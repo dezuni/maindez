@@ -1,230 +1,24 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html dir="rtl" lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>فرم درخواست خدمات</title>
-  <style>
-    /* استایل‌ها بدون تغییر */
-    body {
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background-color: #f9f9f9;
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .form-container {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 500px;
-    }
-
-    h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      color: #555;
-    }
-
-    input[type="text"],
-    input[type="tel"],
-    select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .message {
-      margin-top: 20px;
-      padding: 10px;
-      border-radius: 5px;
-      display: none;
-    }
-
-    .success {
-      background-color: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-    }
-
-    .error {
-      background-color: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
-    }
-
-    /* استایل نشانگر ارسال */
-    .loading {
-      display: none;
-      margin-top: 10px;
-      color: #007bff;
-      font-size: 14px;
-      text-align: center;
-    }
-
-    /* استایل لینک فعال‌سازی مجدد */
-    .reset-link {
-      display: none;
-      margin-top: 15px;
-      text-align: center;
-      color: #007bff;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>خدمات دزیونی</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Optional CSS -->
+    <script src="script.js"></script> <!-- JavaScript for button functionality -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <div class="form-container">
-    <h2>فرم درخواست خدمات</h2>
-    <form id="serviceForm">
-      <!-- نام و نام خانوادگي -->
-      <div class="form-group">
-        <label for="fullName">نام و نام خانوادگي</label>
-        <input type="text" id="fullName" name="fullName" placeholder="نام و نام خانوادگي خود را وارد کنيد" required>
-      </div>
-
-      <!-- شماره موبايل -->
-      <div class="form-group">
-        <label for="phone">شماره موبايل</label>
-        <input type="tel" id="phone" name="phone" placeholder="مثال: 09123456789" required>
-      </div>
-
-      <!-- نوع خدمت -->
-      <div class="form-group">
-        <label for="serviceType">نوع خدمت</label>
-        <select id="serviceType" name="serviceType" required>
-          <option value="" disabled selected>انتخاب کنيد</option>
-          <option value="خدمات فارغ التحصيلي">خدمات فارغ التحصيلي</option>
-          <option value="امور مالي">امور مالي</option>
-          <option value="امور پايان نامه">امور پايان نامه</option>
-        </select>
-      </div>
-
-      <!-- دکمه ارسال -->
-      <button type="submit" id="submitButton">ارسال درخواست</button>
-
-      <!-- نشانگر ارسال -->
-      <div id="loadingIndicator" class="loading">در حال ارسال درخواست...</div>
-    </form>
-
-    <!-- لینک فعال‌سازی مجدد -->
-    <div id="resetLink" class="reset-link">ارسال درخواست جدید؟</div>
-
-    <!-- ناحيه نمايش پيام -->
-    <div id="message" class="message"></div>
-  </div>
-
-  <script>
-    const form = document.getElementById('serviceForm');
-    const submitButton = document.getElementById('submitButton');
-    const loadingIndicator = document.getElementById('loadingIndicator');
-    const resetLink = document.getElementById('resetLink');
-    const messageElement = document.getElementById('message');
-
-    // تابع نمايش پيام
-    function showMessage(text, type) {
-      messageElement.textContent = text;
-      messageElement.className = `message ${type}`;
-      messageElement.style.display = 'block';
-    }
-
-    // تابع غیرفعال کردن فرم
-    function disableForm() {
-      form.querySelectorAll('input, select, button').forEach(element => {
-        element.disabled = true;
-      });
-      loadingIndicator.style.display = 'none'; // مخفی کردن نشانگر ارسال
-      resetLink.style.display = 'block'; // نمایش لینک فعال‌سازی مجدد
-    }
-
-    // تابع فعال‌سازی مجدد فرم
-    function enableForm() {
-      form.querySelectorAll('input, select, button').forEach(element => {
-        element.disabled = false;
-      });
-      form.reset(); // پاک کردن فیلدهای فرم
-      messageElement.style.display = 'none'; // پاک کردن پیام موفقیت
-      resetLink.style.display = 'none'; // مخفی کردن لینک فعال‌سازی مجدد
-    }
-
-    // رویداد ارسال فرم
-    form.addEventListener('submit', function(event) {
-      event.preventDefault(); // جلوگيري از ارسال سنتي فرم
-
-      const formData = new FormData(form);
-
-      // اعتبارسنجي شماره موبايل
-      const phoneInput = document.getElementById('phone');
-      const phoneValue = phoneInput.value.trim();
-      if (!/^\d{11}$/.test(phoneValue) || !phoneValue.startsWith('09')) {
-        showMessage('شماره موبايل بايد ۱۱ رقمي باشد و با ۰۹ شروع شود.', 'error');
-        return;
-      }
-
-      // غیرفعال کردن دکمه و نمایش نشانگر ارسال
-      submitButton.disabled = true;
-      loadingIndicator.style.display = 'block';
-
-      // ارسال درخواست با AJAX
-      fetch('https://script.google.com/macros/s/AKfycbyCNmdEUISNX0q6OUFneNdnqktG4lxZ-oFJSG-UBasvjOD6uJYFn_HL5PERYH7ylstIqA/exec', {
-        method: 'POST',
-        body: new URLSearchParams(formData)
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.result === 'success') {
-          showMessage('درخواست شما با موفقيت ثبت شد.', 'success');
-        } else {
-          showMessage('خطا در ثبت درخواست. لطفاً دوباره تلاش کنيد.', 'error');
-        }
-      })
-      .catch(error => {
-        showMessage('خطاي شبکه: لطفاً اتصال خود را بررسي کنيد.', 'error');
-      })
-      .finally(() => {
-        // غیرفعال کردن فرم پس از اتمام عملیات
-        disableForm();
-      });
-    });
-
-    // رویداد کلیک روی لینک فعال‌سازی مجدد
-    resetLink.addEventListener('click', function() {
-      enableForm();
-    });
-  </script>
+    <header>
+        <h1>اپلیکیشن من</h1>
+        <nav>
+            <button onclick="navigateTo('index.html')">خانه</button>
+            <button onclick="navigateTo('page1.html')">جزوه یاب</button>
+            <button onclick="navigateTo('page2.html')">خدمات دانشجویی</button>
+            <button onclick="navigateTo('page3.html')">نقشه دانشگاه</button>
+       </nav>
+    </header>
+    <main>
+    <p>.صفحه اول: معرفی ...</p>
+    </main>
 </body>
 </html>
