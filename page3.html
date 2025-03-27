@@ -70,17 +70,55 @@
         </nav>
     </header>
     <main>
-        <div class="map-container">
+                <div class="map-container">
+          <!-- Wrapper div to intercept clicks -->
+          <div class="map-overlay" onclick="return false;"></div>
+          
+          <!-- Modified iframe with sandboxing -->
           <iframe
-            src="https://www.google.com/maps/d/embed?mid=1mhrMdO2SadM18we0g5SEJm2u9kxC8xE&ehbc=2E312F&noscroll=true&noapp=true"
+            src="https://www.google.com/maps/d/embed?mid=1mhrMdO2SadM18we0g5SEJm2u9kxC8xE&ehbc=2E312F&noapp=1&noscroll=1"
             width="640" 
             height="480"
             style="border:0;"
-            allowfullscreen=""
             loading="lazy"
+            sandbox="allow-same-origin allow-scripts"
             referrerpolicy="no-referrer-when-downgrade">
           </iframe>
-        </div>         
+        </div>
+        
+        <style>
+          .map-container {
+            position: relative;
+            display: inline-block;
+          }
+          
+          .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            cursor: default;
+          }
+          
+          .map-container iframe {
+            position: relative;
+            z-index: 0;
+            pointer-events: none;
+          }
+        </style>
+        
+        <script>
+        // Additional protection against app opening
+        document.addEventListener('click', function(e) {
+          if (e.target.closest('.map-container')) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          }
+        }, true);
+        </script>
     </main>
 </body>
 </html>
