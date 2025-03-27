@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>خدمات دزیونی</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Optional CSS -->
+    <script src="script.js"></script> <!-- JavaScript for button functionality -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 15px;
+        }
+        input, button {
+          padding: 10px;
+          font-size: 16px;
+          margin: 5px;
+        }
+        #response {
+          margin-top: 20px;
+          font-size: 18px;
+          color: green;
+          text-align: center;
+        }
+        #searchResults {
+          margin-top: 10px;
+            text-align: justify;           
+        }
+        .author-button {
+          display: inline-block; /* Display buttons inline */
+          margin: 5px;
+          padding: 10px;
+          font-size: 16px;
+          cursor: pointer;
+          width: fit-content; /* Make button width fit content */
+            text-align: center;
+        }
+    
+        #authorButtons {
+          display: flex;  /*Use flexbox for layout */
+          flex-direction: column; /* Stack buttons vertically */
+          gap: 10px; /* Add space between buttons */
+          align-items: center;
+        }
+        #articleList {
+          list-style-type: none; /* Remove bullet points */
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center; /* Center list items horizontally */
+          /*text-align: justify;*/
+         gap: 20px; /* Add space between list items */         
+         }
+    
+        .spinner {
+          border: 4px solid #f3f3f3; /* Light grey */
+          border-top: 4px solid #3498db; /* Blue */
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          animation: spin 1s linear infinite;
+          display: inline-block;
+          margin-left: 10px;
+        }
+    
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+  </style>
+</head>
+<body>
+    <header>
+        <h1>جزوه یاب</h1>
+        <nav>
+            <button onclick="navigateTo('index.html')">خانه</button>
+            <button onclick="navigateTo('page1.html')">جزوه یاب</button>
+            <button onclick="navigateTo('page2.html')">خدمات دانشجویی</button>
+            <button onclick="navigateTo('page3.html')">نقشه دانشگاه</button>
+            <!--ul>
+                <li><a href="index.html">خانه</a></li>
+                <li><a href="page1.html">جزوه یاب</a></li>
+                <li><a href="page2.html">خدمات دانشجویی</a></li>
+                <li><a href="page3.html">نقشه دانشگاه</a></li>
+            </ul-->
+        </nav>
+    </header>
+    <main>
+          <h3>جستجوی جزوات بر اساس نام استاد</h3>
+          <input type="text" id="authorInput" placeholder="نام استاد را وارد کن *">
+          <button onclick="searchAuthor()">جستجو کن!</button>
+        
+          <div id="response"></div>
+          
+          <div id="searchResults" style="display: none;">
+            <!--h2>Search Results</h2-->
+            <div id="authorButtons"></div>
+          </div>
+        
+          <div id="articleResults" style="display: none;">
+            <!--h2>Article Results</h2-->
+            <ul id="articleList"></ul>
+          </div>
+        
+          <script>
+            // Add a spinner for visual feedback
+            const spinner = document.createElement('div');
+            spinner.className = 'spinner';
+            
+            const gasUrl = 'https://script.google.com/macros/s/AKfycbxQPk-Xi5_qXIirKy5qE_gsJWgOMw1yb5fo0Nv-GtFQ-uebxXYDfieSeWERAWigXrr8fw/exec';
+            
+            function searchAuthor() {
+              
+              const authorName = document.getElementById('authorInput').value.trim();
+              const responseDiv = document.getElementById('response');
+              const authorButtonsDiv = document.getElementById('authorButtons');
+               if (!authorName) {
+                responseDiv.textContent = 'لطفا نام استاد را وارد کنید!';
+                responseDiv.style.color='red';    
+                 authorButtonsDiv.innerHTML='';
+                 document.getElementById('articleList').innerHTML='';
+                return;
+              }
+        
+              responseDiv.textContent = 'در حال جستجوی استاد ...';
+              responseDiv.style.color='blue';
+              responseDiv.appendChild(spinner);
+              authorButtonsDiv.innerHTML='';
+              document.getElementById('articleList').innerHTML='';     
+        
+              // Send a POST request to the backend for AUTHORSEARCH
+              const requestBody = `action:AUTHORSEARCH|message:${authorName}`;
+        
+              fetch(gasUrl, {
+                method: 'POST',
+                body: requestBody,
+              })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.result && data.result.length > 0) {
+                    // Display search results as buttons
+                    responseDiv.removeChild(spinner);
+                    responseDiv.textContent = 'روی نام استاد کلیک کنید!';
+                    responseDiv.style.color='green';            
+                    
+                    authorButtonsDiv.innerHTML = data.result.map(author => `
+                      <button class="author-button" onclick="selectAuthor('${author}')">${author}</button>
+                    `).join('');
+                    document.getElementById('searchResults').style.display = 'block';
+                    //responseDiv.textContent = '';
+                  } else {
+                    responseDiv.removeChild(spinner);
+                    responseDiv.textContent = 'استاد '+ authorName + '  یافت نشد!' ; 
+                    responseDiv.style.color='red';
+                  }
+                })
+                .catch(error => {          
+                  responseDiv.textContent = '، دوباره تلاش کنید. خطای جستجو';
+                  console.error('Error:', error);
+                });
+            }
+        
+            function selectAuthor(selectedAuthor) {
+              
+              const responseDiv = document.getElementById('response');
+              const articleListDiv = document.getElementById('articleList');      
+              responseDiv.textContent = 'در حال جستجوی جزوات ...';
+              responseDiv.style.color='blue';
+              responseDiv.appendChild(spinner);
+              document.getElementById('authorButtons').innerHTML='';
+              document.getElementById('authorInput').value='';
+              articleListDiv.innerHTML='';
+        
+              // Send a POST request to the backend for ARTICLESEARCH
+              const requestBody = `action:ARTICLESEARCH|message:${selectedAuthor}`;
+        
+              fetch(gasUrl, {
+                method: 'POST',
+                body: requestBody,
+              })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.result && data.result.length > 0) {
+                      responseDiv.removeChild(spinner);
+                      responseDiv.textContent = 'جزوات استاد '+ selectedAuthor + ':';
+                      responseDiv.style.color = 'green';
+                    
+                      // Filter articles to include only those with a non-empty title
+                      const validArticles = data.result.filter(article => article.title && article.title.trim() !== '');
+                    
+                      if (validArticles.length > 0) {
+                        // Display valid articles
+                        articleListDiv.innerHTML = validArticles.map(article => `
+                          <li>
+                            <strong>${article.title}</strong> 
+                            (${article.date.split('T')[0]}) <!-- Extract date only -->
+                            <a href="${article.link}" target="_blank"><strong>دانلود</strong></a>
+                          </li>
+                        `).join('');
+                      } else {
+                        // No valid articles found
+                        responseDiv.textContent='متاسفانه برای استاد '+ selectedAuthor + 'جزوه ای یافت نشد!'; 
+                        responseDiv.style.color='red';
+                      }
+                    
+                    document.getElementById('articleResults').style.display = 'block';
+                    //responseDiv.textContent = '';
+                  } else {
+                    responseDiv.removeChild(spinner);
+                    responseDiv.textContent='متاسفانه برای استاد '+ selectedAuthor + 'جزوه ای یافت نشد!'; 
+                    responseDiv.style.color='red';
+                  }
+                })
+                .catch(error => {
+                  responseDiv.textContent = 'خطا در نمایش جزوات، دوباره تلاش کنید!';
+                  responseDiv.style.color='red';
+                  console.error('Error:', error);
+                });
+            }
+          </script>
+    </main>
+</body>
+</html>
