@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم درخواست خدمات</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Optional CSS -->
+    <script src="script.js"></script> <!-- JavaScript for button functionality -->
+    <style>
+               /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4; /* Light background */
+        }
+
+        /* Navigation bar styles (example) */
+        .navbar {
+            background-color: #333; /* Dark background */
+            color: #fff; /* White text */
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        /* Wrapper for the form */
+        .form-wrapper {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: calc(100vh - 60px); /* Full height minus navbar height */
+            direction: ltr; /* Ensure Flexbox works correctly in RTL */
+        }
+
+        /* Form container */
+        .form-container {
+            width: 100%; /* Full width by default */
+            max-width: 500px; /* Maximum width for the form */
+            padding: 20px;
+            background-color: #fff; /* White background */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            text-align: center; /* Center text inside the container */
+            direction: rtl; /* Reset direction for form content */
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px; /* Space below the heading */
+            color: #333; /* Dark text color */
+        }
+
+        .form-group {
+            margin-bottom: 15px; /* Space between form groups */
+            text-align: right; /* Align labels and inputs to the right */
+        }
+
+        .form-group label {
+            display: block; /* Make labels block-level */
+            margin-bottom: 5px; /* Space between label and input */
+            font-weight: bold;
+            color: #555; /* Slightly lighter text color */
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%; /* Full width of the container */
+            padding: 10px;
+            border: 1px solid #ccc; /* Light border */
+            border-radius: 4px; /* Rounded corners */
+            font-size: 16px;
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        .form-group select {
+            appearance: none; /* Remove default arrow */
+            background-color: #fff; /* White background */
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db; /* Blue background */
+            color: #fff; /* White text */
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+        }
+
+        .message {
+            margin-top: 20px; /* Space above the message */
+            font-size: 16px;
+            color: green; /* Green text for success messages */
+            text-align: center; /* Center the message */
+        }
+   /* .form-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+        justify-content: center;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+   requestbutton {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    requestbutton:hover {
+      background-color: #0056b3;
+    }
+
+    .message {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      display: none;
+    }
+
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }*/
+  </style>
+</head>
+<body>    
+    <header>
+        <h1>خدمات دانشجویی</h1>
+        <nav>
+            <ul>
+                <button onclick="navigateTo('index.html')">خانه</button>
+                <button onclick="navigateTo('page1.html')">جزوه یاب</button>
+                <button onclick="navigateTo('page2.html')">خدمات دانشجویی</button>
+                <button onclick="navigateTo('page3.html')">نقشه دانشگاه</button>
+            </ul>
+        </nav>
+    </header>
+    <main>
+             <div class="form-container">
+        <h2>فرم درخواست خدمات</h2>
+        <form id="serviceForm">
+          <!-- نام و نام خانوادگی -->
+          <div class="form-group">
+            <label for="fullName">نام و نام خانوادگی</label>
+            <input type="text" id="fullName" name="fullName" placeholder="نام و نام خانوادگی خود را وارد کنید" required>
+          </div>
+    
+          <!-- شماره موبایل -->
+          <div class="form-group">
+            <label for="phone">شماره موبایل</label>
+            <input type="tel" id="phone" name="phone" placeholder="مثال: 09123456789" required>
+          </div>
+    
+          <!-- نوع خدمت -->
+          <div class="form-group">
+            <label for="serviceType">نوع خدمت</label>
+            <select id="serviceType" name="serviceType" required>
+              <option value="" disabled selected>انتخاب کنید</option>
+              <option value="خدمات فارغ التحصیلی">خدمات فارغ التحصیلی</option>
+              <option value="امور مالی">امور مالی</option>
+              <option value="امور پایان نامه">امور پایان نامه</option>
+            </select>
+          </div>
+    
+          <!-- دکمه ارسال -->
+          <button type="submit" id="requestbutton">ارسال درخواست</button>
+        </form>
+    
+        <!-- ناحیه نمایش پیام -->
+        <div id="message" class="message"></div>
+      </div>
+    
+      <script>
+        document.getElementById('serviceForm').addEventListener('submit', function(event) {
+          event.preventDefault(); // جلوگیری از ارسال سنتی فرم
+    
+          const form = event.target;
+          const formData = new FormData(form);
+    
+          // اعتبارسنجی شماره موبایل
+          const phoneInput = document.getElementById('phone');
+          const phoneValue = phoneInput.value.trim();
+          if (!/^\d{11}$/.test(phoneValue) || !phoneValue.startsWith('09')) {
+            showMessage('شماره موبایل باید ۱۱ رقمی باشد و با ۰۹ شروع شود.', 'error');
+            return;
+          }
+    
+          // ارسال درخواست با AJAX
+          fetch('https://script.google.com/macros/s/AKfycbyCNmdEUISNX0q6OUFneNdnqktG4lxZ-oFJSG-UBasvjOD6uJYFn_HL5PERYH7ylstIqA/exec', {
+            method: 'POST',
+            body: new URLSearchParams(formData)
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.result === 'success') {
+              showMessage('درخواست شما با موفقیت ثبت شد.', 'success');
+              form.reset(); // پاک کردن فرم پس از ثبت موفق
+            } else {
+              showMessage('خطا در ثبت درخواست. لطفاً دوباره تلاش کنید.', 'error');
+            }
+          })
+          .catch(error => {
+            showMessage('خطای شبکه: لطفاً اتصال خود را بررسی کنید.', 'error');
+          });
+        });
+    
+        // تابع نمایش پیام
+        function showMessage(text, type) {
+          const messageElement = document.getElementById('message');
+          messageElement.textContent = text;
+          messageElement.className = `message ${type}`;
+          messageElement.style.display = 'block';
+    
+          
+        }
+      </script>
+    </main>
+</body>
+</html>
