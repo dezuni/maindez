@@ -71,10 +71,6 @@
     </header>
     </body>
 </html>
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,25 +101,13 @@
 
   <script>
     async function searchOffice() {
-      // دریافت نام دفتر از فیلد ورودی
       const officeName = document.getElementById('officeName').value;
-
-      // ساخت URL برای درخواست به Google Apps Script
-      const url = `https://script.google.com/macros/s/AKfycbzqCe-XGDyKLlR7gEWXy2OIjPM0vc-sP3nZUiaCJYK9/dev?office=${encodeURIComponent(officeName)}`;
+      const url = `https://script.google.com/macros/s/AKfycbzqCe-XGDyKLlR7gEWXy2OIjPM0vc-sP3nZUiaCJYK9/exec?office=${encodeURIComponent(officeName)}`;
 
       try {
-        // ارسال درخواست به Web App
         const response = await fetch(url);
-
-        // بررسی وضعیت پاسخ
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        // دریافت داده‌ها به صورت JSON
         const data = await response.json();
 
-        // نمایش نتیجه در صفحه
         const resultDiv = document.getElementById('result');
         if (data.error) {
           resultDiv.innerHTML = `<p style="color: red;">${data.error}</p>`;
@@ -142,6 +126,11 @@
       }
     }
   </script>
+</body>
+</html>
+
+
+
 </body>
 </html>
 
