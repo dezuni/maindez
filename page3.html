@@ -69,108 +69,58 @@
             </ul>
         </nav>
     </header>
-    </body>
-</html>
+ 
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Office Search</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    input, button {
-      padding: 10px;
-      margin: 5px 0;
-      font-size: 16px;
-    }
-    #result {
-      margin-top: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جستجوی دفاتر دانشگاه</title>
+    <script>
+        async function searchOffice() {
+            const name = document.getElementById("officeName").value;
+            const apiUrl = "https://script.google.com/macros/s/AKfycbxF3_l6hm76tOogkMKojApf1c2ewlmEdJ5fgFYr7Sqyv1F9ix_-4hI9kt1M2rvBHeXV8w
+/exec?name=" + encodeURIComponent(name);
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                let resultDiv = document.getElementById("result");
+                resultDiv.innerHTML = "";
+
+                if (data.length === 0) {
+                    resultDiv.innerHTML = "<p>هیچ دفتری یافت نشد.</p>";
+                    return;
+                }
+
+                data.forEach(office => {
+                    resultDiv.innerHTML += `
+                        <div>
+                            <h3>${office.officeName}</h3>
+                            <p>ساختمان: ${office.building}</p>
+                            <p>طبقه: ${office.floor}</p>
+                            <p>موقعیت: ${office.latitude}, ${office.longitude}</p>
+                        </div>
+                        <hr>
+                    `;
+                });
+
+            } catch (error) {
+                console.error("خطا در دریافت اطلاعات:", error);
+                document.getElementById("result").innerHTML = "<p>خطایی رخ داده است.</p>";
+            }
+        }
+    </script>
 </head>
 <body>
-  <h1>Search for an Office</h1>
-  <input type="text" id="officeName" placeholder="Enter office name">
-  <button onclick="searchOffice()">Search</button>
-
-  <div id="result"></div>
-
-  
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>University Office Search</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    input, button {
-      padding: 10px;
-      margin: 5px 0;
-      font-size: 16px;
-    }
-    #result {
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
-  <h1>Search for an Office</h1>
-  <input type="text" id="officeName" placeholder="Enter office name">
-  <button onclick="searchOffice()">Search</button>
-
-  <div id="result"></div>
-
-  <script>
-    async function searchOffice() {
-      // Get the office name from the input field
-      const officeName = document.getElementById('officeName').value;
-
-      if (!officeName.trim()) {
-        alert("Please enter an office name.");
-        return;
-      }
-
-      // Construct the API URL
-      const url = `https://script.google.com/macros/s/AKfycbyvTyLD8nUoy-SmL1-prPldI4Vkvs3LcNMxZvvnJ2zBIpazsRkjrbS-v1HsGUfi8fFu/exec?office=${encodeURIComponent(officeName)}`;
-
-      try {
-        // Fetch data from the Google Apps Script API
-        const response = await fetch(url);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // Display the result
-        const resultDiv = document.getElementById('result');
-        if (data.error) {
-          resultDiv.innerHTML = `<p style="color: red;">${data.error}</p>`;
-        } else {
-          resultDiv.innerHTML = `
-            <p><strong>Office Name:</strong> ${data.officeName}</p>
-            <p><strong>Building Name:</strong> ${data.buildingName}</p>
-            <p><strong>Floor:</strong> ${data.floor}</p>
-          `;
-        }
-      } catch (error) {
-        console.error(error);
-        document.getElementById('result').innerHTML = '<p style="color: red;">An error occurred while fetching data.</p>';
-      }
-    }
-  </script>
+    <h1>جستجوی دفاتر دانشگاه</h1>
+    <input type="text" id="officeName" placeholder="نام دفتر را وارد کنید">
+    <button onclick="searchOffice()">جستجو</button>
+    <div id="result"></div>
 </body>
 </html>
-
 
 
 
