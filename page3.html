@@ -3,26 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نقشه دانشگاه</title>
+    <title>فرم درخواست خدمات</title>
     <link rel="stylesheet" href="styles.css"> <!-- Optional CSS -->
     <script src="script.js"></script> <!-- JavaScript for button functionality -->
     <style>
-                html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        /* General styles */
+               /* General styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+            background-color: #f4f4f4; /* Light background */
         }
 
-        /* Navigation bar styles */
+        /* Navigation bar styles (example) */
         .navbar {
             background-color: #333; /* Dark background */
             color: #fff; /* White text */
@@ -30,14 +22,79 @@
             text-align: center;
         }
 
-        .navbar a {
-            color: #fff; /* White text for links */
-            text-decoration: none; /* Remove underline */
-            margin: 0 10px; /* Space between links */
+        /* Wrapper for the form */
+        .form-wrapper {
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: calc(100vh - 60px); /* Full height minus navbar height */
+            direction: ltr; /* Ensure Flexbox works correctly in RTL */
         }
 
-        .navbar a:hover {
-            text-decoration: underline; /* Underline on hover */
+        /* Form container */
+        .form-container {
+            width: 100%; /* Full width by default */
+            max-width: 500px; /* Maximum width for the form */
+            padding: 20px;
+            background-color: #fff; /* White background */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            text-align: center; /* Center text inside the container */
+            direction: rtl; /* Reset direction for form content */
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px; /* Space below the heading */
+            color: #333; /* Dark text color */
+        }
+
+        .form-group {
+            margin-bottom: 15px; /* Space between form groups */
+            text-align: right; /* Align labels and inputs to the right */
+        }
+
+        .form-group label {
+            display: block; /* Make labels block-level */
+            margin-bottom: 5px; /* Space between label and input */
+            font-weight: bold;
+            color: #555; /* Slightly lighter text color */
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%; /* Full width of the container */
+            padding: 10px;
+            border: 1px solid #ccc; /* Light border */
+            border-radius: 4px; /* Rounded corners */
+            font-size: 16px;
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        .form-group select {
+            appearance: none; /* Remove default arrow */
+            background-color: #fff; /* White background */
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db; /* Blue background */
+            color: #fff; /* White text */
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+        }
+
+        .message {
+            margin-top: 20px; /* Space above the message */
+            font-size: 16px;
+            color: green; /* Green text for success messages */
+            text-align: center; /* Center the message */
         }
 
         /* Map container styles */
