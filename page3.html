@@ -2,54 +2,67 @@
 <html dir="rtl" lang="fa">
 <head>
     <meta charset="UTF-8">
-        <title>جستجوی دفاتر دانشگاه</title>
+    <title>جستجوی دفاتر دانشگاه</title>
     <link rel="stylesheet" href="styles.css"> <!-- Optional CSS -->
     <script src="script.js"></script> <!-- JavaScript for button functionality -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-            
-    h1 {
-    text-align: center; /* متن را وسط‌چین می‌کند */
-    }
-              
+        h1 {
+            text-align: center; /* متن را وسط‌چین می‌کند */
+        }
+        
         body {
-          font-family: Arial, sans-serif;
-          margin: 15px;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh; /* ارتفاع صفحه به اندازه 100% ویوپورت */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* برای وسط‌چین کردن عناصر */
         }
+
         input, button {
-          padding: 10px;
-          font-size: 16px;
-          margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+            margin: 5px;
         }
+
         #response {
-          margin-top: 20px;
-          font-size: 18px;
-          color: green;
-          text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+            text-align: center;
         }
+
         #searchResults {
-          margin-top: 10px;
+            margin-top: 10px;
             text-align: justify;           
         }
         
-    
         .spinner {
-          border: 4px solid #f3f3f3; /* Light grey */
-          border-top: 4px solid #3498db; /* Blue */
-          border-radius: 50%;
-          width: 20px;
-          height: 20px;
-          animation: spin 1s linear infinite;
-          display: inline-block;
-          margin-left: 10px;
-        }
-    
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
         }
 
-        /* Map container styles */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* اصلاح بخش باکس جستجو و دکمه */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px; /* فاصله بین باکس و دکمه */
+        }
+
         .map-container {
             flex: 1; /* Take up remaining space */
             display: flex;
@@ -64,8 +77,8 @@
             border: 2px solid #ccc;
             border-radius: 8px;
         }
-   
-  </style>
+    </style>
+</head>
 <body>
 
     <header>
@@ -79,13 +92,17 @@
             </ul>
         </nav>
     </header>
- 
-   
+
+    <h1>جستجوی دفاتر دانشگاه</h1>
+    
+    <div class="search-container">
+        <input type="text" id="officeName" placeholder="نام دفتر را وارد کنید">
+        <button onclick="searchOffice()">جستجو</button>
+    </div>
+    
+    <div id="result"></div>
+
     <script>
-        // Add a spinner for visual feedback
-            const spinner = document.createElement('div');
-            spinner.className = 'spinner';
-        
         async function searchOffice() {
             const name = document.getElementById("officeName").value;
             const apiUrl = "https://script.google.com/macros/s/AKfycbxF3_l6hm76tOogkMKojApf1c2ewlmEdJ5fgFYr7Sqyv1F9ix_-4hI9kt1M2rvBHeXV8w/exec?name=" + encodeURIComponent(name);
@@ -120,63 +137,20 @@
             }
         }
     </script>
-</head>
-<body>
-    <h1>جستجوی دفاتر دانشگاه</h1>
-    <input type="text" id="officeName" placeholder="نام دفتر را وارد کنید">
-    <button onclick="searchOffice()">جستجو</button>
-    <div id="result"></div>
-</body>
-</html>
-
 
     <main>
-                <div class="map-container" id="interactive-map">
-          <iframe
-            src="https://www.google.com/maps/d/embed?mid=1mhrMdO2SadM18we0g5SEJm2u9kxC8xE&ehbc=2E312F&noapp=1"
-            width="640" 
-            height="480"
-            style="border:0;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
+        <div class="map-container" id="interactive-map">
+            <iframe
+                src="https://www.google.com/maps/d/embed?mid=1mhrMdO2SadM18we0g5SEJm2u9kxC8xE&ehbc=2E312F&noapp=1"
+                width="640" 
+                height="480"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div>
-        
-        <script>
-        // This script intercepts and modifies all clicks within the iframe
-        document.getElementById('interactive-map').addEventListener('click', function(e) {
-          // Only intercept clicks that would open the app
-          if (e.target.closest('a[href^="https://maps.app.goo.gl"]') || 
-              e.target.closest('a[href^="comgooglemaps://"]')) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          }
-        }, true);
-        
-        // Additional protection by modifying iframe content
-        window.addEventListener('message', function(event) {
-          if (event.origin !== "https://www.google.com") return;
-          
-          // Post a message to the iframe to disable app links
-          const iframe = document.querySelector('#interactive-map iframe');
-          iframe.contentWindow.postMessage({
-            disableAppLinks: true,
-            disableNavigation: true
-          }, 'https://www.google.com');
-        });
-        </script>
-        
-        <style>
-        /* Keep all map functionality but style the container */
-        .map-container {
-          position: relative;
-          overflow: hidden;
-          border-radius: 8px;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        </style>
     </main>
+
 </body>
 </html>
