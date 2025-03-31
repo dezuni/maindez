@@ -51,6 +51,15 @@
             border-radius: 8px;
         }
 
+        /* Spinner and loading text styles */
+        .spinner-container {
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            color: #3498db; /* Blue text */
+        }
+
         .spinner {
             border: 4px solid #f3f3f3; /* Light grey */
             border-top: 4px solid #3498db; /* Blue */
@@ -89,12 +98,22 @@
         <button onclick="searchOffice()">جستجو</button>
     </div>
 
+    <!-- Spinner and loading text -->
+    <div class="spinner-container" id="spinnerContainer">
+        <div class="spinner"></div>
+        <span>در حال جستجو...</span>
+    </div>
+
     <div id="result"></div>
 
     <script>
         async function searchOffice() {
             const name = document.getElementById("officeName").value;
             const apiUrl = "https://script.google.com/macros/s/AKfycbxF3_l6hm76tOogkMKojApf1c2ewlmEdJ5fgFYr7Sqyv1F9ix_-4hI9kt1M2rvBHeXV8w/exec?name=" + encodeURIComponent(name);
+
+            // Show spinner
+            const spinnerContainer = document.getElementById("spinnerContainer");
+            spinnerContainer.style.display = "flex";
 
             try {
                 const response = await fetch(apiUrl);
@@ -105,28 +124,27 @@
 
                 if (data.length === 0) {
                     resultDiv.innerHTML = "<p>هیچ دفتری یافت نشد.</p>";
-                    return;
+                } else {
+                    data.forEach(office => {
+                        const latitude = office.latitude;
+                        const longitude = office.longitude;
+                        const mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}`; // لینک گوگل مپ
+
+                        resultDiv.innerHTML += 
+                            `<div>
+                                <h3>${office.officeName}</h3>
+                                <p>ساختمان: ${office.building}</p>
+                                <p>طبقه: ${office.floor}</p>
+                                <p>موقعیت: <a href="${mapUrl}" target="_blank">مشاهده در نقشه</a></p>
+                            </div><hr>`;
+                    });
                 }
-
-                data.forEach(office => {
-                    const latitude = office.latitude;
-                    const longitude = office.longitude;
-                    const mapUrl = `https://www.google.com/maps?q=${latitude},${longitude}`; // لینک گوگل مپ
-
-                    resultDiv.innerHTML += `
-                        <div>
-                            <h3>${office.officeName}</h3>
-                            <p>ساختمان: ${office.building}</p>
-                            <p>طبقه: ${office.floor}</p>
-                            <p>موقعیت: <a href="${mapUrl}" target="_blank">مشاهده در نقشه</a></p>
-                        </div>
-                        <hr>
-                    `;
-                });
-
             } catch (error) {
                 console.error("خطا در دریافت اطلاعات:", error);
                 document.getElementById("result").innerHTML = "<p>خطایی رخ داده است.</p>";
+            } finally {
+                // Hide spinner
+                spinnerContainer.style.display = "none";
             }
         }
     </script>
