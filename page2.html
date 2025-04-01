@@ -21,151 +21,6 @@
             padding: 10px 20px;
             text-align: center;
         }
-
-        /* Wrapper for the form */
-        .form-wrapper {
-            display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            height: calc(100vh - 60px); /* Full height minus navbar height */
-            direction: ltr; /* Ensure Flexbox works correctly in RTL */
-        }
-
-        /* Form container */
-        .form-container {
-            width: 100%; /* Full width by default */
-            max-width: 500px; /* Maximum width for the form */
-            padding: 20px;
-            background-color: #fff; /* White background */
-            border-radius: 8px; /* Rounded corners */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            text-align: center; /* Center text inside the container */
-            direction: rtl; /* Reset direction for form content */
-        }
-
-        .form-container h2 {
-            margin-bottom: 20px; /* Space below the heading */
-            color: #333; /* Dark text color */
-        }
-
-        .form-group {
-            margin-bottom: 15px; /* Space between form groups */
-            text-align: right; /* Align labels and inputs to the right */
-        }
-
-        .form-group label {
-            display: block; /* Make labels block-level */
-            margin-bottom: 5px; /* Space between label and input */
-            font-weight: bold;
-            color: #555; /* Slightly lighter text color */
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%; /* Full width of the container */
-            padding: 10px;
-            border: 1px solid #ccc; /* Light border */
-            border-radius: 4px; /* Rounded corners */
-            font-size: 16px;
-            box-sizing: border-box; /* Include padding in width */
-        }
-
-        .form-group select {
-            appearance: none; /* Remove default arrow */
-            background-color: #fff; /* White background */
-        }
-
-        button[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #3498db; /* Blue background */
-            color: #fff; /* White text */
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #2980b9; /* Darker blue on hover */
-        }
-
-        .message {
-            margin-top: 20px; /* Space above the message */
-            font-size: 16px;
-            color: green; /* Green text for success messages */
-            text-align: center; /* Center the message */
-        }
-   /* .form-container {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 500px;
-        justify-content: center;
-    }
-
-    h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      color: #555;
-    }
-
-    input[type="text"],
-    input[type="tel"],
-    select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-
-   requestbutton {
-      width: 100%;
-      padding: 10px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    requestbutton:hover {
-      background-color: #0056b3;
-    }
-
-    .message {
-      margin-top: 20px;
-      padding: 10px;
-      border-radius: 5px;
-      display: none;
-    }
-
-    .success {
-      background-color: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-    }
-
-    .error {
-      background-color: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
-    }*/
   </style>
 </head>
 <body>    
@@ -180,85 +35,374 @@
             </ul>
         </nav>
     </header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم درخواست خدمات</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f9;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .service-card {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: #3498db;
+            background: #e9f7ff;
+        }
+
+        .service-card.selected {
+            border-color: #3498db;
+            background: #e9f7ff;
+        }
+
+        .service-card i {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 16px;
+            color: green;
+            text-align: center;
+        }
+
+        /* Spinner and loading text styles */
+        .spinner-container {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            color: #3498db;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Disabled form styles */
+        .form-disabled {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* New request link */
+        .new-request-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .new-request-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>فرم درخواست خدمات</h1>
+    </header>
     <main>
-             <div class="form-container">
-        <h2>فرم درخواست خدمات</h2>
-        <form id="serviceForm">
-          <!-- نام و نام خانوادگی -->
-          <div class="form-group">
-            <label for="fullName">نام و نام خانوادگی</label>
-            <input type="text" id="fullName" name="fullName" placeholder="نام و نام خانوادگی خود را وارد کنید" required>
-          </div>
-    
-          <!-- شماره موبایل -->
-          <div class="form-group">
-            <label for="phone">شماره موبایل</label>
-            <input type="tel" id="phone" name="phone" placeholder="مثال: 09123456789" required>
-          </div>
-    
-          <!-- نوع خدمت -->
-          <div class="form-group">
-            <label for="serviceType">نوع خدمت</label>
-            <select id="serviceType" name="serviceType" required>
-              <option value="" disabled selected>انتخاب کنید</option>
-              <option value="خدمات فارغ التحصیلی">خدمات فارغ التحصیلی</option>
-              <option value="امور مالی">امور مالی</option>
-              <option value="امور پایان نامه">امور پایان نامه</option>
-            </select>
-          </div>
-    
-          <!-- دکمه ارسال -->
-          <button type="submit" id="requestbutton">ارسال درخواست</button>
-        </form>
-    
-        <!-- ناحیه نمایش پیام -->
-        <div id="message" class="message"></div>
-      </div>
-    
-      <script>
-        document.getElementById('serviceForm').addEventListener('submit', function(event) {
-          event.preventDefault(); // جلوگیری از ارسال سنتی فرم
-    
-          const form = event.target;
-          const formData = new FormData(form);
-    
-          // اعتبارسنجی شماره موبایل
-          const phoneInput = document.getElementById('phone');
-          const phoneValue = phoneInput.value.trim();
-          if (!/^\d{11}$/.test(phoneValue) || !phoneValue.startsWith('09')) {
-            showMessage('شماره موبایل باید ۱۱ رقمی باشد و با ۰۹ شروع شود.', 'error');
-            return;
-          }
-    
-          // ارسال درخواست با AJAX
-          fetch('https://script.google.com/macros/s/AKfycbyCNmdEUISNX0q6OUFneNdnqktG4lxZ-oFJSG-UBasvjOD6uJYFn_HL5PERYH7ylstIqA/exec', {
-            method: 'POST',
-            body: new URLSearchParams(formData)
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.result === 'success') {
-              showMessage('درخواست شما با موفقیت ثبت شد.', 'success');
-              form.reset(); // پاک کردن فرم پس از ثبت موفق
-            } else {
-              showMessage('خطا در ثبت درخواست. لطفاً دوباره تلاش کنید.', 'error');
-            }
-          })
-          .catch(error => {
-            showMessage('خطای شبکه: لطفاً اتصال خود را بررسی کنید.', 'error');
-          });
+        <div class="form-container">
+            <form id="serviceForm">
+                <!-- نام و نام خانوادگی -->
+                <div class="form-group">
+                    <label for="fullName">نام و نام خانوادگی</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="نام و نام خانوادگی خود را وارد کنید" 
+
+required>
+                </div>
+
+                <!-- شماره موبایل -->
+                <div class="form-group">
+                    <label for="phone">شماره موبایل</label>
+                    <input type="tel" id="phone" name="phone" placeholder="مثال: 09123456789" 
+
+required>
+                </div>
+
+                <!-- توضیحات -->
+                <div class="form-group">
+                    <label for="description">توضیحات</label>
+                    <textarea id="description" name="description" rows="4" placeholder="توضیحات خود را وارد 
+
+کنید"></textarea>
+                </div>
+
+                <!-- انتخاب خدمت -->
+                <div class="form-group">
+                    <label>انتخاب خدمت</label>
+                    <div class="service-cards" id="serviceCards">
+                        <div class="service-card" data-service="خدمات فارغ التحصیلی">
+                            <i class="fas fa-graduation-cap"></i>
+                            <p>خدمات فارغ التحصیلی</p>
+                        </div>
+                        <div class="service-card" data-service="امور مالی">
+                            <i class="fas fa-money-bill"></i>
+                            <p>امور مالی</p>
+                        </div>
+                        <div class="service-card" data-service="امور پایان نامه">
+                            <i class="fas fa-book"></i>
+                            <p>امور پایان نامه</p>
+                        </div>
+                        <div class="service-card" data-service="مشاوره تحصیلی">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <p>مشاوره تحصیلی</p>
+                        </div>
+                        <div class="service-card" data-service="ثبت نام دوره‌ها">
+                            <i class="fas fa-calendar-alt"></i>
+                            <p>ثبت نام دوره‌ها</p>
+                        </div>
+                        <div class="service-card" data-service="کتابخانه">
+                            <i class="fas fa-book-open"></i>
+                            <p>کتابخانه</p>
+                        </div>
+                        <div class="service-card" data-service="رزرو سالن">
+                            <i class="fas fa-door-open"></i>
+                            <p>رزرو سالن</p>
+                        </div>
+                        <div class="service-card" data-service="پشتیبانی فنی">
+                            <i class="fas fa-tools"></i>
+                            <p>پشتیبانی فنی</p>
+                        </div>
+                        <div class="service-card" data-service="امور دانشجویی">
+                            <i class="fas fa-user-graduate"></i>
+                            <p>امور دانشجویی</p>
+                        </div>
+                        <div class="service-card" data-service="خدمات اداری">
+                            <i class="fas fa-building"></i>
+                            <p>خدمات اداری</p>
+                        </div>
+                        <div class="service-card" data-service="پذیرش">
+                            <i class="fas fa-handshake"></i>
+                            <p>پذیرش</p>
+                        </div>
+                        <div class="service-card" data-service="سایر خدمات">
+                            <i class="fas fa-question-circle"></i>
+                            <p>سایر خدمات</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- دکمه ارسال -->
+                <button type="submit" id="requestbutton">ارسال درخواست</button>
+
+                <!-- Spinner and loading text -->
+                <div class="spinner-container" id="spinnerContainer">
+                    <div class="spinner"></div>
+                    <span>در حال ارسال...</span>
+                </div>
+            </form>
+
+            <!-- ناحیه نمایش پیام -->
+            <div id="message" class="message"></div>
+        </div>
+    </main>
+
+    <script>
+        // انتخاب کارت‌ها
+        const serviceCards = document.querySelectorAll('.service-card');
+        let selectedService = '';
+
+        serviceCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // حذف کلاس selected از تمام کارت‌ها
+                serviceCards.forEach(c => c.classList.remove('selected'));
+                // اضافه کردن کلاس selected به کارت انتخاب‌شده
+                card.classList.add('selected');
+                // ذخیره خدمت انتخاب‌شده
+                selectedService = card.dataset.service;
+            });
         });
-    
+
+        // ارسال فرم
+        document.getElementById('serviceForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const fullName = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const description = document.getElementById('description').value.trim();
+
+            if (!fullName || !phone || !selectedService) {
+                showMessage('لطفاً تمام فیلدها را پر کنید.', 'error');
+                return;
+            }
+
+            if (!/^\d{11}$/.test(phone) || !phone.startsWith('09')) {
+                showMessage('شماره موبایل باید ۱۱ رقمی باشد و با ۰۹ شروع شود.', 'error');
+                return;
+            }
+
+            const spinnerContainer = document.getElementById('spinnerContainer');
+            spinnerContainer.style.display = 'flex';
+            form.classList.add('form-disabled');
+
+            const formData = {
+                fullName,
+                phone,
+                description,
+                service: selectedService
+            };
+
+            // ارسال درخواست با AJAX
+            fetch('https://script.google.com/macros/s/AKfycbyCNmdEUISNX0q6OUFneNdnqktG4lxZ-oFJSG-
+
+UBasvjOD6uJYFn_HL5PERYH7ylstIqA/exec', {
+                method: 'POST',
+                body: new URLSearchParams(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === 'success') {
+                    showMessage('درخواست شما با موفقیت ثبت شد.', 'success');
+                    showNewRequestLink();
+                } else {
+                    showMessage('خطا در ثبت درخواست. لطفاً دوباره تلاش کنید.', 'error');
+                }
+            })
+            .catch(error => {
+                showMessage('خطای شبکه: لطفاً اتصال خود را بررسی کنید.', 'error');
+            })
+            .finally(() => {
+                spinnerContainer.style.display = 'none';
+                form.classList.remove('form-disabled');
+            });
+        });
+
         // تابع نمایش پیام
         function showMessage(text, type) {
-          const messageElement = document.getElementById('message');
-          messageElement.textContent = text;
-          messageElement.className = `message ${type}`;
-          messageElement.style.display = 'block';
-    
-          
+            const messageElement = document.getElementById('message');
+            messageElement.textContent = text;
+            messageElement.className = `message ${type}`;
+            messageElement.style.display = 'block';
         }
-      </script>
-    </main>
+
+        // تابع نمایش لینک "ارسال درخواست جدید"
+        function showNewRequestLink() {
+            const messageElement = document.getElementById('message');
+            const newRequestLink = document.createElement('a');
+            newRequestLink.href = '#';
+            newRequestLink.className = 'new-request-link';
+            newRequestLink.textContent = 'ارسال درخواست جدید';
+            newRequestLink.onclick = resetForm;
+            messageElement.appendChild(newRequestLink);
+        }
+
+        // تابع ریست فرم
+        function resetForm() {
+            const form = document.getElementById('serviceForm');
+            form.reset();
+            document.getElementById('message').innerHTML = '';
+            serviceCards.forEach(card => card.classList.remove('selected'));
+        }
+    </script>
 </body>
 </html>
