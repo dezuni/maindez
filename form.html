@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم درخواست خدمات</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Optional CSS -->
+    <script src="script.js"></script> <!-- JavaScript for button functionality -->
+    <style>
+               /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4; /* Light background */
+        }
+
+        /* Navigation bar styles (example) */
+        .navbar {
+            background-color: #333; /* Dark background */
+            color: #fff; /* White text */
+            padding: 10px 20px;
+            text-align: center;
+        }
+  </style>
+</head>
+<body>    
+    <header>
+        <h1>خدمات دانشجویی</h1>
+        <nav>
+            <ul>
+                <button onclick="navigateTo('index.html')">خانه</button>
+                <button onclick="navigateTo('page1.html')">جزوه یاب</button>
+                <button onclick="navigateTo('page2.html')">خدمات دانشجویی</button>
+                <button onclick="navigateTo('page3.html')">نقشه دانشگاه</button>
+            </ul>
+        </nav>
+    </header>
+
+
+<script>
+  const scriptURL = '<https://script.google.com/macros/s/AKfycbyp612Jj4utJSHp0ELrMqUU3jV9AUlRleSP79kMutIa>'
+  const form = document.forms['submit-to-google-sheet']
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      .then(response => console.log('Success!', response))
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
+
+
+
+
+
+    <style>
+       
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        .spinner {
+            display: none;
+            margin-top: 10px;
+            color: #007BFF;
+        }
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            color: green;
+        }
+        .error-message {
+            display: none;
+            margin-top: 20px;
+            color: red;
+        }
+        .phone-error {
+            display: none;
+            margin-top: 5px;
+            color: red;
+            font-size: 12px;
+        }
+        .inline-link {
+            color: #007BFF;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+  <main>
+        <div class="form-container">
+            <form id="serviceForm">
+<h1>فرم درخواست خدمات</h1>
+
+                <p> اگه فرصت ندارید یا دقیقاً نمی‌دونید برای حل مشکلتون باید به کدوم قسمت دانشگاه مراجعه کنید، کافیه فرم پایین رو پر کنید و خدمتی که نیاز دارید رو انتخاب کنید.
+  <br>                  
+
+ بعد از ثبت درخواست، باهاتون 
+
+تماس می‌گیریم و جزئیات رو می‌پرسیم. 
+                    <br>
+                     به ازای مبلغ به صرفه ای کار شما رو انجام می‌دیم و  آخرش هم نتیجه رو بهتون اطلاع می‌دیم.</p>
+
+    <!-- فیلدهای نام و نام خانوادگی -->
+    <label for="fullName">نام و نام خانوادگی:</label>
+    <input type="text" id="name" placeholder="نام و نام خانوادگی خود را وارد کنید" required>
+
+    <!-- فیلد شماره تماس -->
+    <label for="phone">شماره تماس:</label>
+    <input type="tel" id="phone" placeholder="مثال: 09123456789" oninput="validatePhoneNumber()" required>
+    <div class="phone-error" id="phone-error">شماره تماس وارد شده معتبر نیست.</div>
+
+    <!-- انتخاب نوع خدمت -->
+    <label for="service-type">انتخاب نوع خدمت:</label>
+    <select id="service-type" onchange="updateServiceOptions()">
+        <option value="">-- لطفاً یک گزینه انتخاب کنید --</option>
+        <option value="educational">خدمات آموزشی</option>
+        <option value="research">خدمات پژوهشی</option>
+        <option value="financial">خدمات مالی</option>
+        <option value="student">خدمات دانشجویی</option>
+    </select>
+
+    <!-- گزینه‌های مرتبط با نوع خدمت -->
+    <label for="service-option">انتخاب سرویس:</label>
+    <select id="service-option">
+        <option value="">-- لطفاً یک گزینه انتخاب کنید --</option>
+    </select>
+
+    <!-- توضیحات -->
+    <label for="description">توضیحات:</label>
+    <textarea id="description" rows="4" placeholder="توضیحات خود را وارد کنید"></textarea>
+
+    <!-- دکمه ارسال -->
+    <button id="submit-button" onclick="submitForm()">ارسال</button>
+
+    <!-- اسپینر و پیام در حال ارسال -->
+    <div class="spinner" id="spinner">
+        <span>در حال ارسال فرم...</span>
+    </div>
+
+    <!-- پیام موفقیت و لینک درخواست جدید -->
+    <div class="success-message" id="success-message">
+        <span id="success-text">درخواست شما با موفقیت ثبت شد.</span>
+        <span class="inline-link" id="new-request-link" onclick="showSubmitButton()">درخواست جدید</span>
+    </div>
+
+    <!-- پیام خطا -->
+    <div class="error-message" id="error-message">
+        لطفاً تمام فیلدها را پر کنید و یک سرویس را انتخاب کنید.
+    </div>
+</div>
+
+<script>
+    // تابع برای اعتبارسنجی شماره تلفن
+    function validatePhoneNumber() {
+        const phoneInput = document.getElementById('phone').value.trim();
+        const phoneError = document.getElementById('phone-error');
+        const phonePattern = /^09\d{9}$/; // الگوی شماره موبایل ایران (شروع با 09 و 11 رقم)
+
+        if (!phonePattern.test(phoneInput)) {
+            phoneError.style.display = 'block';
+            return false;
+        } else {
+            phoneError.style.display = 'none';
+            return true;
+        }
+    }
+
+    // تابع برای به‌روزرسانی گزینه‌های سرویس بر اساس نوع خدمت
+    function updateServiceOptions() {
+        const serviceType = document.getElementById('service-type').value;
+        const serviceOption = document.getElementById('service-option');
+        serviceOption.innerHTML = '<option value="">-- لطفاً یک گزینه انتخاب کنید --</option>'; // پاک کردن گزینه‌های قبلی
+
+        if (serviceType === 'educational') {
+            const options = ['اخذ امضاهای پایان نامه', 'فرم معادلسازی دروس', 'امور انتخاب واحد'];
+            options.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.textContent = option;
+                serviceOption.appendChild(opt);
+            });
+        } else if (serviceType === 'research') {
+            const options = ['تهیه فرمهای پژوهشیار', 'اخذ معرفی نامه کارورزی/کارآموزی', 'پروپوزال ارشد/دکتری', 'دفاعیه ارشد/دکتری'];
+            options.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.textContent = option;
+                serviceOption.appendChild(opt);
+            });
+        } else if (serviceType === 'financial') {
+            const options = ['پرداخت شهریه', 'تسویه حساب', 'درخواست کمک هزینه'];
+            options.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.textContent = option;
+                serviceOption.appendChild(opt);
+            });
+        } else if (serviceType === 'student') {
+            const options = ['امور فارغ التحصیلی', 'امور خوابگاه'];
+            options.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.textContent = option;
+                serviceOption.appendChild(opt);
+            });
+        }
+    }
+
+      // ارسال فرم
+        document.getElementById('serviceForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const fullName = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const description = document.getElementById('description').value.trim();
+
+            if (!fullName || !phone || !selectedService) {
+                showMessage('لطفاً تمام فیلدها را پر کنید.', 'error');
+                return;
+            }
+
+            if (!/^\d{11}$/.test(phone) || !phone.startsWith('09')) {
+                showMessage('شماره موبایل باید ۱۱ رقمی باشد و با ۰۹ شروع شود.', 'error');
+                return;
+            }
+
+            const spinnerContainer = document.getElementById('spinnerContainer');
+            spinnerContainer.style.display = 'flex';
+            form.classList.add('form-disabled');
+
+            const formData = {
+                fullName,
+                phone,
+                description,
+                service: selectedService
+            };
+
+            // ارسال درخواست با AJAX
+                fetch('https://script.google.com/macros/s/AKfycbyfB9apRkbmQIbVpozEw2cIhcy-iogqrQeDpIJdeIvGwLIdGB6fOwwnGa44x_cRhhweoQ/exec', {
+                method: 'POST',
+                body: new URLSearchParams(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result === 'success') {
+                    showMessage('درخواست شما با موفقیت ثبت شد.', 'success');
+                    showNewRequestLink();
+                } else {
+                    showMessage('خطا در ثبت درخواست. لطفاً دوباره تلاش کنید.', 'error');
+                }
+            })
+            .catch(error => {
+                showMessage('خطای شبکه: لطفاً اتصال خود را بررسی کنید.', 'error');
+            })
+            .finally(() => {
+                spinnerContainer.style.display = 'none';
+                form.classList.remove('form-disabled');
+            });
+        });
+
+
+        // اعتبارسنجی شماره تلفن
+        if (!validatePhoneNumber()) {
+            return;
+        }
+
+        // بررسی اعتبار فیلدها
+        if (!name || !phone || !serviceType || !serviceOption) {
+            errorMessage.style.display = 'block';
+            return;
+        }
+
+        // غیرفعال کردن دکمه ارسال
+        submitButton.disabled = true;
+
+        // نمایش اسپینر و پیام در حال ارسال
+        spinner.style.display = 'block';
+        errorMessage.style.display = 'none';
+
+        // شبیه‌سازی ارسال فرم (با تاخیر 2 ثانیه)
+        setTimeout(() => {
+            spinner.style.display = 'none';
+            successMessage.style.display = 'block'; // نمایش پیام موفقیت و لینک
+        }, 2000);
+    }
+
+    // تابع نمایش دکمه ارسال و پاک کردن لینک
+    function showSubmitButton() {
+        const submitButton = document.getElementById('submit-button');
+        const successMessage = document.getElementById('success-message');
+
+        // فعال کردن دکمه ارسال
+        submitButton.disabled = false;
+
+        // پنهان کردن پیام موفقیت و لینک
+        successMessage.style.display = 'none';
+
+        // بازنشانی فرم
+        resetForm();
+    }
+
+    // تابع بازنشانی فرم
+    function resetForm() {
+        document.getElementById('name').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById('service-type').value = '';
+        document.getElementById('service-option').innerHTML = '<option value="">-- لطفاً یک گزینه انتخاب کنید --</option>';
+        document.getElementById('description').value = '';
+        document.getElementById('phone-error').style.display = 'none';
+    }
+
+
+</script>
+
+
+</body>
+</html>
