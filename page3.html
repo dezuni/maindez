@@ -123,7 +123,7 @@
                 resultDiv.innerHTML = "";
 
                 if (data.length === 0) {
-                    resultDiv.innerHTML = "<p>هیچ دفتری یافت نشد.</p>";
+                    resultDiv.innerHTML = <p style="color: red;">این دفتر پیدا نشد.</p>;
                 } else {
                     data.forEach(office => {
                         const latitude = office.latitude;
