@@ -132,11 +132,14 @@
 
                         resultDiv.innerHTML += 
                             `<div>
-                                <h3>${office.officeName}</h3>
-                                <p>ساختمان: ${office.building}</p>
-                                <p>طبقه: ${office.floor}</p>
-                                <p>موقعیت: <a href="${mapUrl}" target="_blank">مشاهده در نقشه</a></p>
-                            </div><hr>`;
+    <h3>${office.officeName}</h3>
+    <p>
+        <strong>ساختمان:</strong> ${office.building}, 
+        <strong>طبقه:</strong> ${office.floor}, اتاق: ${office.roomNumber}, 
+        <strong>موقعیت:</strong> <a href="${mapUrl}" target="_blank">مشاهده در نقشه</a>
+    </p>
+</div>
+<hr>`;
                     });
                 }
             } catch (error) {
