@@ -58,6 +58,7 @@ function resetAllServices() {
     document.getElementById('articleResults').style.display = 'none';
     document.getElementById('officeName').value = '';
     document.getElementById('officeSearchResult').innerHTML = '';
+    resetForm(); // request form
     
     // Add reset for other services here if needed
     // For example:
