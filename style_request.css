@@ -1,0 +1,91 @@
+.service-item[data-category="welfare"] .formcontainer {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: right;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: right;
+            min-height: 100vh;
+            flex-direction: column; /* برای نمایش محتوا به صورت عمودی */
+        }
+
+       
+
+     .service-item[data-category="welfare"] .formcontainer {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+    .service-item[data-category="welfare"] .formcontainer   h2 {
+            text-align: center;
+            color: #333;
+        }
+
+     .service-item[data-category="welfare"] .formcontainer   label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+   .service-item[data-category="welfare"] .formcontainer  input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+ .service-item[data-category="welfare"] .formcontainer button {
+    display: inline-block;
+    border: none;
+    background: var(--primary-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    font-size: 0.9rem;
+    margin-top: 10px
+  } 
+
+ .service-item[data-category="welfare"] .formcontainer button:hover {
+    background: var(--secondary-color);
+} 
+
+
+     .service-item[data-category="welfare"] .formcontainer #spinner {
+            display: none;
+            text-align: right;
+            color: blue;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+   .service-item[data-category="welfare"] .formcontainer  #successMessage {
+            display: none;
+            text-align: right;
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+  .service-item[data-category="welfare"] .formcontainer      a {
+            display: block;
+            text-align: right;
+            color: #007bff;
+            margin-top: 10px;
+            text-decoration: none;
+        }
+
+    .service-item[data-category="welfare"] .formcontainer    a:hover {
+            text-decoration: underline;
+        }
+
