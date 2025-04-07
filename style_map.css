@@ -1,5 +1,4 @@
-       /* .service-item[data-category="map"] h1 {
-            text-align: center; }  متن را وسط‌چین می‌کند */
+
 
    .service-item[data-category="map"]  {
             font-family: Arial, sans-serif;
@@ -7,12 +6,12 @@
             text-align: right;
         }
         .service-item[data-category="map"] input {
-           padding: 8px 16px;
+           padding: 10px;
            border-radius: 5px;
            transition: background 0.3s ease;
            font-size: 0.9rem;
            border: 1px solid #ccc;
-           margin-top: 10px
+           margin-top: 5px
         }
 
  .service-item[data-category="map"] button {
@@ -20,12 +19,12 @@
     border: none;
     background: var(--primary-color);
     color: white;
-    padding: 8px 16px;
+    padding: 10px;
     border-radius: 5px;
     text-decoration: none;
     transition: background 0.3s ease;
     font-size: 0.9rem;
-    margin-top: 10px
+    margin-top: 5px
   } 
 
 .service-item[data-category="map"] button:hover {
