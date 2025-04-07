@@ -43,8 +43,8 @@
         }
 
       .service-item[data-category="map"] #map {
-            width: 80%;
-            height: 80%;
+            /*width: 80%;
+            height: 80%;*/
             border: 2px solid #ccc;
             border-radius: 8px;
         }
