@@ -29,7 +29,7 @@ body {
 .container {
     width: 95%;
     max-width: 1200px;
-    margin: 20px auto 0; /* Top: 20px | Left/Right: auto | Bottom: 0 */
+    margin: 60px auto 0; /* Top: 20px | Left/Right: auto | Bottom: 0 */
     padding: 0;
 }
 
