@@ -1,12 +1,12 @@
 /* style_jozvehyab.css - Only affects the جزوه یاب (jozveh) service */
 
 .service-item[data-category="jozveh"] input {    
-    padding: 8px 16px;
+    padding: 10px;
     border-radius: 5px;
     transition: background 0.3s ease;
     font-size: 0.9rem;
     border: 1px solid #ccc;
-    margin-top: 10px
+    margin-top: 5px
     } 
   
 .service-item[data-category="jozveh"] button {
@@ -14,12 +14,12 @@
     border: none;
     background: var(--primary-color);
     color: white;
-    padding: 8px 16px;
+    padding: 10px;
     border-radius: 5px;
     text-decoration: none;
     transition: background 0.3s ease;
     font-size: 0.9rem;
-    margin-top: 10px
+    margin-top: 5px
   } 
 
 .service-item[data-category="jozveh"] button:hover {
