@@ -20,16 +20,16 @@ body {
     padding: 0;
 }
 
-.container { margin-top: 20px; }
-@media (min-width: 768px) {
-    .container { margin-top: 20px; }
-}
-
 .container {
     width: 95%;
     max-width: 1200px;
-    margin: 20px auto 0;  Top: 20px | Left/Right: auto | Bottom: 0 */
+    margin: 40px auto 0;  Top: 20px | Left/Right: auto | Bottom: 0 */
     padding: 0;
+}
+
+.container { margin-top: 40px; }
+@media (min-width: 768px) {
+    .container { margin-top: 20px; }
 }
 
 header {
