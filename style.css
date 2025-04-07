@@ -20,12 +20,11 @@ body {
     padding: 0;
 }
 
-/*.container {
-    width: 95%;
-    max-width: 1200px;
-    margin: 0 auto; 
-    padding: 0 ;
-}*/
+.container { margin-top: 30px; }
+@media (min-width: 768px) {
+    .container { margin-top: 60px; }
+}
+
 .container {
     width: 95%;
     max-width: 1200px;
