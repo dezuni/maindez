@@ -1,18 +1,13 @@
 .service-item[data-category="welfare"] .formcontainer {
-    /* Keep all your existing styles */
-    direction: rtl;
-    text-align: right;
+    font-family: Arial, sans-serif;
+    direction: rtl; /* RTL base direction */
+    text-align: right; /* Text alignment */
+    background: white;
+    margin-left: auto; /* Pushes container to right */
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Align children to right */
-    
-    /* Change these margin properties */
-    margin: 0 0 0 auto; /* Pushes container to right */
-    /* margin-left: auto works too */
-    
-    /* Other existing properties */
-    background: white;
-    padding: 20px;
+    align-items: flex-start; /* Important: use flex-start for RTL */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     max-width: 400px;
