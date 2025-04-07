@@ -20,11 +20,17 @@ body {
     padding: 0;
 }
 
-.container {
+/*.container {
     width: 95%;
     max-width: 1200px;
     margin: 0 auto; 
     padding: 0 ;
+}*/
+.container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 20px auto 0; /* Top: 20px | Left/Right: auto | Bottom: 0 */
+    padding: 0;
 }
 
 header {
