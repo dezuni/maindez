@@ -1,19 +1,18 @@
 .service-item[data-category="welfare"] .formcontainer {
     font-family: Arial, sans-serif;
-    direction: rtl; /* RTL for Persian/Arabic */
-    text-align: right; /* Right-align text */
+    direction: rtl;
+    text-align: right;
     background: white;
-    margin: 0 0 0 auto; /* Top, Right, Bottom, Left - pushes container to right */
-    padding: 0; /*20px;*/
+    margin: 0 auto; /* Center container horizontally */
+    padding: 20px; /* Restore padding for internal spacing */
     display: flex;
-    justify-content: flex-end; /* Align children to right (flex-end) */
-    align-items: flex-end; /* Align items to bottom right */
-    flex-direction: column; /* Stack children vertically */
+    justify-content: flex-start; /* Align children to top */
+    align-items: flex-start; /* Align items to right (in RTL) */
+    flex-direction: column;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 400px;
     width: 90%;
-    /* Removed min-height: 100vh to fit content naturally */
 }
 
     .service-item[data-category="welfare"] .formcontainer   h2 {
