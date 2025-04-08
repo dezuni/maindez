@@ -32,7 +32,7 @@
                 }
             } catch (error) {
                 console.error("خطا در دریافت اطلاعات:", error);
-                document.getElementById("officeSearchResult").innerHTML = "<p>خطایی رخ داده است.</p>";
+                document.getElementById("officeSearchResult").innerHTML = "<p>گشتم نبود! </p>";
             } finally {
                 // Hide spinner
                 spinnerContainer.style.display = "none";
