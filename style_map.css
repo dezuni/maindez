@@ -14,7 +14,7 @@
            margin-top: 5px
         }
 
-/* .service-item[data-category="map"] button {
+ .service-item[data-category="map"] button {
     display: inline-block;
     border: none;
     background: var(--primary-color);
@@ -29,7 +29,7 @@
 
 .service-item[data-category="map"] button:hover {
     background: var(--secondary-color);
-}    */
+}    
 
 
         /* Map container styles */
