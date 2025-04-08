@@ -26,13 +26,14 @@
                                 <h3>${office.officeName}</h3>
                                 <p>ساختمان: ${office.building}</p>
                                 <p>طبقه: ${office.floor}</p>
+                                <p>شماره اتاق: ${office.roomNumber}</p>
                                 <p>موقعیت: <a href="${mapUrl}" target="_blank">مشاهده در نقشه</a></p>
                             </div><hr>`;
                     });
                 }
             } catch (error) {
                 console.error("خطا در دریافت اطلاعات:", error);
-                document.getElementById("officeSearchResult").innerHTML = "<p>خطایی رخ داده است.</p>";
+                document.getElementById("officeSearchResult").innerHTML = "<p>یافت نشد </p>";
             } finally {
                 // Hide spinner
                 spinnerContainer.style.display = "none";
