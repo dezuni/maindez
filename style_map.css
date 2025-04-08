@@ -25,11 +25,11 @@
     transition: background 0.3s ease;
     font-size: 0.9rem;
     margin-top: 5px
-  } */
+  } 
 
 .service-item[data-category="map"] button:hover {
     background: var(--secondary-color);
-} 
+}    */
 
 
         /* Map container styles */
