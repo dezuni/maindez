@@ -1,6 +1,6 @@
  async function searchOffice() {
             const name = document.getElementById("officeName").value;
-            const apiUrl = "https://script.google.com/macros/s/AKfycbwjZ6Sr8JwSa_undmuslgOukEVss589X4BVA_KP8e6rxLIfObBYTcwH4RBBlTtpzHhylA/exec?name=" + encodeURIComponent(name);
+            const apiUrl = "https://script.google.com/macros/s/AKfycbziT4ZmtjMwZovAKkkfCQuiG2sUmkOcNssi1P2CitM-r0L6GkVR4UmtLbIYYkQhOD8YUA/exec?name=" + encodeURIComponent(name);
 
             // Show spinner
             const spinnerContainer = document.getElementById("spinnerContainer");
