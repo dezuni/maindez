@@ -20,9 +20,6 @@ body {
     padding: 0;
 }
 
-  #articleListِDisclaimer p {
-    color: var(--articleMessage-color);
-  }
 
 .container { margin-top: 40px; }
 @media (min-width: 768px) {
