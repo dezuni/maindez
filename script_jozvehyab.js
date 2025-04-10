@@ -22,10 +22,8 @@
               responseDiv.appendChild(spinner);
               authorButtonsDiv.innerHTML='';
               document.getElementById('articleList').innerHTML='';     
-              const articlesContainer = document.getElementById('articleListِDisclaimer');
-              articlesContainer.querySelector('#articleListMessage').textContent = '';
-             // Ensure red color (can also change color if needed)
-              articlesContainer.style.setProperty('--articleMessage-color', 'red'); 
+              articleListِDisclaimerDiv.textContent='';
+              //articleListِDisclaimerDiv.style.color = 'red'; 
         
               // Send a POST request to the backend for AUTHORSEARCH
               const requestBody = `action:AUTHORSEARCH|message:${authorName}`;
