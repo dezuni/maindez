@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // First check for version updates (this will reload if needed)
+    checkVersion();
+    
     // Set current year in footer
     setCurrentYear();
     
@@ -8,6 +11,36 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize mobile menu toggle
     initMobileMenu();
 });
+
+// Current app version - update with each deployment
+const APP_VERSION = '25.04.10';
+
+// Check for version update
+function checkVersion() {
+  const storedVersion = localStorage.getItem('app_version');
+  
+  if (storedVersion !== APP_VERSION) {
+    console.log(`Updating from ${storedVersion} to ${APP_VERSION}`);
+    
+    // Clear all caches
+    if ('caches' in window) {
+      caches.keys().then(cacheNames => {
+        cacheNames.forEach(cacheName => caches.delete(cacheName));
+      });
+    }
+    
+    // Clear service workers
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(registrations => {
+        registrations.forEach(registration => registration.unregister());
+      });
+    }
+    
+    // Update stored version and reload
+    localStorage.setItem('app_version', APP_VERSION);
+    window.location.reload(true);
+  }
+}
 
 function setCurrentYear() {
     document.getElementById('current-year').textContent = new Date().getFullYear();
