@@ -98,7 +98,7 @@
                           </li>
                         `).join('');
 
-                        articleListِDisclaimerDiv.textContent="توجه: جزوات در تاریخهای درج شده در لیست فوق برای دزیونی ارسال شده اند. همچنین دزیونی نمی تواند کامل یا بروز بودن جزوات را تضمین کند.";
+                        articleListِDisclaimerDiv.textContent="توجه: جزوات در تاریخهای درج شده در لیست فوق برای دزیونی ارسال شده اند. همچنین دزیونی نمی تواند کامل یا بروز بودن جزوات را تایید کند.";
                         articleListِDisclaimerDiv.style.color = 'red';          
                       } else {
                         // No valid articles found
