@@ -9,6 +9,7 @@
               const authorName = document.getElementById('authorInput').value.trim();
               const responseDiv = document.getElementById('response');
               const authorButtonsDiv = document.getElementById('authorButtons');
+               const articleListِDisclaimerDiv = document.getElementById('articleListِDisclaimer');
                if (!authorName) {
                 responseDiv.textContent = 'لطفا نام استاد را وارد کنید!';
                 responseDiv.style.color='red';    
@@ -60,7 +61,8 @@
             function selectAuthor(selectedAuthor) {
               
               const responseDiv = document.getElementById('response');
-              const articleListDiv = document.getElementById('articleList');      
+              const articleListDiv = document.getElementById('articleList');  
+              const articleListِDisclaimerDiv = document.getElementById('articleListِDisclaimer');
               responseDiv.textContent = 'در حال جستجوی جزوات ...';
               responseDiv.style.color='blue';
               responseDiv.appendChild(spinner);
