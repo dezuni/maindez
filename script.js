@@ -93,8 +93,8 @@ function resetAllServices() {
     document.getElementById('officeSearchResult').innerHTML = '';
     resetForm(); // request form
 
-    articleListِDisclaimerDiv.textContent='';
-    //articleListِDisclaimerDiv.style.color = 'red'; 
+    document.getElementById('articleListِDisclaimer').textContent='';
+    //document.getElementById('articleListِDisclaimer').style.color = 'red'; 
     
     // Add reset for other services here if needed
     // For example:
