@@ -96,7 +96,7 @@ function resetAllServices() {
     const container = document.getElementById('articleListِDisclaimer');
     container.querySelector('#articleListMessage').textContent = '';
     // Ensure red color (can also change color if needed)
-    container.style.setProperty('--text-color', 'red'); 
+    container.style.setProperty('--articleMessage-color', 'red'); 
     
     // Add reset for other services here if needed
     // For example:
