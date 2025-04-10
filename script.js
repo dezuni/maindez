@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Current app version - update with each deployment
-const APP_VERSION = '25.04.10';
+const APP_VERSION = '25.04.101';
 
 // Check for version update
 function checkVersion() {
