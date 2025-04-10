@@ -96,6 +96,9 @@
                             <a href="${article.link}" target="_blank"><strong>دانلود</strong></a>
                           </li>
                         `).join('');
+
+                        articleListِDisclaimerDiv.textContent="توجه: جزوات در تاریخهای درج شده در لیست فوق برای دزیونی ارسال شده اند. همچنین دزیونی نمی تواند کامل یا بروز بودن جزوات را تضمین کند.";
+                        articleListِDisclaimerDiv.style.color = 'red';          
                       } else {
                         // No valid articles found
                         responseDiv.textContent='متاسفانه برای استاد '+ selectedAuthor + 'جزوه ای یافت نشد!'; 
