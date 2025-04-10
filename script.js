@@ -92,6 +92,11 @@ function resetAllServices() {
     document.getElementById('officeName').value = '';
     document.getElementById('officeSearchResult').innerHTML = '';
     resetForm(); // request form
+
+    const container = document.getElementById('articleListِDisclaimer');
+    container.querySelector('#articleListMessage').textContent = '';
+    // Ensure red color (can also change color if needed)
+    container.style.setProperty('--text-color', 'red'); 
     
     // Add reset for other services here if needed
     // For example:
