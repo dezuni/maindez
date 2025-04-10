@@ -15,6 +15,7 @@
                 responseDiv.style.color='red';    
                  authorButtonsDiv.innerHTML='';
                  document.getElementById('articleList').innerHTML='';
+                 articleListِDisclaimerDiv.textContent='';
                 return;
               }
         
