@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Current app version - update with each deployment
-const APP_VERSION = '25.04.11.0';
+const APP_VERSION = '25.04.11.1';
 
 // Check for version update
 function checkVersion() {
@@ -93,10 +93,10 @@ function resetAllServices() {
     document.getElementById('officeSearchResult').innerHTML = '';
     resetForm(); // request form
 
-    const container = document.getElementById('articleListِDisclaimer');
-    container.querySelector('#articleListMessage').textContent = '';
+    const articlesContainer = document.getElementById('articleListِDisclaimer');
+    articlesContainer.querySelector('#articleListMessage').textContent = '';
     // Ensure red color (can also change color if needed)
-    container.style.setProperty('--articleMessage-color', 'red'); 
+    articlesContainer.style.setProperty('--articleMessage-color', 'red'); 
     
     // Add reset for other services here if needed
     // For example:
