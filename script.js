@@ -13,21 +13,35 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Current app version - update with each deployment
-const APP_VERSION = '25.04.11.3';
+const APP_VERSION = '25.04.11.4';
 
 // Check for version update
-function checkVersion() {
+async function checkVersion() {
   const storedVersion = localStorage.getItem('app_version');
   
   if (storedVersion !== APP_VERSION) {
     console.log(`Updating from ${storedVersion} to ${APP_VERSION}`);
     
-    // Clear all caches
+    // 1. Clear all caches
     if ('caches' in window) {
-      caches.keys().then(cacheNames => {
-        cacheNames.forEach(cacheName => caches.delete(cacheName));
+      await caches.keys().then(cacheNames => {
+        return Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
       });
     }
+    
+    // 2. Unregister all service workers
+    if ('serviceWorker' in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(registrations.map(reg => reg.unregister()));
+    }
+    
+    // 3. Update version in storage
+    localStorage.setItem('app_version', APP_VERSION);
+    
+    // 4. Force reload (with cache bypass)
+    window.location.href = window.location.href + '?forceReload=' + Date.now();
+  }
+}
     
     // Clear service workers
     if ('serviceWorker' in navigator) {
