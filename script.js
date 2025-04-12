@@ -43,18 +43,6 @@ async function checkVersion() {
   }
 }
     
-    // Clear service workers
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(registrations => {
-        registrations.forEach(registration => registration.unregister());
-      });
-    }
-    
-    // Update stored version and reload
-    localStorage.setItem('app_version', APP_VERSION);
-    window.location.reload(true);
-  }
-}
 
 function setCurrentYear() {
     document.getElementById('current-year').textContent = new Date().getFullYear();
