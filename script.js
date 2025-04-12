@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // First check for version updates (this will reload if needed)
-    checkVersion();
+   // checkVersion();
     
     // Set current year in footer
     setCurrentYear();
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 const APP_VERSION = '25.04.13.0';
 
 // Check for version update
-async function checkVersion() {
+/*async function checkVersion() {
   const storedVersion = localStorage.getItem('app_version');
   
   if (storedVersion !== APP_VERSION) {
@@ -41,7 +41,7 @@ async function checkVersion() {
     // 4. Force reload (with cache bypass)
     window.location.href = window.location.href + '?forceReload=' + Date.now();
   }
-}
+} */
     
 
 function setCurrentYear() {
