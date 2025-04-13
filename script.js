@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Current app version - update with each deployment
-const APP_VERSION = '25.04.13.1';
+const APP_VERSION = '25.04.13.2';
 async function checkVersion() {
   // Skip entirely if in private mode (where localStorage isn't persistent)
   if (isPrivateMode()) {
