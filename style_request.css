@@ -52,7 +52,7 @@
 } 
 
 
-     .service-item[data-category="welfare"] .formcontainer #spinner {
+     .service-item[data-category="welfare"] .formcontainer .spinner {
             display: none;
             text-align: right;
             color: blue;
