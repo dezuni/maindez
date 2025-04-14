@@ -3,16 +3,7 @@
             "پژوهشی": ["تهیه فرمهای پژوهشیار", "اخذ معرفی نامه کارورزی/کارآموزی", "پروپوزال ارشد/دکتری", "دفاعیه ارشد/دکتری"],
             "دانشجویی": ["امور فارغ التحصیلی", "امور خوابگاه"]
         };
-let correctAnswer = 0;
 
-function generateCaptcha() {
-    const num1 = Math.floor(Math.random() * 10) + 1;
-    const num2 = Math.floor(Math.random() * 10) + 1;
-    correctAnswer = num1 + num2;
-    document.getElementById("captchaQuestion").textContent = `حاصل جمع ${num1} + ${num2} چند می‌شود؟`;
-}
-
-generateCaptcha(); // اولین بار هنگام بارگذاری صفحه
        document.getElementById("serviceType").addEventListener("change", function() {
             let subService = document.getElementById("subService");
             subService.innerHTML = "<option value=''>انتخاب کنید</option>";
@@ -26,15 +17,24 @@ generateCaptcha(); // اولین بار هنگام بارگذاری صفحه
                 });
             }
         });
+let correctAnswer = 0;
 
+function generateCaptcha() {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    correctAnswer = num1 + num2;
+    document.getElementById("captchaQuestion").textContent = `حاصل جمع ${num1} + ${num2} چند می‌شود؟`;
+}
+
+generateCaptcha(); // اولین بار هنگام بارگذاری صفحه
         document.getElementById("serviceForm").addEventListener("submit", function(event) {
             event.preventDefault();
-const userCaptcha = parseInt(document.getElementById("captchaAnswer").value);
-if (userCaptcha !== correctAnswer) {
-    document.getElementById("captchaError").style.display = "block";
-    generateCaptcha(); // تولید سوال جدید
-    document.getElementById("captchaAnswer").value = ""; // پاک کردن پاسخ اشتباه
-    document.getElementById("spinner").style.display = "none";
+		const userCaptcha = parseInt(document.getElementById("captchaAnswer").value);
+		if (userCaptcha !== correctAnswer) {
+		 document.getElementById("captchaError").style.display = "block";
+  		 generateCaptcha(); // تولید سوال جدید
+    		document.getElementById("captchaAnswer").value = ""; // پاک کردن پاسخ اشتباه
+   		 document.getElementById("spinner").style.display = "none";
     return; // از ارسال فرم جلوگیری کن
 }
 document.getElementById("captchaError").style.display = "none"; // اگر پاسخ درست بود، پیام خطا رو مخفی کن
