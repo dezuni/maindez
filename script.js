@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Current app version - update with each deployment
-const APP_VERSION = '25.04.14.4';
+const APP_VERSION = '25.04.14.5';
 
 // check version updates
 async function checkVersion() {
