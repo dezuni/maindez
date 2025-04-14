@@ -47,7 +47,8 @@ document.getElementById("serviceForm").addEventListener("submit", function(event
     // Show spinner and hide messages
     document.getElementById("successMessage").style.display = "none";
     document.getElementById("spinner").style.display = "block";
-    document.getElementById("spinner").textContent = "🔄 در حال ارسال فرم...";
+    document.getElementById("spinner").textContent = " در حال ارسال فرم...";   
+     /*"🔄 در حال ارسال فرم...";*/
     
     // Validate captcha
     const userCaptcha = parseInt(document.getElementById("captchaAnswer").value);
