@@ -13,9 +13,7 @@ function generateCaptcha() {
 }
 
 generateCaptcha(); // اولین بار هنگام بارگذاری صفحه
-
-
-        document.getElementById("serviceType").addEventListener("change", function() {
+       document.getElementById("serviceType").addEventListener("change", function() {
             let subService = document.getElementById("subService");
             subService.innerHTML = "<option value=''>انتخاب کنید</option>";
             let selectedService = this.value;
