@@ -51,27 +51,28 @@
     background: var(--secondary-color);
 } 
 
+.service-item[data-category="welfare"] .formcontainer #spinner {
+    display: none;
+    text-align: right;
+    color: blue;
+    font-weight: bold;
+    margin-top: 10px;
+}
 
-     .service-item[data-category="welfare"] .formcontainer #spinner {
-            display: none;
-            text-align: right;
-            color: blue;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-/* Add these new rules for the spinning animation */
 .service-item[data-category="welfare"] .formcontainer #spinner::before {
     content: "🔄";
     display: inline-block;
     animation: spin 1s linear infinite;
     margin-left: 5px;
+    /* Critical fixes below */
+    transform-origin: center;
+    line-height: 1;
+    vertical-align: middle;
+    width: 1em;
+    text-align: center;
 }
-/*@keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}*/
 
-  @keyframes spin {
+@keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
