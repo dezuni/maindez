@@ -59,6 +59,10 @@
             font-weight: bold;
             margin-top: 10px;
         }
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
 
    .service-item[data-category="welfare"] .formcontainer  #successMessage {
             display: none;
