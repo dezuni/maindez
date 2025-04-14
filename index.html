@@ -100,6 +100,11 @@
                                 </select>
                             </label>
                             <label>توضیحات: <textarea id="description"></textarea></label>
+                            <div id="captchaContainer">
+                            <label for="captchaAnswer" id="captchaQuestion">چند می‌شود؟</label>
+                            <input type="number" id="captchaAnswer" placeholder="پاسخ را وارد کنید" required>
+                            </div>
+                            <div id="captchaError" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
                             <button type="submit">ارسال درخواست</button>
                         </form>
                         <div id="spinner">🔄 در حال ارسال فرم...</div>
