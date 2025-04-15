@@ -45,6 +45,7 @@ body {
 /* Header-specific adjustments */
 .container-header {
     margin-top: 40px;  /* Only affects header */
+    margin-bottom: 20px;  /* Only affects header */
     padding: 0 15px;   /* Example: Add horizontal padding */
 }
 
