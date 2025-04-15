@@ -45,7 +45,6 @@ body {
 /* Header-specific adjustments */
 .container-header {
     margin-top: 40px;  /* Only affects header */
-    margin-bottom: 20px;  /* Only affects header */
     padding: 0 15px;   /* Example: Add horizontal padding */
 }
 
@@ -57,7 +56,7 @@ body {
 
 @media (min-width: 768px) {
     .container-header { margin-top: 20px; }
-    .container-main { margin-top: 10px; }  /* Adjust independently */
+    .container-main { margin-top: 20px; }  /* Adjust independently */
 }
 
 
