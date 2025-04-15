@@ -36,6 +36,7 @@ document.getElementById("serviceForm").addEventListener("submit", function(event
 const userCaptcha = parseInt(document.getElementById("captchaAnswer").value);
     const requeststatusDiv = document.getElementById('requeststatus');
 if (userCaptcha !== correctAnswer) {
+             requeststatusDiv.textContent = "";
  document.getElementById("captchaError").style.display = "block";
    generateCaptcha(); // تولید سوال جدید
     document.getElementById("captchaAnswer").value = ""; // پاک کردن پاسخ اشتباه
