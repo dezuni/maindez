@@ -20,29 +20,31 @@ body {
     padding: 0;
 }
 
+
+.container { margin-top: 40px; }
+@media (min-width: 768px) {
+    .container { margin-top: 20px; }
+}
+
 .container {
     width: 95%;
     max-width: 1200px;
-    margin: 40px auto 0;
+    margin: 40px auto 0;  /*Top: 20px | Left/Right: auto | Bottom: 0 */
     padding: 0;
 }
 
-@media (min-width: 768px) {
-    .container {
-        margin-top: 20px;
-    }
-}
 
 header {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    padding: 60px 0 20px;
+    padding: 40px 0;
     text-align: center;
     position: relative;
 }
 
 .header-content {
     position: relative;
+    padding-top: 20px;
 }
 
 /* Mobile Menu Toggle */
@@ -53,7 +55,7 @@ header {
     color: white;
     font-size: 1.5rem;
     position: absolute;
-    right: 20px;
+    left: 20px;
     top: 20px;
     cursor: pointer;
     z-index: 101;
@@ -193,23 +195,20 @@ footer {
     margin-left: 5px;
 }
 
-/* Prevent scrolling when menu is open */
+/* Add this to prevent scrolling when menu is open */
 .no-scroll {
     overflow: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
 }
 
-/* Mobile Styles */
 @media (max-width: 768px) {
     header {
-        padding: 60px 0 20px;
+        padding: 20px 0;
+        position: relative;
     }
     
     .mobile-menu-toggle {
-        display: flex;
-        position: absolute;
+        display: block;
+        position: fixed;
         right: 20px;
         top: 20px;
         background: var(--primary-color);
@@ -217,6 +216,7 @@ footer {
         width: 40px;
         height: 40px;
         border-radius: 50%;
+        display: flex;
         align-items: center;
         justify-content: center;
         z-index: 102;
@@ -241,6 +241,17 @@ footer {
         right: 0;
     }
     
+    .mobile-menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 100;
+        display: none;
+    }
+    
     .mobile-menu-overlay.active {
         display: block;
     }
@@ -255,8 +266,5 @@ footer {
         margin: 5px 0;
         padding: 12px 15px;
     }
-    
-    .header-content {
-        padding-top: 0;
-    }
 }
+
