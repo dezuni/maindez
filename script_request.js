@@ -55,6 +55,7 @@ document.getElementById("serviceForm").addEventListener("submit", function(event
     if (userCaptcha !== correctAnswer) {
         document.getElementById("captchaError").style.display = "block";
         generateCaptcha();
+        document.getElementById("captchaAnswer").value = ""; // پاک کردن پاسخ اشتباه
         document.getElementById("spinner").style.display = "none";
         submitButton.disabled = false;
         return false;
