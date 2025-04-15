@@ -51,31 +51,42 @@
     background: var(--secondary-color);
 } 
 
-.service-item[data-category="welfare"] .formcontainer #spinner {
+/*.service-item[data-category="welfare"] .formcontainer #spinner {
     display: none;
     text-align: right;
     color: blue;
     font-weight: bold;
     margin-top: 10px;
-}
+}*/
 
-.service-item[data-category="welfare"] .formcontainer #spinner::before {
+/*.service-item[data-category="welfare"] .formcontainer #spinner::before {
     content: "🔄";
     display: inline-block;
     animation: spin 1s linear infinite;
     margin-left: 5px;
     /* Critical fixes below */
-    transform-origin: center;
+    /*transform-origin: center;
     line-height: 1;
     vertical-align: middle;
     width: 1em;
     text-align: center;
-}
+}*/
+ .service-item[data-category="welfare"] .formcontainer .spinner {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    margin-left: 10px;
+  }
 
-@keyframes spin {
+  @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
 
    .service-item[data-category="welfare"] .formcontainer  #successMessage {
             display: none;
