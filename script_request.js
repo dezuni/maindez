@@ -53,7 +53,7 @@ document.getElementById("captchaError").style.display = "none"; // اگر پاس
     //document.getElementById("spinner").style.display = "block";
     document.getElementById("successMessage").style.display = "none";
    // document.getElementById('newRequest')='';
-   document.getElementById("newRequest").style.display = "none";
+   //document.getElementById("newRequest").style.display = "none";
 
     let formData = new FormData();
     formData.append("نام و نام خانوادگی", document.getElementById("fullName").value);
@@ -74,7 +74,7 @@ generateCaptcha(); // تولید کپچای جدید بعد از ارسال مو
        //document.getElementById("spinner").style.display = "none";
         requeststatusDiv.removeChild(spinnerform);
         document.getElementById("successMessage").style.display = "block";
-        document.getElementById("newRequest").style.display = "block";
+        //document.getElementById("newRequest").style.display = "block";
         document.getElementById("serviceForm").reset();
     })
     .catch(error => {
@@ -88,6 +88,6 @@ generateCaptcha(); // تولید کپچای جدید بعد از ارسال مو
 
 function resetForm() {
     document.getElementById("successMessage").style.display = "none";
-   document.getElementById("newRequest").style.display = "none";
+  // document.getElementById("newRequest").style.display = "none";
     document.getElementById("serviceForm").reset();
 }
