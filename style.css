@@ -56,7 +56,7 @@ body {
 
 @media (min-width: 768px) {
     .container-header { margin-top: 20px; }
-    .container-main { margin-top: 30px; }  /* Adjust independently */
+    .container-main { margin-top: 40px; }  /* Adjust independently */
 }
 
 
