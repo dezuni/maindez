@@ -1,3 +1,7 @@
+            // Add a spinner for visual feedback
+ const spinnerform = document.createElement('div');
+    spinnerform.className = 'spinner';
+
 const serviceOptions = {
     "آموزشی": ["اخذ امضاهای پایان نامه", "فرم معادلسازی دروس", "امور انتخاب واحد"],
     "پژوهشی": ["تهیه فرمهای پژوهشیار", "اخذ معرفی نامه کارورزی/کارآموزی", "پروپوزال ارشد/دکتری", "دفاعیه ارشد/دکتری"],
@@ -30,16 +34,19 @@ generateCaptcha(); // اولین بار هنگام بارگذاری صفحه
 document.getElementById("serviceForm").addEventListener("submit", function(event) {
     event.preventDefault();
 const userCaptcha = parseInt(document.getElementById("captchaAnswer").value);
+    const requeststatusDiv = document.getElementById('response');
 if (userCaptcha !== correctAnswer) {
  document.getElementById("captchaError").style.display = "block";
    generateCaptcha(); // تولید سوال جدید
     document.getElementById("captchaAnswer").value = ""; // پاک کردن پاسخ اشتباه
-    document.getElementById("spinner").style.display = "none";
+    //document.getElementById("spinner").style.display = "none";
 return; // از ارسال فرم جلوگیری کن
 }
+requeststatusDiv.appendChild(spinnerform);
+    
 document.getElementById("captchaError").style.display = "none"; // اگر پاسخ درست بود، پیام خطا رو مخفی کن
 
-    document.getElementById("spinner").style.display = "block";
+    //document.getElementById("spinner").style.display = "block";
     document.getElementById("successMessage").style.display = "none";
 
     let formData = new FormData();
@@ -58,7 +65,8 @@ document.getElementById("captchaError").style.display = "none"; // اگر پاس
     .then(data => {
 generateCaptcha(); // تولید کپچای جدید بعد از ارسال موفق
 
-        document.getElementById("spinner").style.display = "none";
+       //document.getElementById("spinner").style.display = "none";
+        requeststatusDiv.removeChild(spinner);
         document.getElementById("successMessage").style.display = "block";
         document.getElementById("serviceForm").reset();
     })
