@@ -68,12 +68,15 @@ document.getElementById("captchaError").style.display = "none"; // اگر پاس
 generateCaptcha(); // تولید کپچای جدید بعد از ارسال موفق
 
        //document.getElementById("spinner").style.display = "none";
-        requeststatusDiv.removeChild(spinner);
+        requeststatusDiv.removeChild(spinnerform);
         document.getElementById("successMessage").style.display = "block";
         document.getElementById("serviceForm").reset();
     })
     .catch(error => {
-        document.getElementById("spinner").textContent = "❌ خطا در ارسال فرم";
+        
+        requeststatusDiv.textContent = "❌ خطا در ارسال فرم";
+        requeststatusDiv.style.color='red';
+       requeststatusDiv.removeChild(spinnerform);
         console.error("Error:", error);
     });
 });
