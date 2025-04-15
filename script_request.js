@@ -34,7 +34,7 @@ generateCaptcha(); // اولین بار هنگام بارگذاری صفحه
 document.getElementById("serviceForm").addEventListener("submit", function(event) {
     event.preventDefault();
 const userCaptcha = parseInt(document.getElementById("captchaAnswer").value);
-    const requeststatusDiv = document.getElementById('response');
+    const requeststatusDiv = document.getElementById('requeststatus');
 if (userCaptcha !== correctAnswer) {
  document.getElementById("captchaError").style.display = "block";
    generateCaptcha(); // تولید سوال جدید
@@ -42,6 +42,8 @@ if (userCaptcha !== correctAnswer) {
     //document.getElementById("spinner").style.display = "none";
 return; // از ارسال فرم جلوگیری کن
 }
+requeststatusDiv.textContent = 'در حال ارسال درخواست ...';
+requeststatusDiv.style.color='blue';
 requeststatusDiv.appendChild(spinnerform);
     
 document.getElementById("captchaError").style.display = "none"; // اگر پاسخ درست بود، پیام خطا رو مخفی کن
