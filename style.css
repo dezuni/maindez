@@ -24,13 +24,39 @@ body {
 .container { margin-top: 40px; }
 @media (min-width: 768px) {
     .container { margin-top: 20px; }
-} */
+}
 
 .container {
     width: 95%;
     max-width: 1200px;
     margin: 20px auto 0;  /*Top: 40px | Left/Right: auto | Bottom: 0 */
     padding: 0;
+}  */
+
+/* Shared container properties (if needed) */
+.container-header, 
+.container-main {
+    width: 95%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Header-specific adjustments */
+.container-header {
+    margin-top: 40px;  /* Only affects header */
+    padding: 0 15px;   /* Example: Add horizontal padding */
+}
+
+/* Main content-specific adjustments */
+.container-main {
+    margin-top: 20px;  /* Only affects main */
+    margin-bottom: 30px;
+}
+
+@media (min-width: 768px) {
+    .container-header { margin-top: 20px; }
+    .container-main { margin-top: 10px; }  /* Adjust independently */
 }
 
 
