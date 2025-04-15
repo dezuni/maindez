@@ -1,6 +1,6 @@
-            // Add a spinner for visual feedback
- const spinnerform = document.createElement('div');
-    spinnerform.className = 'spinner';
+// Add a spinner for visual feedback
+const spinnerform = document.createElement('div');
+spinnerform.className = 'spinner';
 
 const serviceOptions = {
     "آموزشی": ["اخذ امضاهای پایان نامه", "فرم معادلسازی دروس", "امور انتخاب واحد"],
@@ -21,39 +21,38 @@ document.getElementById("serviceType").addEventListener("change", function() {
         });
     }
 });
+
 let correctAnswer = 0;
 
 function generateCaptcha() {
-const num1 = Math.floor(Math.random() * 10) + 1;
-const num2 = Math.floor(Math.random() * 10) + 1;
-correctAnswer = num1 + num2;
-document.getElementById("captchaQuestion").textContent = `حاصل جمع ${num1} + ${num2} چند می‌شود؟`;
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    correctAnswer = num1 + num2;
+    document.getElementById("captchaQuestion").textContent = `حاصل جمع ${num1} + ${num2} چند می‌شود؟`;
 }
 
-generateCaptcha(); // اولین بار هنگام بارگذاری صفحه
+generateCaptcha(); // Generate first captcha on page load
+
 document.getElementById("serviceForm").addEventListener("submit", function(event) {
     event.preventDefault();
-const userCaptcha = parseInt(document.getElementById("captchaAnswer").value);
+    const userCaptcha = parseInt(document.getElementById("captchaAnswer").value);
     const requeststatusDiv = document.getElementById('requeststatus');
-if (userCaptcha !== correctAnswer) {
-             requeststatusDiv.textContent = "";
-            document.getElementById("successMessage").style.display = "none";
-             document.getElementById("captchaError").style.display = "block";
-               generateCaptcha(); // تولید سوال جدید
-                document.getElementById("captchaAnswer").value = ""; // پاک کردن پاسخ اشتباه
-                //document.getElementById("spinner").style.display = "none";
-            return; // از ارسال فرم جلوگیری کن
-}
-requeststatusDiv.textContent = 'در حال ارسال درخواست ...';
-requeststatusDiv.style.color='blue';
-requeststatusDiv.appendChild(spinnerform);
     
-document.getElementById("captchaError").style.display = "none"; // اگر پاسخ درست بود، پیام خطا رو مخفی کن
-
-    //document.getElementById("spinner").style.display = "block";
+    if (userCaptcha !== correctAnswer) {
+        requeststatusDiv.textContent = "";
+        document.getElementById("successMessage").style.display = "none";
+        document.getElementById("captchaError").style.display = "block";
+        generateCaptcha(); // Generate new question
+        document.getElementById("captchaAnswer").value = ""; // Clear wrong answer
+        return; // Prevent form submission
+    }
+    
+    requeststatusDiv.textContent = 'در حال ارسال درخواست ...';
+    requeststatusDiv.style.color = 'blue';
+    requeststatusDiv.appendChild(spinnerform);
+    
+    document.getElementById("captchaError").style.display = "none";
     document.getElementById("successMessage").style.display = "none";
-   // document.getElementById('newRequest')='';
-   //document.getElementById("newRequest").style.display = "none";
 
     let formData = new FormData();
     formData.append("نام و نام خانوادگی", document.getElementById("fullName").value);
@@ -67,27 +66,33 @@ document.getElementById("captchaError").style.display = "none"; // اگر پاس
         method: "POST",
         body: formData
     })
-    .then(response => response.text())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('خطای ارسال، بعدا تلاش کنید');
+        }
+        return response.text();
+    })
     .then(data => {
-generateCaptcha(); // تولید کپچای جدید بعد از ارسال موفق
+        generateCaptcha(); // Generate new captcha after successful submission
         requeststatusDiv.textContent = '';
-       //document.getElementById("spinner").style.display = "none";
-        requeststatusDiv.removeChild(spinnerform);
+        if (requeststatusDiv.contains(spinnerform)) {
+            requeststatusDiv.removeChild(spinnerform);
+        }
         document.getElementById("successMessage").style.display = "block";
-        resetForm();
         document.getElementById("serviceForm").reset();
     })
     .catch(error => {
-        
         requeststatusDiv.textContent = "❌ خطا در ارسال فرم";
-        requeststatusDiv.style.color='red';
-       requeststatusDiv.removeChild(spinnerform);
+        requeststatusDiv.style.color = 'red';
+        if (requeststatusDiv.contains(spinnerform)) {
+            requeststatusDiv.removeChild(spinnerform);
+        }
         console.error("Error:", error);
     });
 });
 
 function resetForm() {
     document.getElementById("successMessage").style.display = "none";
-  // document.getElementById("newRequest").style.display = "none";
     document.getElementById("serviceForm").reset();
+    generateCaptcha();
 }
