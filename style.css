@@ -48,7 +48,7 @@ header {
 }
 
 /* Mobile Menu Toggle */
-.mobile-menu-toggle {
+/*.mobile-menu-toggle {
     display: none;
     background: none;
     border: none;
@@ -56,6 +56,18 @@ header {
     font-size: 1.5rem;
     position: absolute;
     left: 20px;
+    top: 20px;
+    cursor: pointer;
+    z-index: 101;
+}*/
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    position: absolute;
+    right: 20px; /* Changed from left to right for RTL */
     top: 20px;
     cursor: pointer;
     z-index: 101;
@@ -205,8 +217,49 @@ footer {
         padding: 20px 0;
         position: relative;
     }
-    
+
+    @media (max-width: 768px) {
     .mobile-menu-toggle {
+        display: flex;
+        position: absolute; /* Changed from fixed to absolute */
+        right: 20px; /* Keep right-aligned */
+        top: 20px;
+        background: var(--primary-color);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        z-index: 102;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
+    .services-menu {
+        position: fixed;
+        top: 0;
+        right: -280px;
+        width: 280px;
+        height: 100vh;
+        margin: 0;
+        border-radius: 0;
+        z-index: 101;
+        transition: right 0.3s ease;
+        overflow-y: auto;
+        background: white;
+    }
+    
+    .header-content {
+        padding-top: 0; /* Remove extra padding */
+    }
+    
+    /* Ensure header has enough padding for the toggle */
+    header {
+        padding: 60px 0 20px; /* Added top padding for the toggle */
+    }
+}
+    
+  /*  .mobile-menu-toggle {
         display: block;
         position: fixed;
         right: 20px;
@@ -267,4 +320,4 @@ footer {
         padding: 12px 15px;
     }
 }
-
+*/
