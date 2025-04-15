@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize service filtering
     initServiceFiltering();
     
-    // Initialize mobile menu toggle
+    // Initialize mobile menu toggle (with all improvements)
     initMobileMenu();
 
-        // check for version updates (this will reload if needed)
+    // check for version updates (this will reload if needed)
     checkVersion();
 });
 
@@ -96,8 +96,6 @@ function reloadWithCacheBust() {
   setTimeout(() => window.location.assign(targetUrl), 100);
 }
 
-    
-
 function setCurrentYear() {
     document.getElementById('current-year').textContent = new Date().getFullYear();
 }
@@ -119,16 +117,69 @@ function initMobileMenu() {
     const menu = document.querySelector('.services-menu');
     const overlay = document.querySelector('.mobile-menu-overlay');
     
-    toggleBtn.addEventListener('click', function() {
+    // Set initial ARIA attributes and state
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    toggleBtn.setAttribute('aria-controls', 'services-menu');
+    menu.setAttribute('aria-hidden', 'true');
+    menu.style.visibility = 'hidden';
+    
+    // Handle menu toggle
+    function toggleMenu() {
+        const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+        toggleBtn.setAttribute('aria-expanded', !isExpanded);
+        menu.setAttribute('aria-hidden', isExpanded);
+        
         menu.classList.toggle('active');
         overlay.classList.toggle('active');
         document.body.classList.toggle('no-scroll');
-    });
+        
+        if (!isExpanded) {
+            menu.style.visibility = 'visible';
+        }
+    }
     
-    overlay.addEventListener('click', function() {
+    // Close menu
+    function closeMenu() {
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
         menu.classList.remove('active');
         overlay.classList.remove('active');
         document.body.classList.remove('no-scroll');
+    }
+    
+    // Click/touch event for toggle button
+    toggleBtn.addEventListener('click', toggleMenu);
+    toggleBtn.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        toggleMenu();
+    }, { passive: false });
+    
+    // Click/touch event for overlay
+    overlay.addEventListener('click', closeMenu);
+    overlay.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        closeMenu();
+    }, { passive: false });
+    
+    // Close when clicking menu links
+    menu.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') {
+            closeMenu();
+        }
+    });
+    
+    // Close with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && menu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
+    
+    // Handle animation end
+    menu.addEventListener('transitionend', function() {
+        if (!menu.classList.contains('active')) {
+            menu.style.visibility = 'hidden';
+        }
     });
 }
 
@@ -150,12 +201,8 @@ function resetAllServices() {
     resetForm(); // request form
 
     document.getElementById('articleListِDisclaimer').textContent='';
-    //document.getElementById('articleListِDisclaimer').style.color = 'red'; 
     
     // Add reset for other services here if needed
-    // For example:
-    // document.getElementById('financial-input').value = '';
-    // document.getElementById('welfare-input').value = '';
 }
 
 function filterServices(clickedLink, allServices) {
@@ -187,10 +234,15 @@ function filterServices(clickedLink, allServices) {
     
     // Close mobile menu if open
     const menu = document.querySelector('.services-menu');
-    const overlay = document.querySelector('.mobile-menu-overlay');
     if (menu.classList.contains('active')) {
+        const toggleBtn = document.querySelector('.mobile-menu-toggle');
+        const overlay = document.querySelector('.mobile-menu-overlay');
+        
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
         menu.classList.remove('active');
         overlay.classList.remove('active');
         document.body.classList.remove('no-scroll');
+        menu.style.visibility = 'hidden';
     }
 }
