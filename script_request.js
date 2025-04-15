@@ -70,7 +70,7 @@ document.getElementById("captchaError").style.display = "none"; // اگر پاس
     .then(response => response.text())
     .then(data => {
 generateCaptcha(); // تولید کپچای جدید بعد از ارسال موفق
-
+        requeststatusDiv.textContent = '';
        //document.getElementById("spinner").style.display = "none";
         requeststatusDiv.removeChild(spinnerform);
         document.getElementById("successMessage").style.display = "block";
