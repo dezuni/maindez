@@ -74,7 +74,7 @@ generateCaptcha(); // تولید کپچای جدید بعد از ارسال مو
        //document.getElementById("spinner").style.display = "none";
         requeststatusDiv.removeChild(spinnerform);
         document.getElementById("successMessage").style.display = "block";
-        //document.getElementById("newRequest").style.display = "block";
+        resetForm();
         document.getElementById("serviceForm").reset();
     })
     .catch(error => {
