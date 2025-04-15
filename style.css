@@ -20,46 +20,32 @@ body {
     padding: 0;
 }
 
-
-.container { margin-top: 40px; }
-@media (min-width: 768px) {
-    .container { margin-top: 20px; }
-}
-
 .container {
     width: 95%;
     max-width: 1200px;
-    margin: 40px auto 0;  /*Top: 20px | Left/Right: auto | Bottom: 0 */
+    margin: 40px auto 0;
     padding: 0;
 }
 
+@media (min-width: 768px) {
+    .container {
+        margin-top: 20px;
+    }
+}
 
 header {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    padding: 40px 0;
+    padding: 60px 0 20px;
     text-align: center;
     position: relative;
 }
 
 .header-content {
     position: relative;
-    padding-top: 20px;
 }
 
 /* Mobile Menu Toggle */
-/*.mobile-menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    position: absolute;
-    left: 20px;
-    top: 20px;
-    cursor: pointer;
-    z-index: 101;
-}*/
 .mobile-menu-toggle {
     display: none;
     background: none;
@@ -67,7 +53,7 @@ header {
     color: white;
     font-size: 1.5rem;
     position: absolute;
-    right: 20px; /* Changed from left to right for RTL */
+    right: 20px;
     top: 20px;
     cursor: pointer;
     z-index: 101;
@@ -207,61 +193,20 @@ footer {
     margin-left: 5px;
 }
 
-/* Add this to prevent scrolling when menu is open */
+/* Prevent scrolling when menu is open */
 .no-scroll {
     overflow: hidden;
 }
 
+/* Mobile Styles */
 @media (max-width: 768px) {
     header {
-        padding: 20px 0;
-        position: relative;
+        padding: 60px 0 20px;
     }
-
-    @media (max-width: 768px) {
+    
     .mobile-menu-toggle {
         display: flex;
-        position: absolute; /* Changed from fixed to absolute */
-        right: 20px; /* Keep right-aligned */
-        top: 20px;
-        background: var(--primary-color);
-        color: white;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        align-items: center;
-        justify-content: center;
-        z-index: 102;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    
-    .services-menu {
-        position: fixed;
-        top: 0;
-        right: -280px;
-        width: 280px;
-        height: 100vh;
-        margin: 0;
-        border-radius: 0;
-        z-index: 101;
-        transition: right 0.3s ease;
-        overflow-y: auto;
-        background: white;
-    }
-    
-    .header-content {
-        padding-top: 0; /* Remove extra padding */
-    }
-    
-    /* Ensure header has enough padding for the toggle */
-    header {
-        padding: 60px 0 20px; /* Added top padding for the toggle */
-    }
-}
-    
-  /*  .mobile-menu-toggle {
-        display: block;
-        position: fixed;
+        position: absolute;
         right: 20px;
         top: 20px;
         background: var(--primary-color);
@@ -269,7 +214,6 @@ footer {
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        display: flex;
         align-items: center;
         justify-content: center;
         z-index: 102;
@@ -294,17 +238,6 @@ footer {
         right: 0;
     }
     
-    .mobile-menu-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0,0,0,0.5);
-        z-index: 100;
-        display: none;
-    }
-    
     .mobile-menu-overlay.active {
         display: block;
     }
@@ -319,5 +252,8 @@ footer {
         margin: 5px 0;
         padding: 12px 15px;
     }
+    
+    .header-content {
+        padding-top: 0;
+    }
 }
-*/
