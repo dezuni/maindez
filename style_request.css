@@ -96,7 +96,7 @@
             margin-top: 10px;
         }
 
-  .service-item[data-category="welfare"] .formcontainer      a {
+/*   .service-item[data-category="welfare"] .formcontainer      a {
             display: block;
             text-align: right;
             color: #007bff;
@@ -106,5 +106,5 @@
 
     .service-item[data-category="welfare"] .formcontainer    a:hover {
             text-decoration: underline;
-        }
+        } */
 
