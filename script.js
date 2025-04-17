@@ -151,8 +151,8 @@ function resetAllServices() {
 
   document.getElementById('articleListِDisclaimer').textContent='';
   //document.getElementById('articleListِDisclaimer').style.color = 'red'; 
-  document.getElementById('requeststatus').textContent='';
-  document.getElementById('successMessage').textContent='';
+  document.getElementById("successMessage").style.display = "none";
+  document.getElementById("captchaError").style.display = "none";
     
   // Add reset for other services here if needed
   // For example:
