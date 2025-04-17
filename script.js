@@ -151,7 +151,9 @@ function resetAllServices() {
 
   document.getElementById('articleListِDisclaimer').textContent='';
   //document.getElementById('articleListِDisclaimer').style.color = 'red'; 
-  
+  document.getElementById('requeststatus').textContent='';
+  document.getElementById('successMessage').textContent='';
+    
   // Add reset for other services here if needed
   // For example:
   // document.getElementById('financial-input').value = '';
