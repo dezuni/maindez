@@ -212,61 +212,7 @@
     <script src="./script_map.js"></script>
     <script src="./script_request.js"></script>
 
-    <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Discount phone check</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 24px; max-width: 640px; margin: auto; }
-    input, button { padding: 8px; font-size: 16px; }
-    .result { margin-top: 16px; font-weight: bold; }
-  </style>
-</head>
-<body>
-  <h2>Check your phone for discount</h2>
-  <form id="phoneForm">
-    <label>
-      Phone number:
-      <input id="phoneInput" name="phone" required placeholder="+998901234567 or 998901234567 or 0901234567" />
-    </label>
-    <button type="submit">Check</button>
-  </form>
-
-  <div id="result" class="result" aria-live="polite"></div>
-
-  <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzTv_HvAT85DFMBeqq1wjROAqCSUr9oXoGOtOn9hW9GfmHZO6fK6zdmjyooLxrt-4Z0/exec"; // e.g. https://script.google.com/macros/s/AAA.../exec
-
-    document.getElementById("phoneForm").addEventListener("submit", async (ev) => {
-      ev.preventDefault();
-      const resultEl = document.getElementById("result");
-      resultEl.textContent = "Checking ...";
-
-      const phone = document.getElementById("phoneInput").value.trim();
-      if (!phone) { resultEl.textContent = "Please enter a phone number."; return; }
-
-      try {
-        const resp = await fetch(APPS_SCRIPT_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ phone })
-        });
-        const data = await resp.json();
-        if (data.valid) {
-          resultEl.textContent = data.message; // {name} with phone number of {phone} has 10% discount
-        } else {
-          resultEl.textContent = data.message || "This number is not valid.";
-        }
-      } catch (err) {
-        console.error(err);
-        resultEl.textContent = "Network or server error.";
-      }
-    });
-  </script>
-</body>
-</html>
+   
 
 </body>
 </html>
