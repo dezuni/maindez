@@ -16,31 +16,31 @@ generateCaptcha(); // Generate first captcha on page load
 
 document.getElementById("DiscountForm").addEventListener("submit", function(event) {
     event.preventDefault();
-    const userCaptcha = parseInt(document.getElementById("captchaAnswer").value);
-    const requeststatusDiv = document.getElementById('requeststatus');
+    const userCaptcha = parseInt(document.getElementById("captchaAnswer_discount").value);
+    const DiscountRequestStatusDiv = document.getElementById('DiscountRequestStatus');
     
     if (userCaptcha !== correctAnswer) {
-        requeststatusDiv.textContent = "";
-        document.getElementById("successMessage").style.display = "none";
-        document.getElementById("captchaError").style.display = "block";
+        DiscountRequestStatusDiv.textContent = "";
+        document.getElementById("DiscountSuccessMessage").style.display = "none";
+        document.getElementById("captchaError_discount").style.display = "block";
         generateCaptcha(); // Generate new question
-        document.getElementById("captchaAnswer").value = ""; // Clear wrong answer
+        document.getElementById("captchaAnswer_discount").value = ""; // Clear wrong answer
         return; // Prevent form submission
     }
     
-    requeststatusDiv.textContent = 'در حال ارسال درخواست ...';
-    requeststatusDiv.style.color = 'blue';
-    requeststatusDiv.appendChild(spinnerformDSCNT);
+    DiscountRequestStatusDiv.textContent = 'در حال ارسال درخواست ...';
+    DiscountRequestStatusDiv.style.color = 'blue';
+    DiscountRequestStatusDiv.appendChild(spinnerformDSCNT);
     
-    document.getElementById("captchaError").style.display = "none";
-    document.getElementById("successMessage").style.display = "none";
+    document.getElementById("captchaError_discount").style.display = "none";
+    document.getElementById("DiscountSuccessMessage").style.display = "none";
 
     let formData = new FormData();
-    formData.append("نام و نام خانوادگی", document.getElementById("fullName").value);
-    formData.append("شماره تماس", document.getElementById("phoneNumber").value);
-    formData.append("نوع خدمات", document.getElementById("serviceType").value);
-    formData.append("نوع فعالیت", document.getElementById("subService").value);
-    formData.append("توضیحات", document.getElementById("description").value);
+    formData.append("نام و نام خانوادگی", document.getElementById("fullName_discount").value);
+    formData.append("شماره تماس", document.getElementById("phoneNumber_discount").value);
+   // formData.append("نوع خدمات", document.getElementById("serviceType").value);
+   // formData.append("نوع فعالیت", document.getElementById("subService").value);
+   // formData.append("توضیحات", document.getElementById("description").value);
     formData.append("تاریخ ثبت", new Date().toLocaleString("fa-IR"));
 
     fetch("https://script.google.com/macros/s/AKfycbyMqaXSgQpvA88bbodhMcU3bDuzEwxihZXifrAud0KgFmmVpjyLyEMJM2yJ7mjYJ5r5qw/exec", {
@@ -55,25 +55,25 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
     })
     .then(data => {
         generateCaptcha(); // Generate new captcha after successful submission
-        requeststatusDiv.textContent = '';
-        if (requeststatusDiv.contains(spinnerformDSCNT)) {
-            requeststatusDiv.removeChild(spinnerformDSCNT);
+        DiscountRequestStatusDiv.textContent = '';
+        if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
+            DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
         }
-        document.getElementById("successMessage").style.display = "block";
+        document.getElementById("DiscountSuccessMessage").style.display = "block";
         document.getElementById("DiscountForm").reset();
     })
     .catch(error => {
-        requeststatusDiv.textContent = "❌ خطا در ارسال فرم";
-        requeststatusDiv.style.color = 'red';
-        if (requeststatusDiv.contains(spinnerformDSCNT)) {
-            requeststatusDiv.removeChild(spinnerformDSCNT);
+        DiscountRequestStatusDiv.textContent = "❌ خطا در ارسال فرم";
+        DiscountRequestStatusDiv.style.color = 'red';
+        if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
+            DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
         }
         console.error("Error:", error);
     });
 });
 
 function resetForm() {
-    document.getElementById("successMessage").style.display = "none";
+    document.getElementById("DiscountSuccessMessage").style.display = "none";
     document.getElementById("DiscountForm").reset();
     generateCaptcha();
 }
