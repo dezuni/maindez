@@ -3,27 +3,13 @@ const spinnerformDSCNT = document.createElement('div');
 spinnerformDSCNT.className = 'spinner';
 
 
-document.getElementById("serviceType").addEventListener("change", function() {
-    let subService = document.getElementById("subService");
-    subService.innerHTML = "<option value=''>انتخاب کنید</option>";
-    let selectedService = this.value;
-    if (selectedService in serviceOptions) {
-        serviceOptions[selectedService].forEach(option => {
-            let newOption = document.createElement("option");
-            newOption.value = option;
-            newOption.textContent = option;
-            subService.appendChild(newOption);
-        });
-    }
-});
-
 let correctAnswer = 0;
 
 function generateCaptcha() {
     const num1 = Math.floor(Math.random() * 10) + 1;
     const num2 = Math.floor(Math.random() * 10) + 1;
     correctAnswer = num1 + num2;
-    document.getElementById("captchaQuestion").textContent = `حاصل جمع ${num1} + ${num2} چند می‌شود؟`;
+    document.getElementById("captchaQuestion_discount").textContent = `حاصل جمع ${num1} + ${num2} چند می‌شود؟`;
 }
 
 generateCaptcha(); // Generate first captcha on page load
