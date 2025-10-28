@@ -14,7 +14,7 @@ function generateCaptcha() {
 
 generateCaptcha(); // Generate first captcha on page load
 
-document.getElementById("serviceForm").addEventListener("submit", function(event) {
+document.getElementById("DiscountForm").addEventListener("submit", function(event) {
     event.preventDefault();
     const userCaptcha = parseInt(document.getElementById("captchaAnswer").value);
     const requeststatusDiv = document.getElementById('requeststatus');
@@ -60,7 +60,7 @@ document.getElementById("serviceForm").addEventListener("submit", function(event
             requeststatusDiv.removeChild(spinnerformDSCNT);
         }
         document.getElementById("successMessage").style.display = "block";
-        document.getElementById("serviceForm").reset();
+        document.getElementById("DiscountForm").reset();
     })
     .catch(error => {
         requeststatusDiv.textContent = "❌ خطا در ارسال فرم";
@@ -74,6 +74,6 @@ document.getElementById("serviceForm").addEventListener("submit", function(event
 
 function resetForm() {
     document.getElementById("successMessage").style.display = "none";
-    document.getElementById("serviceForm").reset();
+    document.getElementById("DiscountForm").reset();
     generateCaptcha();
 }
