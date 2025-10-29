@@ -1,6 +1,20 @@
 // how much discount?
 let discountRate = 10;
 
+// discount registration deadline
+const RegistrationDeadline = new Date('2025-11-15'); // YYMMDD
+
+// discount expiration date
+const expiryDate = new Date('2025-11-30'); // YYMMDD
+
+// Get the current date
+const currentDate = new Date();
+
+// discount registration deadline passed?
+if (inputDate > currentDate) {
+    return false;
+}
+
 // Add a spinner for visual feedback
 const spinnerformDSCNT = document.createElement('div');
 spinnerformDSCNT.className = 'spinner';
