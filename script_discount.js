@@ -2,16 +2,16 @@
 let discountRate = 10;
 
 // discount registration deadline
-const RegistrationDeadline = new Date('2025-11-15'); // YYMMDD
+const RegistrationDeadline = new Date('2025-11-15'); // YYYY-MM-DD
 
 // discount expiration date
-const expiryDate = new Date('2025-11-30'); // YYMMDD
+const expiryDate = new Date('2025-11-30'); // YYYY-MM-DD
 
 // Get the current date
 const currentDate = new Date();
 
 // discount registration deadline passed?
-if (inputDate > currentDate) {
+if ( currentDate > RegistrationDeadline ) {
     return false;
 }
 
