@@ -62,7 +62,7 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
     formData.append("date_used", "");
     formData.append("Expiration_Date", expiryDate );
     
-    fetch("https://script.google.com/macros/s/AKfycbyMqaXSgQpvA88bbodhMcU3bDuzEwxihZXifrAud0KgFmmVpjyLyEMJM2yJ7mjYJ5r5qw/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbxK4pmFkIphGVBT5xYmdo0P7E_6F8N-W5KB2jeuiynt0G5JDqJsyZWEupEhWF8nq1Zm/exec", {
         method: "POST",
         body: formData
     })
