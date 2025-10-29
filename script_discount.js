@@ -1,3 +1,6 @@
+// how much discount?
+let discountRate = 10;
+
 // Add a spinner for visual feedback
 const spinnerformDSCNT = document.createElement('div');
 spinnerformDSCNT.className = 'spinner';
@@ -36,8 +39,15 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
     document.getElementById("DiscountSuccessMessage").style.display = "none";
 
     let formData = new FormData();
-    formData.append("نام و نام خانوادگی", document.getElementById("fullName_discount").value);
-    formData.append("شماره تماس", document.getElementById("phoneNumber_discount").value);
+    formData.append("phone", document.getElementById("phoneNumber_discount").value);
+    formData.append("name", document.getElementById("fullName_discount").value);
+    formData.append("discount", discountRate);
+    formData.append("password", ???);
+    formData.append("status", "active");
+    formData.append("time_used", "");
+    formData.append("date_used", "");
+    formData.append("Expiration_Date", new Date().toLocaleString("fa-IR"));
+    
    // formData.append("نوع خدمات", document.getElementById("serviceType").value);
    // formData.append("نوع فعالیت", document.getElementById("subService").value);
    // formData.append("توضیحات", document.getElementById("description").value);
