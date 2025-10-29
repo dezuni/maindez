@@ -56,7 +56,7 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
     formData.append("phone", document.getElementById("phoneNumber_discount").value);
     formData.append("name", document.getElementById("fullName_discount").value);
     formData.append("discount", discountRate);
-    formData.append("password", ???);
+    formData.append("password", document.getElementById("DiscountVerifCode").value); 
     formData.append("status", "active");
     formData.append("time_used", "");
     formData.append("date_used", "");
