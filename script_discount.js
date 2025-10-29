@@ -60,13 +60,8 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
     formData.append("status", "active");
     formData.append("time_used", "");
     formData.append("date_used", "");
-    formData.append("Expiration_Date", new Date().toLocaleString("fa-IR"));
+    formData.append("Expiration_Date", expiryDate );
     
-   // formData.append("نوع خدمات", document.getElementById("serviceType").value);
-   // formData.append("نوع فعالیت", document.getElementById("subService").value);
-   // formData.append("توضیحات", document.getElementById("description").value);
-    formData.append("تاریخ ثبت", new Date().toLocaleString("fa-IR"));
-
     fetch("https://script.google.com/macros/s/AKfycbyMqaXSgQpvA88bbodhMcU3bDuzEwxihZXifrAud0KgFmmVpjyLyEMJM2yJ7mjYJ5r5qw/exec", {
         method: "POST",
         body: formData
