@@ -12,6 +12,8 @@ const currentDate = new Date();
 
 // discount registration deadline passed?
 if ( currentDate > RegistrationDeadline ) {
+    DiscountRequestStatusDiv.textContent = "❌ مهلت ثبت نام برای تخفیف به اتمام رسیده است.";
+    DiscountRequestStatusDiv.style.color = 'red';
     return;
 }
 
