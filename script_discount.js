@@ -10,13 +10,6 @@ const expiryDate = new Date('2025-11-30'); // YYYY-MM-DD
 // Get the current date
 const currentDate = new Date();
 
-// discount registration deadline passed?
-if ( currentDate > RegistrationDeadline ) {
-    DiscountRequestStatusDiv.textContent = "❌ مهلت ثبت نام برای تخفیف به اتمام رسیده است.";
-    DiscountRequestStatusDiv.style.color = 'red';
-    return;
-}
-
 // Add a spinner for visual feedback
 const spinnerformDSCNT = document.createElement('div');
 spinnerformDSCNT.className = 'spinner';
@@ -45,6 +38,12 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
         generateCaptcha1(); // Generate new question
         document.getElementById("captchaAnswer_discount").value = ""; // Clear wrong answer
         return; // Prevent form submission
+    }
+    // discount registration deadline passed?
+    if ( currentDate > RegistrationDeadline ) {
+        DiscountRequestStatusDiv.textContent = "❌ مهلت ثبت نام برای تخفیف به اتمام رسیده است.";
+        DiscountRequestStatusDiv.style.color = 'red';
+        return;
     }
     
     DiscountRequestStatusDiv.textContent = 'در حال ارسال درخواست ...';
