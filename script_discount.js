@@ -12,7 +12,7 @@ const currentDate = new Date();
 
 // discount registration deadline passed?
 if ( currentDate > RegistrationDeadline ) {
-    return false;
+    //return false;
 }
 
 // Add a spinner for visual feedback
@@ -26,7 +26,7 @@ function generateCaptcha1() {
     const num3 = Math.floor(Math.random() * 10) + 1;
     const num4 = Math.floor(Math.random() * 10) + 1;
     correctAnswer1 = num3 + num4;
-    document.getElementById("captchaQuestion_discount").textContent = `حاصل جمع ${num3} + ${num4} چند می‌شود؟`;
+    document.getElementById("captchaQuestion_discount").textContent = `حاصل جمع ${num3} + ${num4} چند مممی‌شود؟`;
 }
 
 generateCaptcha1(); // Generate first captcha on page load
