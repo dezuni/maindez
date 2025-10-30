@@ -33,10 +33,10 @@ generateCaptcha1(); // Generate first captcha on page load
 
 document.getElementById("DiscountForm").addEventListener("submit", function(event) {
     event.preventDefault();
-    const userCaptcha = parseInt(document.getElementById("captchaAnswer_discount").value);
+    const userCaptcha1 = parseInt(document.getElementById("captchaAnswer_discount").value);
     const DiscountRequestStatusDiv = document.getElementById('DiscountRequestStatus');
     
-    if (userCaptcha !== correctAnswer) {
+    if (userCaptcha1 !== correctAnswer1) {
         DiscountRequestStatusDiv.textContent = "";
         document.getElementById("DiscountSuccessMessage").style.display = "none";
         document.getElementById("captchaError_discount").style.display = "block";
@@ -73,7 +73,7 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
         return response.text();
     })
     .then(data => {
-        generateCaptcha(); // Generate new captcha after successful submission
+        generateCaptcha1(); // Generate new captcha after successful submission
         DiscountRequestStatusDiv.textContent = '';
         if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
             DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
