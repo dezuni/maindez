@@ -20,16 +20,16 @@ const spinnerformDSCNT = document.createElement('div');
 spinnerformDSCNT.className = 'spinner';
 
 
-let correctAnswer = 0;
+let correctAnswer1 = 0;
 
-function generateCaptcha() {
-    const num1 = Math.floor(Math.random() * 10) + 1;
-    const num2 = Math.floor(Math.random() * 10) + 1;
-    correctAnswer = num1 + num2;
-    document.getElementById("captchaQuestion_discount").textContent = `حاصل جمع ${num1} + ${num2} چند می‌شود؟`;
+function generateCaptcha1() {
+    const num3 = Math.floor(Math.random() * 10) + 1;
+    const num4 = Math.floor(Math.random() * 10) + 1;
+    correctAnswer1 = num3 + num4;
+    document.getElementById("captchaQuestion_discount").textContent = `حاصل جمع ${num3} + ${num4} چند می‌شود؟`;
 }
 
-generateCaptcha(); // Generate first captcha on page load
+generateCaptcha1(); // Generate first captcha on page load
 
 document.getElementById("DiscountForm").addEventListener("submit", function(event) {
     event.preventDefault();
