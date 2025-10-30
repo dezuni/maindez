@@ -62,7 +62,7 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
     document.getElementById("captchaError_discount").style.display = "none";
     document.getElementById("DiscountSuccessMessage").style.display = "none";
 
-    let DiscountFormData = new DiscountFormData();
+    let DiscountFormData = new FormData();
     DiscountFormData.append("phone", document.getElementById("phoneNumber_discount").value);
     DiscountFormData.append("name", document.getElementById("fullName_discount").value);
     DiscountFormData.append("discount", discountRate);
