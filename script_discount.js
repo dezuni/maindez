@@ -40,7 +40,7 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
         DiscountRequestStatusDiv.textContent = "";
         document.getElementById("DiscountSuccessMessage").style.display = "none";
         document.getElementById("captchaError_discount").style.display = "block";
-        generateCaptcha(); // Generate new question
+        generateCaptcha1(); // Generate new question
         document.getElementById("captchaAnswer_discount").value = ""; // Clear wrong answer
         return; // Prevent form submission
     }
