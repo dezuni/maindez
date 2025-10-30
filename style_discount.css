@@ -1,4 +1,4 @@
-.service-item[data-category="welfare"] .formcontainer {
+.service-item[data-category="DISCOUNT"] .formcontainer {
     font-family: Arial, sans-serif;
     direction: rtl; /* RTL base direction */
     text-align: right; /* Text alignment */
@@ -14,18 +14,18 @@
     width: 90%;
 }
 
-    .service-item[data-category="welfare"] .formcontainer   h2 {
+    .service-item[data-category="DISCOUNT"] .formcontainer   h2 {
             text-align: center;
             color: #333;
         }
 
-     .service-item[data-category="welfare"] .formcontainer   label {
+     .service-item[data-category="DISCOUNT"] .formcontainer   label {
             font-weight: bold;
             margin-top: 10px;
             display: block;
         }
 
-   .service-item[data-category="welfare"] .formcontainer  input, select, textarea {
+   .service-item[data-category="DISCOUNT"] .formcontainer  input, select, textarea {
             width: 100%;
             padding: 10px;
             margin-top: 5px;
@@ -34,7 +34,7 @@
             font-size: 0.9rem;
         }
 
- .service-item[data-category="welfare"] .formcontainer button {
+ .service-item[data-category="DISCOUNT"] .formcontainer button {
     display: inline-block;
     border: none;
     background: var(--primary-color);
@@ -47,11 +47,11 @@
     margin-top: 10px
   } 
 
- .service-item[data-category="welfare"] .formcontainer button:hover {
+ .service-item[data-category="DISCOUNT"] .formcontainer button:hover {
     background: var(--secondary-color);
 } 
 
-/*.service-item[data-category="welfare"] .formcontainer #spinner {
+/*.service-item[data-category="DISCOUNT"] .formcontainer #spinner {
     display: none;
     text-align: right;
     color: blue;
@@ -59,7 +59,7 @@
     margin-top: 10px;
 }*/
 
-/*.service-item[data-category="welfare"] .formcontainer #spinner::before {
+/*.service-item[data-category="DISCOUNT"] .formcontainer #spinner::before {
     content: "🔄";
     display: inline-block;
     animation: spin 1s linear infinite;
@@ -71,7 +71,7 @@
     width: 1em;
     text-align: center;
 }*/
- .service-item[data-category="welfare"] .formcontainer .spinner {
+ .service-item[data-category="DISCOUNT"] .formcontainer .spinner {
     border: 4px solid #f3f3f3; /* Light grey */
     border-top: 4px solid #3498db; /* Blue */
     border-radius: 50%;
@@ -88,7 +88,7 @@
 }
 
 
-   .service-item[data-category="welfare"] .formcontainer  #successMessage {
+   .service-item[data-category="DISCOUNT"] .formcontainer  #successMessage {
             display: none;
             text-align: right;
             color: green;
@@ -96,7 +96,7 @@
             margin-top: 10px;
         }
 
-/*   .service-item[data-category="welfare"] .formcontainer      a {
+/*   .service-item[data-category="DISCOUNT"] .formcontainer      a {
             display: block;
             text-align: right;
             color: #007bff;
@@ -104,6 +104,6 @@
             text-decoration: none;
         }
 
-    .service-item[data-category="welfare"] .formcontainer    a:hover {
+    .service-item[data-category="DISCOUNT"] .formcontainer    a:hover {
             text-decoration: underline;
         } */
