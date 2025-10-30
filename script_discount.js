@@ -47,7 +47,7 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
     }
     // discount registration deadline passed?
     if ( currentDate > RegistrationDeadline ) {
-        DiscountRequestStatusDiv.textContent = "❌ مهلت ثبت نام برای تخفیف به اتمام رسیده است.";
+        DiscountRequestStatusDiv.textContent = "❌ مهلت ثبت نام به پایان رسیده است.";
         DiscountRequestStatusDiv.style.color = 'red';
         //document.getElementById("captchaError_discount").style.display = "block";
         // generateCaptcha1(); // Generate new question
@@ -62,19 +62,19 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
     document.getElementById("captchaError_discount").style.display = "none";
     document.getElementById("DiscountSuccessMessage").style.display = "none";
 
-    let formData = new FormData();
-    formData.append("phone", document.getElementById("phoneNumber_discount").value);
-    formData.append("name", document.getElementById("fullName_discount").value);
-    formData.append("discount", discountRate);
-    formData.append("password", document.getElementById("DiscountVerifCode").value); 
-    formData.append("status", "active");
-    formData.append("time_used", "");
-    formData.append("date_used", "");
-    formData.append("Expiration_Date", expiryDate );
+    let DiscountFormData = new DiscountFormData();
+    DiscountFormData.append("phone", document.getElementById("phoneNumber_discount").value);
+    DiscountFormData.append("name", document.getElementById("fullName_discount").value);
+    DiscountFormData.append("discount", discountRate);
+    DiscountFormData.append("password", document.getElementById("DiscountVerifCode").value); 
+    DiscountFormData.append("status", "active");
+    DiscountFormData.append("time_used", "");
+    DiscountFormData.append("date_used", "");
+    DiscountFormData.append("Expiration_Date", expiryDate );
     
     fetch("https://script.google.com/macros/s/AKfycbxK4pmFkIphGVBT5xYmdo0P7E_6F8N-W5KB2jeuiynt0G5JDqJsyZWEupEhWF8nq1Zm/exec", {
         method: "POST",
-        body: formData
+        body: DiscountFormData
     })
     .then(response => {
         if (!response.ok) {
