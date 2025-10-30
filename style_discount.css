@@ -68,7 +68,7 @@
 }
 
 
-   .service-item[data-category="DISCOUNT"] .formcontainer  #successMessage {
+   .service-item[data-category="DISCOUNT"] .formcontainer  #DiscountSuccessMessage {
             display: none;
             text-align: right;
             color: green;
