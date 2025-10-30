@@ -91,8 +91,8 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
     });
 });
 
-function resetForm() {
+function resetDiscountForm() {
     document.getElementById("DiscountSuccessMessage").style.display = "none";
     document.getElementById("DiscountForm").reset();
-    generateCaptcha();
+    generateCaptcha1();
 }
