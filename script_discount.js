@@ -49,6 +49,9 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
     if ( currentDate > RegistrationDeadline ) {
         DiscountRequestStatusDiv.textContent = "❌ مهلت ثبت نام برای تخفیف به اتمام رسیده است.";
         DiscountRequestStatusDiv.style.color = 'red';
+        document.getElementById("captchaError_discount").style.display = "block";
+        generateCaptcha1(); // Generate new question
+        document.getElementById("captchaAnswer_discount").value = ""; 
         return;
     }
     
