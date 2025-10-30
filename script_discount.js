@@ -26,7 +26,7 @@ function generateCaptcha1() {
     const num3 = Math.floor(Math.random() * 10) + 1;
     const num4 = Math.floor(Math.random() * 10) + 1;
     correctAnswer1 = num3 + num4;
-    document.getElementById("captchaQuestion_discount").textContent = `حاصل جمع ${num3} + ${num4} چند مممی‌شود؟`;
+    document.getElementById("captchaQuestion_discount").textContent = `حاصل جمع ${num3} + ${num4} چند می‌شود؟`;
 }
 
 generateCaptcha1(); // Generate first captcha on page load
