@@ -74,7 +74,7 @@
               </div>
             </div>
 
-            <!-- Financial Service -->
+            <!-- Discount Service -->
             <div class="service-item" data-category="DISCOUNT">
                 <h2><i class="fas fa-money-bill-wave"></i>ثبت نام برای 10 % تحفیف فست فود لیمو</h2>
                 <p>برای استفاده از تخفیف فرم زیر را تکمیل کنید.</p>
@@ -85,46 +85,35 @@
                         <label>شماره تماس: <input type="text" id="phoneNumber_discount" placeholder="مثلاً: 09123456789" required></label>
                         <label>سه رقم آخر شماره دانشجویی/پرسنلی: <input type="text" id="DiscountVerifCode" placeholder="مثلاً: 123" required></label>
                         
-                        <!-- CAPTCHA SECTION - SIMPLE AND VISIBLE -->
-                        <div class="service-item" data-category="DISCOUNT">
-                            <h2><i class="fas fa-money-bill-wave"></i>ثبت نام برای 10 % تحفیف فست فود لیمو</h2>
-                            <p>برای استفاده از تخفیف فرم زیر را تکمیل کنید.</p>
-                        
-                            <div class="formcontainer">
-                                <form id="DiscountForm">
-                                    <label>نام و نام خانوادگی: <input type="text" id="fullName_discount" required></label>
-                                    <label>شماره تماس: <input type="text" id="phoneNumber_discount" placeholder="مثلاً: 09123456789" required></label>
-                                    <label>سه رقم آخر شماره دانشجویی/پرسنلی: <input type="text" id="DiscountVerifCode" placeholder="مثلاً: 123" required></label>
-                                    
-                                    <!-- FIXED CAPTCHA SECTION -->
-                                    <div id="captchaContainer_discount">
-                                        <div id="captchaQuestion_discount" style="
-                                            padding: 10px;
-                                            margin: 10px 0;
-                                            background: #f0f0f0;
-                                            border: 1px solid #ccc;
-                                            border-radius: 5px;
-                                            font-size: 16px;
-                                            font-weight: bold;
-                                            text-align: center;
-                                            color: #000;
-                                        "></div>
-                                        <label for="captchaAnswer_discount">پاسخ را وارد کنید:</label>
-                                        <input type="number" id="captchaAnswer_discount" placeholder="مثلاً: 15" required>
-                                    </div>
-                                    
-                                    <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
-                                    <button type="submit">تایید ثبت نام</button>
-                                </form>
-                                <div id="DiscountRequestStatus"></div> 
-                                <div id="DiscountSuccessMessage" style="display: none;">
-                                    ✅ تخفیف شما با موفقیت ثبت شد!<br><br>
-                                    <span style="color: blue;">
-                                        مهلت استفاده: 30/09/1404. 
-                                    </span>
-                                </div>
-                            </div>
+                        <!-- FIXED CAPTCHA SECTION -->
+                        <div id="captchaContainer_discount">
+                            <div id="captchaQuestion_discount" style="
+                                padding: 10px;
+                                margin: 10px 0;
+                                background: #f0f0f0;
+                                border: 1px solid #ccc;
+                                border-radius: 5px;
+                                font-size: 16px;
+                                font-weight: bold;
+                                text-align: center;
+                                color: #000;
+                            "></div>
+                            <label for="captchaAnswer_discount">پاسخ را وارد کنید:</label>
+                            <input type="number" id="captchaAnswer_discount" placeholder="مثلاً: 15" required>
                         </div>
+                        
+                        <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
+                        <button type="submit">تایید ثبت نام</button>
+                    </form>
+                    <div id="DiscountRequestStatus"></div> 
+                    <div id="DiscountSuccessMessage" style="display: none;">
+                        ✅ تخفیف شما با موفقیت ثبت شد!<br><br>
+                        <span style="color: blue;">
+                            مهلت استفاده: 30/09/1404. 
+                        </span>
+                    </div>
+                </div>
+            </div>
 
             <!-- Welfare Service -->
             <div class="service-item" data-category="welfare">
