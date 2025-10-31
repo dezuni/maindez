@@ -38,9 +38,16 @@ function generateCaptcha1() {
     const questionText = `حاصل جمع ${num3} + ${num4} چند می‌شود؟`;
     document.getElementById("captchaQuestion_discount").textContent = questionText;
     
-    // Clear previous answer
-    document.getElementById("captchaAnswer_discount").value = "";
+    // Force browser to render the changes
+    const element = document.getElementById("captchaQuestion_discount");
+    element.style.display = 'block';
+    element.style.visibility = 'visible';
 }
+
+// Call this when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    generateCaptcha1();
+});
 
 generateCaptcha1(); // Generate first captcha on page load
 
