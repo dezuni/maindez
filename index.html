@@ -75,44 +75,146 @@
             </div>
 
             <!-- Discount Service -->
-            <div class="service-item" data-category="DISCOUNT">
-                <h2><i class="fas fa-money-bill-wave"></i>ثبت نام برای 10 % تحفیف فست فود لیمو</h2>
-                <p>برای استفاده از تخفیف فرم زیر را تکمیل کنید.</p>
-            
-                <div class="formcontainer">
-                    <form id="DiscountForm">
-                        <label>نام و نام خانوادگی: <input type="text" id="fullName_discount" required></label>
-                        <label>شماره تماس: <input type="text" id="phoneNumber_discount" placeholder="مثلاً: 09123456789" required></label>
-                        <label>سه رقم آخر شماره دانشجویی/پرسنلی: <input type="text" id="DiscountVerifCode" placeholder="مثلاً: 123" required></label>
-                        
-                        <!-- FIXED CAPTCHA SECTION -->
-                        <div id="captchaContainer_discount">
-                            <div id="captchaQuestion_discount" style="
-                                padding: 10px;
-                                margin: 10px 0;
-                                background: #f0f0f0;
-                                border: 1px solid #ccc;
-                                border-radius: 5px;
-                                font-size: 16px;
-                                font-weight: bold;
-                                text-align: center;
-                                color: #000;
-                            "></div>
-                            <label for="captchaAnswer_discount">پاسخ را وارد کنید:</label>
-                            <input type="number" id="captchaAnswer_discount" placeholder="مثلاً: 15" required>
-                        </div>
-                        
-                        <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
-                        <button type="submit">تایید ثبت نام</button>
-                    </form>
-                    <div id="DiscountRequestStatus"></div> 
-                    <div id="DiscountSuccessMessage" style="display: none;">
-                        ✅ تخفیف شما با موفقیت ثبت شد!<br><br>
-                        <span style="color: blue;">
-                            مهلت استفاده: 30/09/1404. 
-                        </span>
-                    </div>
-                </div>
+            <!-- Discount Service -->
+<div class="service-item" data-category="DISCOUNT">
+    <h2><i class="fas fa-money-bill-wave"></i>ثبت نام برای 10% تخفیف فست فود لیمو</h2>
+    <p>برای استفاده از تخفیف فرم زیر را تکمیل کنید.</p>
+
+    <div class="formcontainer">
+        <form id="DiscountForm">
+            <label>نام و نام خانوادگی: <input type="text" id="fullName_discount" required></label>
+            <label>شماره تماس: <input type="text" id="phoneNumber_discount" placeholder="مثلاً: 09123456789" required></label>
+            <label>سه رقم آخر شماره دانشجویی/پرسنلی: <input type="text" id="DiscountVerifCode" placeholder="مثلاً: 123" required></label>
+
+            <!-- CAPTCHA -->
+            <div id="captchaContainer_discount">
+                <div id="captchaQuestion_discount" style="
+                    padding: 10px;
+                    margin: 10px 0;
+                    background: #f0f0f0;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    text-align: center;
+                    color: #000;
+                "></div>
+                <label for="captchaAnswer_discount">پاسخ را وارد کنید:</label>
+                <input type="number" id="captchaAnswer_discount" placeholder="مثلاً: 15" required>
+            </div>
+
+            <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
+            <button type="submit" id="submitBtn">تایید ثبت نام</button>
+        </form>
+
+        <div id="DiscountRequestStatus" style="margin-top: 10px;"></div> 
+        <div id="DiscountSuccessMessage" style="display: none; color: green; margin-top: 10px;">
+            ✅ ثبت‌نام شما با موفقیت انجام شد!
+        </div>
+    </div>
+</div>
+
+<script>
+// === تنظیمات ===
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz29NGUnED-apOWZLSJUKPxLNzTHsWtsIDa26rVqwNyCDR0RwVk5kV7OU-SAFZXZAxb/exec'; // ⚠️ جایگزین کنید!
+
+// === CAPTCHA ===
+function generateCaptcha() {
+    const a = Math.floor(Math.random() * 10) + 1;
+    const b = Math.floor(Math.random() * 10) + 1;
+    window.correctCaptchaAnswer = a + b;
+    document.getElementById('captchaQuestion_discount').textContent = `${a} + ${b} = ?`;
+}
+
+// === بررسی انقضا ===
+async function checkExpiration() {
+    const statusDiv = document.getElementById('DiscountRequestStatus');
+    try {
+        const response = await fetch(WEB_APP_URL);
+        const data = await response.json();
+
+        if (!data.success) {
+            statusDiv.innerHTML = `❌ خطا: ${data.error || 'خطای ناشناخته'}`;
+            statusDiv.style.color = 'red';
+            document.getElementById('DiscountForm').style.display = 'none';
+            return false;
+        }
+
+        if (data.expired) {
+            statusDiv.innerHTML = `
+                ❌ زمان ثبت این تخفیف به پایان رسیده است.<br>
+                لطفاً <a href="https://t.me/dezvani" target="_blank" style="color: blue;">کانال دزیونی</a> را برای اطلاع از تخفیف‌های جدید دنبال کنید.
+            `;
+            statusDiv.style.color = 'red';
+            document.getElementById('DiscountForm').style.display = 'none';
+            return false;
+        }
+
+        return true; // هنوز معتبر است
+    } catch (error) {
+        statusDiv.innerHTML = '❌ خطای اتصال. لطفاً دوباره بارگذاری کنید.';
+        statusDiv.style.color = 'red';
+        document.getElementById('DiscountForm').style.display = 'none';
+        console.error('Check expiration error:', error);
+        return false;
+    }
+}
+
+// === ارسال فرم ===
+async function submitForm() {
+    const captchaInput = document.getElementById('captchaAnswer_discount').value;
+    if (parseInt(captchaInput) !== window.correctCaptchaAnswer) {
+        document.getElementById('captchaError_discount').style.display = 'block';
+        return false;
+    }
+    document.getElementById('captchaError_discount').style.display = 'none';
+
+    const fullName = document.getElementById('fullName_discount').value.trim();
+    const phoneNumber = document.getElementById('phoneNumber_discount').value.trim();
+    const password = document.getElementById('DiscountVerifCode').value.trim();
+
+    if (!fullName || !phoneNumber || !password) {
+        alert('لطفاً تمام فیلدها را پر کنید.');
+        return false;
+    }
+
+    const statusDiv = document.getElementById('DiscountRequestStatus');
+    statusDiv.innerHTML = 'در حال ارسال...';
+    statusDiv.style.color = 'blue';
+
+    try {
+        await fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ fullName, phoneNumber, password })
+        });
+
+        // با no-cors، پاسخ دریافت نمی‌شود، اما فرض موفقیت
+        document.getElementById('DiscountSuccessMessage').style.display = 'block';
+        document.getElementById('DiscountForm').style.display = 'none';
+        statusDiv.innerHTML = '';
+        return true;
+    } catch (error) {
+        statusDiv.innerHTML = '❌ خطایی در ارسال رخ داد.';
+        statusDiv.style.color = 'red';
+        console.error('Submit error:', error);
+        return false;
+    }
+}
+
+// === رویدادها ===
+document.addEventListener('DOMContentLoaded', async () => {
+    generateCaptcha();
+    const isAvailable = await checkExpiration();
+    if (isAvailable) {
+        document.getElementById('DiscountForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            submitForm();
+        });
+    }
+});
+</script>
             </div>
 
             <!-- Welfare Service -->
