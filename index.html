@@ -12,7 +12,7 @@
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سامانه خدمات دانشجویی دزیونی</title>
+    <title>سامانه خدمات دانشجو?? دز?ون?</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./style_jozvehyab.css">
@@ -29,10 +29,10 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="logo">
-                    <img src="logo.png" alt="لوگوی دانشگاه" style="max-width: 40%; height: auto;">
+                    <img src="logo.png" alt="لوگو? دانشگاه" style="max-width: 40%; height: auto;">
                 </div>
                 <div class="header-text">                    
-                    <h2>سامانه خدمات دانشجویی</h2>
+                    <h2>سامانه خدمات دانشجو??</h2>
                 </div>
             </div>
         </div>
@@ -44,21 +44,21 @@
         <nav class="services-menu">
             <ul class="services-nav">
                 <li><a href="#" class="active" data-category="all"><i class="fas fa-list"></i>همه خدمات</a></li>
-                <li><a href="#" data-category="DISCOUNT"><i class="fas fa-badge-percent"></i>تخفیف ها</a></li>
-                <li><a href="#" data-category="jozveh"><i class="fas fa-book"></i>جزوه یاب</a></li>
-               <!-- <li><a href="#" data-category="financial"><i class="fas fa-money-bill-wave"></i>مالی</a></li>  -->
-                <li><a href="#" data-category="welfare"><i class="fas fa-users"></i>خدمات غیرحضوری</a></li>                
-                <li><a href="#" data-category="map"><i class="fas fa-directions"></i>مکان یابی در دانشگاه</a></li>
+                <li><a href="#" data-category="DISCOUNT"><i class="fas fa-badge-percent"></i>تخف?ف ها</a></li>
+                <li><a href="#" data-category="jozveh"><i class="fas fa-book"></i>جزوه ?اب</a></li>
+               <!-- <li><a href="#" data-category="financial"><i class="fas fa-money-bill-wave"></i>مال?</a></li>  -->
+                <li><a href="#" data-category="welfare"><i class="fas fa-users"></i>خدمات غ?رحضور?</a></li>                
+                <li><a href="#" data-category="map"><i class="fas fa-directions"></i>مکان ?اب? در دانشگاه</a></li>
                 <li><a href="#" data-category="aboutus"><i class="fas fa-info-circle"></i> درباره ما</a></li>
-                <li><a href="#" data-category="contact"><i class="fas fa-headset"></i>تماس با ادمین</a></li>
+                <li><a href="#" data-category="contact"><i class="fas fa-headset"></i>تماس با ادم?ن</a></li>
             </ul>
         </nav>
 
         <main>
             <!-- Academic Service -->
             <div class="service-item" data-category="jozveh">
-               <h2><i class="fas fa-book"></i> جزوه یاب</h2>
-              <p style="font-weight: bold; margin-top: 20px;">جستجوی جزوات بر اساس نام استاد </p>
+               <h2><i class="fas fa-book"></i> جزوه ?اب</h2>
+              <p style="font-weight: bold; margin-top: 20px;">جستجو? جزوات بر اساس نام استاد </p>
               <input type="text" id="authorInput" placeholder="نام استاد را وارد کن *">
               <button onclick="searchAuthor()">جستجو</button>            
               <div id="response"></div>              
@@ -75,182 +75,80 @@
             </div>
 
             <!-- Discount Service -->
-            <!-- Discount Service -->
-<div class="service-item" data-category="DISCOUNT">
-    <h2><i class="fas fa-money-bill-wave"></i>ثبت نام برای 10% تخفیف فست فود لیمو</h2>
-    <p>برای استفاده از تخفیف فرم زیر را تکمیل کنید.</p>
-
-    <div class="formcontainer">
-        <form id="DiscountForm">
-            <label>نام و نام خانوادگی: <input type="text" id="fullName_discount" required></label>
-            <label>شماره تماس: <input type="text" id="phoneNumber_discount" placeholder="مثلاً: 09123456789" required></label>
-            <label>سه رقم آخر شماره دانشجویی/پرسنلی: <input type="text" id="DiscountVerifCode" placeholder="مثلاً: 123" required></label>
-
-            <!-- CAPTCHA -->
-            <div id="captchaContainer_discount">
-                <div id="captchaQuestion_discount" style="
-                    padding: 10px;
-                    margin: 10px 0;
-                    background: #f0f0f0;
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                    font-size: 16px;
-                    font-weight: bold;
-                    text-align: center;
-                    color: #000;
-                "></div>
-                <label for="captchaAnswer_discount">پاسخ را وارد کنید:</label>
-                <input type="number" id="captchaAnswer_discount" placeholder="مثلاً: 15" required>
-            </div>
-
-            <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
-            <button type="submit" id="submitBtn">تایید ثبت نام</button>
-        </form>
-
-        <div id="DiscountRequestStatus" style="margin-top: 10px;"></div> 
-        <div id="DiscountSuccessMessage" style="display: none; color: green; margin-top: 10px;">
-            ✅ ثبت‌نام شما با موفقیت انجام شد!
-        </div>
-    </div>
-</div>
-
-<script>
-// === تنظیمات ===
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbz29NGUnED-apOWZLSJUKPxLNzTHsWtsIDa26rVqwNyCDR0RwVk5kV7OU-SAFZXZAxb/exec'; // ⚠️ جایگزین کنید!
-
-// === CAPTCHA ===
-function generateCaptcha() {
-    const a = Math.floor(Math.random() * 10) + 1;
-    const b = Math.floor(Math.random() * 10) + 1;
-    window.correctCaptchaAnswer = a + b;
-    document.getElementById('captchaQuestion_discount').textContent = `${a} + ${b} = ?`;
-}
-
-// === بررسی انقضا ===
-async function checkExpiration() {
-    const statusDiv = document.getElementById('DiscountRequestStatus');
-    try {
-        const response = await fetch(WEB_APP_URL);
-        const data = await response.json();
-
-        if (!data.success) {
-            statusDiv.innerHTML = `❌ خطا: ${data.error || 'خطای ناشناخته'}`;
-            statusDiv.style.color = 'red';
-            document.getElementById('DiscountForm').style.display = 'none';
-            return false;
-        }
-
-        if (data.expired) {
-            statusDiv.innerHTML = `
-                ❌ زمان ثبت این تخفیف به پایان رسیده است.<br>
-                لطفاً <a href="https://t.me/dezvani" target="_blank" style="color: blue;">کانال دزیونی</a> را برای اطلاع از تخفیف‌های جدید دنبال کنید.
-            `;
-            statusDiv.style.color = 'red';
-            document.getElementById('DiscountForm').style.display = 'none';
-            return false;
-        }
-
-        return true; // هنوز معتبر است
-    } catch (error) {
-        statusDiv.innerHTML = '❌ خطای اتصال. لطفاً دوباره بارگذاری کنید.';
-        statusDiv.style.color = 'red';
-        document.getElementById('DiscountForm').style.display = 'none';
-        console.error('Check expiration error:', error);
-        return false;
-    }
-}
-
-// === ارسال فرم ===
-async function submitForm() {
-    const captchaInput = document.getElementById('captchaAnswer_discount').value;
-    if (parseInt(captchaInput) !== window.correctCaptchaAnswer) {
-        document.getElementById('captchaError_discount').style.display = 'block';
-        return false;
-    }
-    document.getElementById('captchaError_discount').style.display = 'none';
-
-    const fullName = document.getElementById('fullName_discount').value.trim();
-    const phoneNumber = document.getElementById('phoneNumber_discount').value.trim();
-    const password = document.getElementById('DiscountVerifCode').value.trim();
-
-    if (!fullName || !phoneNumber || !password) {
-        alert('لطفاً تمام فیلدها را پر کنید.');
-        return false;
-    }
-
-    const statusDiv = document.getElementById('DiscountRequestStatus');
-    statusDiv.innerHTML = 'در حال ارسال...';
-    statusDiv.style.color = 'blue';
-
-    try {
-        await fetch(WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ fullName, phoneNumber, password })
-        });
-
-        // با no-cors، پاسخ دریافت نمی‌شود، اما فرض موفقیت
-        document.getElementById('DiscountSuccessMessage').style.display = 'block';
-        document.getElementById('DiscountForm').style.display = 'none';
-        statusDiv.innerHTML = '';
-        return true;
-    } catch (error) {
-        statusDiv.innerHTML = '❌ خطایی در ارسال رخ داد.';
-        statusDiv.style.color = 'red';
-        console.error('Submit error:', error);
-        return false;
-    }
-}
-
-// === رویدادها ===
-document.addEventListener('DOMContentLoaded', async () => {
-    generateCaptcha();
-    const isAvailable = await checkExpiration();
-    if (isAvailable) {
-        document.getElementById('DiscountForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            submitForm();
-        });
-    }
-});
-</script>
+            <div class="service-item" data-category="DISCOUNT">
+                <h2><i class="fas fa-money-bill-wave"></i>ثبت نام برا? 10 % تحف?ف فست فود ل?مو</h2>
+                <p>برا? استفاده از تخف?ف فرم ز?ر را تکم?ل کن?د.</p>
+            
+                <div class="formcontainer">
+                    <form id="DiscountForm">
+                        <label>نام و نام خانوادگ?: <input type="text" id="fullName_discount" required></label>
+                        <label>شماره تماس: <input type="text" id="phoneNumber_discount" placeholder="مثلاً: 09123456789" required></label>
+                        <label>سه رقم آخر شماره دانشجو??/پرسنل?: <input type="text" id="DiscountVerifCode" placeholder="مثلاً: 123" required></label>
+                        
+                        <!-- FIXED CAPTCHA SECTION -->
+                        <div id="captchaContainer_discount">
+                            <div id="captchaQuestion_discount" style="
+                                padding: 10px;
+                                margin: 10px 0;
+                                background: #f0f0f0;
+                                border: 1px solid #ccc;
+                                border-radius: 5px;
+                                font-size: 16px;
+                                font-weight: bold;
+                                text-align: center;
+                                color: #000;
+                            "></div>
+                            <label for="captchaAnswer_discount">پاسخ را وارد کن?د:</label>
+                            <input type="number" id="captchaAnswer_discount" placeholder="مثلاً: 15" required>
+                        </div>
+                        
+                        <div id="captchaError_discount" style="color:red; display:none;">? پاسخ اشتباه است.</div>
+                        <button type="submit">تا??د ثبت نام</button>
+                    </form>
+                    <div id="DiscountRequestStatus"></div> 
+                    <div id="DiscountSuccessMessage" style="display: none;">
+                        ? تخف?ف شما با موفق?ت ثبت شد!<br><br>
+                        <span style="color: blue;">
+                            مهلت استفاده: 30/09/1404. 
+                        </span>
+                    </div>
+                </div> 
             </div>
 
             <!-- Welfare Service -->
             <div class="service-item" data-category="welfare">
-                <h2><i class="fas fa-users"></i> خدمات غیرحضوری</h2>
-                <p>دانشجویان و فارغ التحصیلان عزیز جهت استفاده از خدمات غیرحضوری سامانه دزیونی، فرم ذیل را تکمیل و ارسال نمایید.</p>
+                <h2><i class="fas fa-users"></i> خدمات غ?رحضور?</h2>
+                <p>دانشجو?ان و فارغ التحص?لان عز?ز جهت استفاده از خدمات غ?رحضور? سامانه دز?ون?، فرم ذ?ل را تکم?ل و ارسال نما??د.</p>
                     <div class="formcontainer">
                             <form id="serviceForm">
-                            <label>نام و نام خانوادگی: <input type="text" id="fullName" required></label>
+                            <label>نام و نام خانوادگ?: <input type="text" id="fullName" required></label>
                             <label>شماره تماس: <input type="text" id="phoneNumber" placeholder="مثلاً: 09123456789" required></label>
                             <label>نوع خدمت:
                                 <select id="serviceType" required>
-                                    <option value="">انتخاب کنید</option>
-                                    <option value="آموزشی">خدمات آموزشی</option>
-                                    <option value="پژوهشی">خدمات پژوهشی</option>
-                                    <option value="دانشجویی">خدمات دانشجویی</option>
-                                    <option value="کاریابی">خدمات کاریابی</option>
+                                    <option value="">انتخاب کن?د</option>
+                                    <option value="آموزش?">خدمات آموزش?</option>
+                                    <option value="پژوهش?">خدمات پژوهش?</option>
+                                    <option value="دانشجو??">خدمات دانشجو??</option>
+                                    <option value="کار?اب?">خدمات کار?اب?</option>
                                 </select>
                             </label>
-                            <label>نوع فعالیت:
+                            <label>نوع فعال?ت:
                                 <select id="subService" required>
-                                    <option value=""> نوع فعالیت را انتخاب کنید</option>
+                                    <option value=""> نوع فعال?ت را انتخاب کن?د</option>
                                 </select>
                             </label>
-                            <label>توضیحات: <textarea id="description"></textarea></label>
+                            <label>توض?حات: <textarea id="description"></textarea></label>
                             <div id="captchaContainer">
-                            <label for="captchaAnswer" id="captchaQuestion">چند می‌شود؟</label>
-                            <input type="number" id="captchaAnswer" placeholder="پاسخ را وارد کنید" required>
+                            <label for="captchaAnswer" id="captchaQuestion">چند م?‌شود؟</label>
+                            <input type="number" id="captchaAnswer" placeholder="پاسخ را وارد کن?د" required>
                             </div>
-                            <div id="captchaError" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
+                            <div id="captchaError" style="color:red; display:none;">? پاسخ اشتباه است.</div>
                             <button type="submit">ارسال درخواست</button>
                         </form>
                         <div id="requeststatus"></div> 
-                         <div id="successMessage">  ✅ درخواست شما با موفقیت ثبت شد!<br><br>
+                         <div id="successMessage">  ? درخواست شما با موفق?ت ثبت شد!<br><br>
                             <span style="color: blue;">
-                                 توجه: ادمین دزیونی جهت پیگیری درخواست ارسال شده، با شما تماس خواهد گرفت. 
+                                 توجه: ادم?ن دز?ون? جهت پ?گ?ر? درخواست ارسال شده، با شما تماس خواهد گرفت. 
                             </span>
                         </div>
                         </div>
@@ -258,11 +156,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             <!-- office search -->
             <div class="service-item" data-category="map">
-                <h2><i class="fas fa-directions"></i> مکان یابی در دانشگاه</h2>
-                <p style="font-weight: bold; margin-top: 20px;">جستجوی دفاتر دانشگاه</p>
+                <h2><i class="fas fa-directions"></i> مکان ?اب? در دانشگاه</h2>
+                <p style="font-weight: bold; margin-top: 20px;">جستجو? دفاتر دانشگاه</p>
                     
                 
-                        <input type="text" id="officeName" placeholder="نام دفتر را وارد کنید">
+                        <input type="text" id="officeName" placeholder="نام دفتر را وارد کن?د">
                         <button onclick="searchOffice()">جستجو</button>
                                   
                     <!-- Spinner and loading text -->
@@ -271,7 +169,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <div class="spinner"></div>                        
                     </div>                
                     <div id="officeSearchResult"></div>
-                    <p style="font-weight: bold; margin-top: 20px;">موقعیت ساختمان های دانشگاه</p>
+                    <p style="font-weight: bold; margin-top: 20px;">موقع?ت ساختمان ها? دانشگاه</p>
                 <div class="map-container" id="interactive-map">
     <img
         src="https://raw.githubusercontent.com/dezuni/maindez/main/Map2.jpg"
@@ -284,14 +182,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             <!-- about us -->
             <div class="service-item hidden" data-category="aboutus">
                 <h2><i class="fas fa-info-circle"></i> درباره ما</h2>
-                <p style="margin-top: 20px;">دزیونی یک سایت مستقل است که در فروردین 1404 جهت ارائه خدمات به دانشجویان راه اندازی شد.</p>
-                <p style="font-weight: bold; margin-top: 10px; margin-bottom: 0;">خدمات دزیونی شامل موارد زیر است:</p>
+                <p style="margin-top: 20px;">دز?ون? ?ک سا?ت مستقل است که در فرورد?ن 1404 جهت ارائه خدمات به دانشجو?ان راه انداز? شد.</p>
+                <p style="font-weight: bold; margin-top: 10px; margin-bottom: 0;">خدمات دز?ون? شامل موارد ز?ر است:</p>
                 <div style="display: flex; flex-wrap: wrap;  margin-top: 0;">
                <div style="white-space: pre-line; overflow-wrap: break-word; text-align: right;">
-    ◾جزوه یاب: یافتن جزوه دروس مختلف با جستجوی نام استاد. 
-    ◾مکان یابی در دانشگاه: یافتن آدرس دفاتر مختلف دانشگاه و رویت نقشه دانشگاه. 
-    ◾خدمات غیرحضوری: پیگیری درخواست کاربران جهت انجام امور دانشجویی/فارغ التحصیلی/آموزشی/پژوهشی/مالی توسط کارگزاران دزیونی در دانشگاه. 
-    ◾خدمات دیگر بزودی اضافه خواهد شد. 
+    ?جزوه ?اب: ?افتن جزوه دروس مختلف با جستجو? نام استاد. 
+    ?مکان ?اب? در دانشگاه: ?افتن آدرس دفاتر مختلف دانشگاه و رو?ت نقشه دانشگاه. 
+    ?خدمات غ?رحضور?: پ?گ?ر? درخواست کاربران جهت انجام امور دانشجو??/فارغ التحص?ل?/آموزش?/پژوهش?/مال? توسط کارگزاران دز?ون? در دانشگاه. 
+    ?خدمات د?گر بزود? اضافه خواهد شد. 
               </div>
               </div>
                 
@@ -299,31 +197,31 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             <!-- Enhanced Contact Admin Section -->
             <div class="service-item hidden" data-category="contact">
-                <h2><i class="fas fa-headset"></i> تماس با ادمین</h2>
+                <h2><i class="fas fa-headset"></i> تماس با ادم?ن</h2>
                 <div class="contact-grid">
                     <div class="contact-method">
                         <i class="fab fa-telegram"></i>
-                        <h3>پشتیبانی تلگرام</h3>
+                        <h3>پشت?بان? تلگرام</h3>
                         <p>@dezuni_admin</p>
                         <a href="https://t.me/dezuni_admin" target="_blank" class="btn">ارتباط در تلگرام</a>
                     </div>
                     <div class="contact-method">
                         <i class="fab fa-telegram"></i>
-                        <h3>کانال اطلاع رسانی دزیونی</h3>
+                        <h3>کانال اطلاع رسان? دز?ون?</h3>
                         <p>@dezuni_ch</p>
                         <a href="https://t.me/dezuni_ch" target="_blank" class="btn">ارتباط در تلگرام</a>
                     </div>
                     <div class="contact-method">
                         <i class="fas fa-envelope"></i>
-                        <h3>ایمیل پشتیبانی</h3>
+                        <h3>ا?م?ل پشت?بان?</h3>
                         <p>unidez.ir@gmail.com</p>
-                        <a href="mailto:support@university.ac.ir" class="btn">ارسال ایمیل</a>
+                        <a href="mailto:support@university.ac.ir" class="btn">ارسال ا?م?ل</a>
                     </div>
                    <!-- <div class="contact-method">
                         <i class="fas fa-phone"></i>
                         <h3>تلفن تماس</h3>
-                        <p>۰۲۱-۱۲۳۴۵۶۷۸</p>
-                        <a href="tel:+982112345678" class="btn">تماس تلفنی</a> 
+                        <p>???-????????</p>
+                        <a href="tel:+982112345678" class="btn">تماس تلفن?</a> 
                     </div> -->
                 </div>
             </div>
@@ -332,9 +230,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     <footer>
         <div class="container">
-            <p>© <span id="current-year"></span> کلیه حقوق این سامانه متعلق به دزیونی است.</p>
+            <p>© <span id="current-year"></span> کل?ه حقوق ا?ن سامانه متعلق به دز?ون? است.</p>
             <div class="telegram-contact">
-                <a href="https://t.me/dezuni_admin" target="_blank"><i class="fab fa-telegram"></i> پشتیبانی تلگرام: @dezuni_admin</a>
+                <a href="https://t.me/dezuni_admin" target="_blank"><i class="fab fa-telegram"></i> پشت?بان? تلگرام: @dezuni_admin</a>
             </div>
         </div>
     </footer>
