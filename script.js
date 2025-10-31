@@ -154,10 +154,14 @@ function resetAllServices() {
   document.getElementById("successMessage").style.display = "none";
   document.getElementById("captchaError").style.display = "none";
     
-  // Add reset for other services here if needed
-  // For example:
-  // document.getElementById('financial-input').value = '';
-  // document.getElementById('welfare-input').value = '';
+  
+  document.getElementById('fullName_discount').value = '';
+  document.getElementById('phoneNumber_discount').value = '';  
+  document.getElementById('DiscountVerifCode').value = '';
+  document.getElementById('captchaAnswer_discount').value = '';
+  
+  document.getElementById('captchaAnswer_discount').value = '';
+  document.getElementById('DiscountSuccessMessage').value = '';
 }
 
 function filterServices(clickedLink, allServices) {
