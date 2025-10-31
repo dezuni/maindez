@@ -23,11 +23,23 @@ spinnerformDSCNT.className = 'spinner';
 
 let correctAnswer1 = 0;
 
-function generateCaptcha1() {
+/*function generateCaptcha1() {
     const num3 = Math.floor(Math.random() * 10) + 1;
     const num4 = Math.floor(Math.random() * 10) + 1;
     correctAnswer1 = num3 + num4;
     document.getElementById("captchaQuestion_discount").textContent = `حاصل جمع ${num3} + ${num4} چند می‌شود؟`;
+}*/
+
+function generateCaptcha1() {
+    const num3 = Math.floor(Math.random() * 10) + 1;
+    const num4 = Math.floor(Math.random() * 10) + 1;
+    correctAnswer1 = num3 + num4;
+    
+    const questionText = `حاصل جمع ${num3} + ${num4} چند می‌شود؟`;
+    document.getElementById("captchaQuestion_discount").textContent = questionText;
+    
+    // Clear previous answer
+    document.getElementById("captchaAnswer_discount").value = "";
 }
 
 generateCaptcha1(); // Generate first captcha on page load
