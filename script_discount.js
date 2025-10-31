@@ -80,6 +80,74 @@ function handleFormSubmit() {
     document.getElementById("captchaError_discount").style.display = "none";
     document.getElementById("DiscountSuccessMessage").style.display = "none";
 
+    // Use FormData instead of JSON
+    let DiscountFormData = new FormData();
+    DiscountFormData.append("phone", document.getElementById("phoneNumber_discount").value);
+    DiscountFormData.append("name", document.getElementById("fullName_discount").value);
+    DiscountFormData.append("discount", discountRate);
+    DiscountFormData.append("password", document.getElementById("DiscountVerifCode").value);
+    DiscountFormData.append("status", "active");
+    DiscountFormData.append("time_used", "");
+    DiscountFormData.append("date_used", "");
+    DiscountFormData.append("Expiration_Date", expiryDate.toString());
+
+    fetch("https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/exec", {
+        method: "POST",
+        body: DiscountFormData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('خطای ارسال، بعدا تلاش کنید');
+        }
+        return response.text(); // Changed back to text()
+    })
+    .then(data => {
+        console.log('Response data:', data);
+        generateCaptcha1();
+        DiscountRequestStatusDiv.textContent = '';
+        if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
+            DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
+        }
+        document.getElementById("DiscountSuccessMessage").style.display = "block";
+        document.getElementById("DiscountForm").reset();
+    })
+    .catch(error => {
+        DiscountRequestStatusDiv.textContent = "❌ خطا در ارسال فرم";
+        DiscountRequestStatusDiv.style.color = 'red';
+        if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
+            DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
+        }
+        console.error("Error:", error);
+    });
+}
+
+/*
+function handleFormSubmit() {
+    const userCaptcha1 = parseInt(document.getElementById("captchaAnswer_discount").value);
+    const DiscountRequestStatusDiv = document.getElementById('DiscountRequestStatus');
+    
+    if (userCaptcha1 !== correctAnswer1) {
+        DiscountRequestStatusDiv.textContent = "";
+        document.getElementById("DiscountSuccessMessage").style.display = "none";
+        document.getElementById("captchaError_discount").style.display = "block";
+        generateCaptcha1();
+        document.getElementById("captchaAnswer_discount").value = "";
+        return;
+    }
+    
+    if (currentDate > RegistrationDeadline) {
+        DiscountRequestStatusDiv.textContent = "❌ مهلت ثبت نام به پایان رسیده است.";
+        DiscountRequestStatusDiv.style.color = 'red';
+        return;
+    }
+    
+    DiscountRequestStatusDiv.textContent = 'در حال ارسال درخواست ...';
+    DiscountRequestStatusDiv.style.color = 'blue';
+    DiscountRequestStatusDiv.appendChild(spinnerformDSCNT);
+    
+    document.getElementById("captchaError_discount").style.display = "none";
+    document.getElementById("DiscountSuccessMessage").style.display = "none";
+
     let DiscountFormData = {
         phone: document.getElementById("phoneNumber_discount").value,
         name: document.getElementById("fullName_discount").value,
@@ -122,7 +190,8 @@ function handleFormSubmit() {
         console.error("Error:", error);
     });
 }
-
+*/
+    
 function resetDiscountForm() {
     document.getElementById("DiscountSuccessMessage").style.display = "none";
     document.getElementById("DiscountForm").reset();
