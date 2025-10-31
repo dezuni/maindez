@@ -91,7 +91,7 @@ function handleFormSubmit() {
         Expiration_Date: expiryDate
     };
 
-    fetch("https://script.google.com/macros/s/AKfycbxHZU1KQSMvc8MWtO--hPvtdIyam-CKHQqPO5jWNZwkqGg9ep0dq4lamYdM7pOI7Y8/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbyt08JF6WSaaYbU7BZXPtwG9fniBA0A9wQ7piLY43VpgFbNirmwx8lxCRibmyTx8Q_h/exec", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
