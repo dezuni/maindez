@@ -62,17 +62,59 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
     document.getElementById("captchaError_discount").style.display = "none";
     document.getElementById("DiscountSuccessMessage").style.display = "none";
 
-    let DiscountFormData = new FormData();
-    DiscountFormData.append("phone", document.getElementById("phoneNumber_discount").value);
-    DiscountFormData.append("name", document.getElementById("fullName_discount").value);
-    DiscountFormData.append("discount", discountRate);
-    DiscountFormData.append("password", document.getElementById("DiscountVerifCode").value); 
-    DiscountFormData.append("status", "active");
-    DiscountFormData.append("time_used", "");
-    DiscountFormData.append("date_used", "");
-    DiscountFormData.append("Expiration_Date", expiryDate );
+//    let DiscountFormData = new FormData();
+//    DiscountFormData.append("phone", document.getElementById("phoneNumber_discount").value);
+//    DiscountFormData.append("name", document.getElementById("fullName_discount").value);
+//    DiscountFormData.append("discount", discountRate);
+//    DiscountFormData.append("password", document.getElementById("DiscountVerifCode").value); 
+//    DiscountFormData.append("status", "active");
+//    DiscountFormData.append("time_used", "");
+//    DiscountFormData.append("date_used", "");
+//    DiscountFormData.append("Expiration_Date", expiryDate );
+
+let DiscountFormData = {
+    phone: document.getElementById("phoneNumber_discount").value,
+    name: document.getElementById("fullName_discount").value,
+    discount: discountRate,
+    password: document.getElementById("DiscountVerifCode").value,
+    status: "active",
+    time_used: "",
+    date_used: "",
+    Expiration_Date: expiryDate
+};
+
+    fetch("https://script.google.com/macros/s/AKfycbzMk5POv3CjcdGGt3PbDtZ094vKc5vEczAU3PV2HVt2Tpl7yoiTtaXITNkwq71WS9tH/exec", {
+    method: "POST",
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(DiscountFormData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('خطای ارسال، بعدا تلاش کنید');
+        }
+        return response.json(); // Changed from text() to json()
+    })
+    .then(data => {
+        generateCaptcha1(); // Generate new captcha after successful submission
+        DiscountRequestStatusDiv.textContent = '';
+        if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
+            DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
+        }
+        document.getElementById("DiscountSuccessMessage").style.display = "block";
+        document.getElementById("DiscountForm").reset();
+    })
+    .catch(error => {
+        DiscountRequestStatusDiv.textContent = "❌ خطا در ارسال فرم";
+        DiscountRequestStatusDiv.style.color = 'red';
+        if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
+            DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
+        }
+        console.error("Error:", error);
+    });
     
-    fetch("https://script.google.com/macros/s/AKfycbxK4pmFkIphGVBT5xYmdo0P7E_6F8N-W5KB2jeuiynt0G5JDqJsyZWEupEhWF8nq1Zm/exec", {
+/*    fetch("https://script.google.com/macros/s/AKfycbxK4pmFkIphGVBT5xYmdo0P7E_6F8N-W5KB2jeuiynt0G5JDqJsyZWEupEhWF8nq1Zm/exec", {
         method: "POST",
         body: DiscountFormData
     })
@@ -100,6 +142,7 @@ document.getElementById("DiscountForm").addEventListener("submit", function(even
         console.error("Error:", error);
     });
 });
+*/
 
 function resetDiscountForm() {
     document.getElementById("DiscountSuccessMessage").style.display = "none";
