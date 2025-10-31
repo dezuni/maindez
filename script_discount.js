@@ -80,7 +80,7 @@ function handleFormSubmit() {
     document.getElementById("captchaError_discount").style.display = "none";
     document.getElementById("DiscountSuccessMessage").style.display = "none";
 
-    // Use FormData instead of JSON
+    // Use FormData instead of JSON to avoid CORS
     let DiscountFormData = new FormData();
     DiscountFormData.append("phone", document.getElementById("phoneNumber_discount").value);
     DiscountFormData.append("name", document.getElementById("fullName_discount").value);
@@ -91,96 +91,19 @@ function handleFormSubmit() {
     DiscountFormData.append("date_used", "");
     DiscountFormData.append("Expiration_Date", expiryDate.toString());
 
-    /*fetch("https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/exec", {
-        method: "POST",
-        body: DiscountFormData
-    })*/
-    // Change only this line in your current JavaScript:
-fetch("https://script.google.com/macros/s/AKfycbwllRw8F6VrTh2GLqvPAeIgWuOuALpjfcla14scwvwCBX0ylewu568QNDV9UFky3pfV/dev", {
-    method: "POST",
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(DiscountFormData)
-})
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('خطای ارسال، بعدا تلاش کنید');
-        }
-        return response.text(); // Changed back to text()
-    })
-    .then(data => {
-        console.log('Response data:', data);
-        generateCaptcha1();
-        DiscountRequestStatusDiv.textContent = '';
-        if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
-            DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
-        }
-        document.getElementById("DiscountSuccessMessage").style.display = "block";
-        document.getElementById("DiscountForm").reset();
-    })
-    .catch(error => {
-        DiscountRequestStatusDiv.textContent = "❌ خطا در ارسال فرم";
-        DiscountRequestStatusDiv.style.color = 'red';
-        if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
-            DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
-        }
-        console.error("Error:", error);
-    });
-}
-
-/*
-function handleFormSubmit() {
-    const userCaptcha1 = parseInt(document.getElementById("captchaAnswer_discount").value);
-    const DiscountRequestStatusDiv = document.getElementById('DiscountRequestStatus');
-    
-    if (userCaptcha1 !== correctAnswer1) {
-        DiscountRequestStatusDiv.textContent = "";
-        document.getElementById("DiscountSuccessMessage").style.display = "none";
-        document.getElementById("captchaError_discount").style.display = "block";
-        generateCaptcha1();
-        document.getElementById("captchaAnswer_discount").value = "";
-        return;
-    }
-    
-    if (currentDate > RegistrationDeadline) {
-        DiscountRequestStatusDiv.textContent = "❌ مهلت ثبت نام به پایان رسیده است.";
-        DiscountRequestStatusDiv.style.color = 'red';
-        return;
-    }
-    
-    DiscountRequestStatusDiv.textContent = 'در حال ارسال درخواست ...';
-    DiscountRequestStatusDiv.style.color = 'blue';
-    DiscountRequestStatusDiv.appendChild(spinnerformDSCNT);
-    
-    document.getElementById("captchaError_discount").style.display = "none";
-    document.getElementById("DiscountSuccessMessage").style.display = "none";
-
-    let DiscountFormData = {
-        phone: document.getElementById("phoneNumber_discount").value,
-        name: document.getElementById("fullName_discount").value,
-        discount: discountRate,
-        password: document.getElementById("DiscountVerifCode").value,
-        status: "active",
-        time_used: "",
-        date_used: "",
-        Expiration_Date: expiryDate
-    };
-
     fetch("https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/exec", {
         method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(DiscountFormData)
+        body: DiscountFormData
     })
     .then(response => {
+        console.log('Response status:', response.status);
         if (!response.ok) {
-            throw new Error('خطای ارسال، بعدا تلاش کنید');
+            throw new Error('خطای ارسال، بعدا تلاش کنید. Status: ' + response.status);
         }
-        return response.json();
+        return response.text();
     })
     .then(data => {
+        console.log('Success response:', data);
         generateCaptcha1();
         DiscountRequestStatusDiv.textContent = '';
         if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
@@ -190,16 +113,15 @@ function handleFormSubmit() {
         document.getElementById("DiscountForm").reset();
     })
     .catch(error => {
+        console.error("Fetch error:", error);
         DiscountRequestStatusDiv.textContent = "❌ خطا در ارسال فرم";
         DiscountRequestStatusDiv.style.color = 'red';
         if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
             DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
         }
-        console.error("Error:", error);
     });
 }
-*/
-    
+
 function resetDiscountForm() {
     document.getElementById("DiscountSuccessMessage").style.display = "none";
     document.getElementById("DiscountForm").reset();
