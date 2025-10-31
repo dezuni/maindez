@@ -96,7 +96,7 @@ function handleFormSubmit() {
         body: DiscountFormData
     })*/
     // Change only this line in your current JavaScript:
-fetch("https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/dev", {
+fetch("https://script.google.com/macros/s/AKfycbwllRw8F6VrTh2GLqvPAeIgWuOuALpjfcla14scwvwCBX0ylewu568QNDV9UFky3pfV/dev", {
     method: "POST",
     headers: {
         'Content-Type': 'application/json'
