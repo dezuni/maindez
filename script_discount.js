@@ -36,6 +36,27 @@ function generateCaptcha1() {
     }
 }
 
+// verify phone number
+function validatePhoneNumber(phone) {
+    // Remove any spaces, dashes, or other characters
+    const cleanedPhone = phone.replace(/\D/g, '');
+    
+    // Check if it has exactly 11 digits and starts with 09
+    const phoneRegex = /^09\d{9}$/;
+    
+    if (phoneRegex.test(cleanedPhone)) {
+        return {
+            isValid: true,
+            cleanedNumber: cleanedPhone
+        };
+    } else {
+        return {
+            isValid: false,
+            cleanedNumber: cleanedPhone
+        };
+    }
+}
+
 // Initialize when page loads
 function initDiscountForm() {
     console.log('Initializing discount form...');
@@ -57,6 +78,16 @@ function initDiscountForm() {
 function handleFormSubmit() {
     const userCaptcha1 = parseInt(document.getElementById("captchaAnswer_discount").value);
     const DiscountRequestStatusDiv = document.getElementById('DiscountRequestStatus');
+    const phoneInput = document.getElementById("phoneNumber_discount");
+    
+        // Validate phone number
+    const phoneValidation = validatePhoneNumber(phoneInput.value);
+    if (!phoneValidation.isValid) {
+        DiscountRequestStatusDiv.textContent = "❌ شماره تماس باید 11 رقمی و با 09 شروع شود";
+        DiscountRequestStatusDiv.style.color = 'red';
+        phoneInput.focus();
+        return;
+    }
     
     if (userCaptcha1 !== correctAnswer1) {
         DiscountRequestStatusDiv.textContent = "";
