@@ -76,19 +76,4 @@
             margin-top: 10px;
         }
 
-   .service-item[data-category="DISCOUNT"] .formcontainer #captchaQuestion_discount {
-    display: block;
-    width: 100%;
-    white-space: normal;
-    word-wrap: break-word;
-    text-align: center;
-    padding: 10px;
-    margin: 10px 0;
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 5px;
-    font-size: 16px;
-    line-height: 1.5;
-    min-height: 50px;
-    direction: rtl; /* For Persian text */
-}
+
