@@ -91,10 +91,18 @@ function handleFormSubmit() {
     DiscountFormData.append("date_used", "");
     DiscountFormData.append("Expiration_Date", expiryDate.toString());
 
-    fetch("https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/exec", {
+    /*fetch("https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/exec", {
         method: "POST",
         body: DiscountFormData
-    })
+    })*/
+    // Change only this line in your current JavaScript:
+fetch("https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/dev", {
+    method: "POST",
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(DiscountFormData)
+})
     .then(response => {
         if (!response.ok) {
             throw new Error('خطای ارسال، بعدا تلاش کنید');
