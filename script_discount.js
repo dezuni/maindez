@@ -4,13 +4,13 @@ let discountRate = 10;
 // discount registration deadline
 let YYYY = 2025; // year
 let MM = 11;      // month
-let DD = 15;      // day
+let DD = 7;      // day
 let RegistrationDeadline = new Date(YYYY, MM-1, DD, 24, 00, 00);
 
 // discount expiration date
 YYYY = 2025; // year
 MM = 11;      // month
-DD = 30;      // day
+DD = 21;      // day
 const expiryDate = new Date(YYYY, MM-1, DD, 24, 00, 00);
 
 // Get the current date
