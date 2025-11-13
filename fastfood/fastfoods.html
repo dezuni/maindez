@@ -1,85 +1,148 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>تخفیف فست‌فودهای منتخب  | دزیونی</title>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E00MPED2X0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E00MPED2X0');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سامانه خدمات دانشجويي دزيوني</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- مسیرهای CSS از ریشه -->
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="/style_discount.css">
+    <link rel="stylesheet" href="/style_jozvehyab.css">
+    <link rel="stylesheet" href="/style_map.css">
+    <link rel="stylesheet" href="/style_request.css">
+   <link rel="stylesheet" href="/style_discount.css">
 </head>
 <body>
     <header>
-        <div class="container-header">
+        <div class="container-header" >
+
             <div class="header-content">
-                <a href="/" style="text-decoration: none; color: inherit;">
-                    <div class="logo">
-                        <img src="/logo.png" alt="لوگوی دزیونی" style="max-width: 40%; height: auto;">
-                    </div>
-                </a>
-                <div class="header-text">
-                    <h2>تخفیف 10% فست‌فود لیمو</h2>
+                                <button class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <img src="/logo.png" alt="لوگوي دانشگاه" style="max-width: 40%; height: auto;">
+                </div>
+                <div class="header-text">                    
+                    <h2>سامانه خدمات دانشجويي</h2>
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="container-main" style="padding: 20px;">
-        <!-- فرم تخفیف — بدون کلاس hidden -->
-        <div class="service-item" data-category="DISCOUNT">
-            <h2><i class="fas fa-tags"></i> ثبت‌نام برای 10% تخفیف فست‌فود لیمو</h2>
-            <p>فرم زیر را تکمیل کنید تا کد تخفیف دریافت کنید.</p>
+    <div class="mobile-menu-overlay"></div>
+    
+    <div class="container-main">
+        <nav class="services-menu">
+            <ul class="services-nav">
+                <li><a href="#" class="active" data-category="all"><i class="fas fa-list"></i>همه خدمات</a></li>
+                <li><a href="#" data-category="DISCOUNT"><i class="fas fa-tags"></i>تخفيف ها</a></li>
+                <li><a href="#" data-category="jozveh"><i class="fas fa-book"></i>جزوه ياب</a></li>
+               <!-- <li><a href="#" data-category="financial"><i class="fas fa-money-bill-wave"></i>مالي</a></li>  -->
+                <li><a href="#" data-category="welfare"><i class="fas fa-users"></i>خدمات غيرحضوري</a></li>                
+                <li><a href="#" data-category="map"><i class="fas fa-directions"></i>مکان يابي در دانشگاه</a></li>
+                <li><a href="#" data-category="aboutus"><i class="fas fa-info-circle"></i> درباره ما</a></li>
+                <li><a href="#" data-category="contact"><i class="fas fa-headset"></i>تماس با ادمين</a></li>
+            </ul>
+        </nav>
+
+        <main>
+           <!-- Discount Service -->
+            <div class="service-item " data-category="DISCOUNT">
+                <h2><i class="fas fa-tags"></i> ثبت نام براي 10 % تخفيف فست فود ليمو</h2>
+                <p>فرم زير را تکميل کنيد.</p>
             
-            <div class="formcontainer">
-                <form id="DiscountForm">
-                    <label>نام و نام خانوادگی: <input type="text" id="fullName_discount" required></label>
-                    <label>شماره تماس (مانند مثال): 
-                        <input type="text" id="phoneNumber_discount" inputmode="numeric" 
-                               pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
-                    </label>
-                    <label>سه رقم آخر شماره دانشجویی/پرسنلی: 
-                        <input type="text" id="DiscountVerifCode" inputmode="numeric" 
-                               placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
-                    </label>
-                    
-                    <div id="captchaContainer_discount">
-                        <div id="captchaQuestion_discount" style="
-                            padding: 10px; margin: 10px 0;
-                            background: #f0f0f0; border: 1px solid #ccc;
-                            border-radius: 5px; font-size: 16px;
-                            font-weight: bold; text-align: center;
-                        "></div>
-                        <label for="captchaAnswer_discount">پاسخ را وارد کنید:</label>
-                        <input type="number" id="captchaAnswer_discount" required>
+                <div class="formcontainer">
+                    <form id="DiscountForm">
+                        <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" required></label>
+                       <label>شماره تماس (مانند مثال): <input type="text" id="phoneNumber_discount" inputmode="numeric" pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required> </label>
+                       <label>سه رقم آخر شماره دانشجويي/پرسنلي: <input type="text" id="DiscountVerifCode"  inputmode="numeric" placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required></label>
+                        
+                        <!-- FIXED CAPTCHA SECTION -->
+                        <div id="captchaContainer_discount">
+                            <div id="captchaQuestion_discount" style="
+                                padding: 10px;
+                                margin: 10px 0;
+                                background: #f0f0f0;
+                                border: 1px solid #ccc;
+                                border-radius: 5px;
+                                font-size: 16px;
+                                font-weight: bold;
+                                text-align: center;
+                                color: #000;
+                            "></div>
+                            <label for="captchaAnswer_discount">پاسخ را وارد کنيد:</label>
+                            <input type="number" id="captchaAnswer_discount" placeholder="" required>
+                        </div>
+                        
+                        <div id="captchaError_discount" style="color:red; display:none;">? پاسخ اشتباه است.</div>
+                        <button type="submit">تاييد ثبت نام</button>
+                    </form>
+                    <div id="DiscountRequestStatus"></div> 
+                    <div id="DiscountSuccessMessage" style="display: none;">
+                        ? تخفيف شما با موفقيت ثبت شد!<br><br>
+                        <span style="color: blue;">
+                            مهلت استفاده: 30 آبان 1404، ساعت 24:00. 
+                        </span>
                     </div>
-                    
-                    <div id="captchaError_discount" style="color: red; display: none;">
-                        ❌ پاسخ اشتباه است.
-                    </div>
-                    <button type="submit">تایید ثبت‌نام</button>
-                </form>
-                <div id="DiscountRequestStatus"></div> 
-                <div id="DiscountSuccessMessage" style="display: none;">
-                    ✅ تخفیف شما با موفقیت ثبت شد!<br><br>
-                    <span style="color: blue;">مهلت استفاده: 30 آبان 1404، ساعت 24:00.</span>
                 </div>
             </div>
-        </div>
+
+            
+
+            <!-- Enhanced Contact Admin Section -->
+            <div class="service-item hidden" data-category="contact">
+                <h2><i class="fas fa-headset"></i> تماس با ادمين</h2>
+                <div class="contact-grid">
+                    <div class="contact-method">
+                        <i class="fab fa-telegram"></i>
+                        <h3>پشتيباني تلگرام</h3>
+                        <p>@dezuni_admin</p>
+                        <a href="https://t.me/dezuni_admin" target="_blank" class="btn">ارتباط در تلگرام</a>
+                    </div>
+                    <div class="contact-method">
+                        <i class="fab fa-telegram"></i>
+                        <h3>کانال اطلاع رساني دزيوني</h3>
+                        <p>@dezuni_ch</p>
+                        <a href="https://t.me/dezuni_ch" target="_blank" class="btn">ارتباط در تلگرام</a>
+                    </div>
+                    <div class="contact-method">
+                        <i class="fas fa-envelope"></i>
+                        <h3>ايميل پشتيباني</h3>
+                        <p>unidez.ir@gmail.com</p>
+                        <a href="mailto:support@university.ac.ir" class="btn">ارسال ايميل</a>
+                    </div>
+                   <!-- <div class="contact-method">
+                        <i class="fas fa-phone"></i>
+                        <h3>تلفن تماس</h3>
+                        <p>???-????????</p>
+                        <a href="tel:+982112345678" class="btn">تماس تلفني</a> 
+                    </div> -->
+                </div>
+            </div>
+        </main>
     </div>
 
     <footer>
         <div class="container">
-            <p>© <span id="current-year"></span> دزیونی. تمامی حقوق محفوظ است.</p>
+            <p>© <span id="current-year"></span> کليه حقوق اين سامانه متعلق به دزيوني است.</p>
+            <div class="telegram-contact">
+                <a href="https://t.me/dezuni_admin" target="_blank"><i class="fab fa-telegram"></i> پشتيباني تلگرام: @dezuni_admin</a>
+            </div>
         </div>
     </footer>
-
-    <!-- اسکریپت‌ها از ریشه -->
-    <script>
-        // تنظیم سال
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
+    <script src="/script.js"></script>
+    <script src="/script_jozvehyab.js"></script>
+    <script src="/script_map.js"></script>
+    <script src="/script_request.js"></script>
     <script src="/script_discount.js"></script>
-</body>
+
 </html>
