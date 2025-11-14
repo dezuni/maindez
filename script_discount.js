@@ -157,40 +157,14 @@ document.querySelectorAll('.filter-btn').forEach(button => {
         const serviceItems = document.querySelectorAll('.service-item1');
         
         serviceItems.forEach(item => {
-            if (filter === 'all') {
-                item.style.display = 'flex';
-            } else if (item.getAttribute('data-category').includes(filter)) {
+            const categories = item.getAttribute('data-category').split(' ');
+            
+            // اگر دسته‌بندی مورد نظر در لیست دسته‌بندی‌های آیتم وجود دارد، نمایش بده
+            if (categories.includes(filter)) {
                 item.style.display = 'flex';
             } else {
                 item.style.display = 'none';
             }
         });
     });
-});
-
-function copyCode() {
-    const codeElement = document.querySelector('pre code');
-    const textArea = document.createElement('textarea');
-    textArea.value = codeElement.textContent;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
-    
-    const button = document.querySelector('.copy-btn');
-    const originalText = button.textContent;
-    button.textContent = 'کپی شد!';
-    button.style.backgroundColor = '#2ecc71';
-    
-    setTimeout(() => {
-        button.textContent = originalText;
-        button.style.backgroundColor = '#3498db';
-    }, 2000);
-}
-
-// مقداردهی اولیه - نمایش همه خدمات هنگام بارگذاری صفحه
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('صفحه با موفقیت بارگذاری شد');
-    console.log('تعداد خدمات: ' + document.querySelectorAll('.service-item1').length);
-    console.log('تعداد خدمات دارای تخفیف: ' + document.querySelectorAll('.service-item1[data-category*="DISCOUNT"]').length);
 });
