@@ -103,8 +103,8 @@ function setCurrentYear() {
 }
 
 function initServiceFiltering() {
-  // فقط لینک‌هایی که هم data-category دارند و هم href="#" هستند را انتخاب کن
-  const menuLinks = document.querySelectorAll('.services-nav a[data-category][href="#"]');
+  const menuLinks = document.querySelectorAll('.services-nav a');
+  const allServices = document.querySelectorAll('.service-item');
   
   menuLinks.forEach(link => {
       link.addEventListener('click', function(e) {
