@@ -267,7 +267,7 @@ h1 {
     margin-top: 5px;
 }
 
-.explanation {
+/*.explanation {
     margin-top: 30px;
     padding: 20px;
     background-color: #e8f4fd;
@@ -289,7 +289,7 @@ h1 {
 
 .explanation li {
     margin-bottom: 10px;
-}
+}*/
 
 
 @media (max-width: 900px) {
