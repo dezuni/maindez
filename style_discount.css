@@ -209,7 +209,7 @@ h1 {
     gap: 20px;
 }
 
-.service-item[data-category="DISCOUNT"] .service-item {
+.service-item[data-category="DISCOUNT"] .service-item1 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -227,14 +227,14 @@ h1 {
     position: relative;
 }
 
-.service-item[data-category="DISCOUNT"] .service-item:hover {
+.service-item[data-category="DISCOUNT"] .service-item1:hover {
     background-color: #e8f4fd;
     border-color: #3498db;
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
 }
 
-.service-item[data-category="DISCOUNT"] .service-item[data-category*="DISCOUNT"] {
+.service-item[data-category*="DISCOUNT"] {
     border: 2px solid #e74c3c;
 }
 
