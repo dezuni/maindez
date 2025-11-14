@@ -281,7 +281,7 @@
         // تبدیل عدد به "XX هزار تومان" با ارقام فارسی
         function formatToToman(value) {
             const num = parseInt(value) || 0;
-            const thousand = Math.floor(num / 1000);
+            const thousand = Math.floor(num);
             return new Intl.NumberFormat('fa-IR').format(thousand) + ' هزار تومان';
         }
 
