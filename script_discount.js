@@ -138,6 +138,10 @@ if (document.readyState === 'loading') {
 
 
 /********  new lines for discount logos ********/
+/********  new lines for discount logos ********/
+/********  new lines for discount logos ********/
+
+
 // فیلتر کردن خدمات بر اساس دسته‌بندی
 document.querySelectorAll('.filter-btn').forEach(button => {
     button.addEventListener('click', () => {
@@ -150,7 +154,7 @@ document.querySelectorAll('.filter-btn').forEach(button => {
         button.classList.add('active');
         
         const filter = button.getAttribute('data-filter');
-        const serviceItems = document.querySelectorAll('.service-item');
+        const serviceItems = document.querySelectorAll('.service-item1');
         
         serviceItems.forEach(item => {
             if (filter === 'all') {
@@ -187,6 +191,6 @@ function copyCode() {
 // مقداردهی اولیه - نمایش همه خدمات هنگام بارگذاری صفحه
 document.addEventListener('DOMContentLoaded', function() {
     console.log('صفحه با موفقیت بارگذاری شد');
-    console.log('تعداد خدمات: ' + document.querySelectorAll('.service-item').length);
-    console.log('تعداد خدمات دارای تخفیف: ' + document.querySelectorAll('.service-item[data-category*="DISCOUNT"]').length);
+    console.log('تعداد خدمات: ' + document.querySelectorAll('.service-item1').length);
+    console.log('تعداد خدمات دارای تخفیف: ' + document.querySelectorAll('.service-item1[data-category*="DISCOUNT"]').length);
 });
