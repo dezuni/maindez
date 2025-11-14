@@ -1,281 +1,391 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <style>
-.vouchers-container {
-  display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 1000px; margin: 20px auto;
-}
-.voucher-card { background: white; border-radius: 16px; box-shadow: 0 6px 18px rgba(0,30,60,0.1); max-width: 480px; overflow: hidden; }
-.voucher-header { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; padding: 16px; text-align: center; font-weight: bold; }
-.voucher-body { padding: 18px; }
-.voucher-item { display: flex; justify-content: space-between; padding: 10px 0; }
-.label { color: #4b5563; }
-.value { font-weight: bold; }
-.highlight-credit { color: #1d4ed8; }
-.highlight-payment { color: #0ea5e9; }
-.highlight-discount { color: #10b981; }
-.deposit-link {
-  display: block; background: linear-gradient(135deg, #fb8500, #ff9e10); color: white !important;
-  text-align: center; padding: 14px; border-radius: 12px; margin-top: 12px; font-weight: bold;
-  text-decoration: none; font-size: 1.1rem;
-}
-.deposit-link.disabled { background: #ccc; cursor: not-allowed; }
-.voucher-card.dimmed { opacity: 0.5; pointer-events: none; }
-.help-link { display: block; text-align: center; color: #3b82f6; margin-top: 16px; text-decoration: none; }
-</style>
-    <link href="https://vazirmatn.github.io/Vazirmatn/fonts/webfonts/vazirmatn.min.css" rel="stylesheet">
-<style>
-  body {
-    font-family: 'Vazirmatn', Tahoma, sans-serif;
-  }
-</style>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-E00MPED2X0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>پیش‌پرداخت کارت تخفیف</title>
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E00MPED2X0"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-E00MPED2X0');
+  </script>
 
-  gtag('config', 'G-E00MPED2X0');
-</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پیش پرداخت کارت تخفیف  </title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="/style_jozvehyab.css">
-    <link rel="stylesheet" href="/style_map.css">
-    <link rel="stylesheet" href="/style_request.css">
-   <link rel="stylesheet" href="/style_discount.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- فونت فارسی -->
+  <link href="https://vazirmatn.github.io/Vazirmatn/fonts/webfonts/vazirmatn.min.css" rel="stylesheet">
+
+  <!-- CSS اصلی سایت -->
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/style_discount.css">
+
+  <style>
+    /* تنظیمات جدید برای کارت‌های تخفیف */
+    body {
+      font-family: 'Vazirmatn', Tahoma, Arial, sans-serif;
+      background: #f5f9ff;
+      padding: 20px;
+      color: #333;
+    }
+
+    .vouchers-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 1000px;
+      margin: 20px auto;
+    }
+
+    .voucher-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(0, 30, 60, 0.1);
+      width: 100%;
+      max-width: 480px;
+      overflow: hidden;
+      transition: transform 0.25s ease;
+    }
+
+    .voucher-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 22px rgba(0, 30, 60, 0.14);
+    }
+
+    .voucher-header {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      color: white;
+      padding: 16px;
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+
+    .voucher-body {
+      padding: 18px;
+    }
+
+    .voucher-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+    }
+
+    .label {
+      color: #4b5563;
+      font-size: 0.95rem;
+    }
+
+    .value {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .highlight-credit { color: #1d4ed8; }
+    .highlight-payment { color: #0ea5e9; }
+    .highlight-discount { color: #10b981; }
+
+    .deposit-link {
+      display: block;
+      background: linear-gradient(135deg, #fb8500, #ff9e10);
+      color: white !important;
+      text-align: center;
+      padding: 14px;
+      border-radius: 12px;
+      margin-top: 12px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25);
+    }
+
+    .deposit-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(124, 58, 237, 0.35);
+    }
+
+    .deposit-link.disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .voucher-card.dimmed {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .help-link {
+      display: block;
+      text-align: center;
+      color: #3b82f6;
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+
+    .help-link:hover {
+      text-decoration: underline;
+    }
+
+    #loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+
+    #reservation-form {
+      display: none;
+      margin: 60px auto 40px;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    /* Modal راهنما */
+    #helpModal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+    }
+
+    #helpModal .modal-content {
+      background: white;
+      margin: 10% auto;
+      padding: 24px;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 14px;
+      direction: rtl;
+      text-align: center;
+      position: relative;
+    }
+
+    #helpModal .close {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #6b7280;
+    }
+
+    @media (max-width: 768px) {
+      .vouchers-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container-header" >
-
-            <div class="header-content">
-                                <button class="mobile-menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="logo">
-                    <img src="/logo.png" alt="لوگوي دانشگاه" style="max-width: 40%; height: auto;">
-                </div>
-                <div class="header-text">                    
-                    <h2>سامانه خدمات دانشجویی</h2>
-                </div>
-            </div>
+  <header>
+    <div class="container-header">
+      <div class="header-content">
+        <button class="mobile-menu-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="logo">
+          <img src="/logo.png" alt="لوگوی دزیونی" style="max-width: 40%; height: auto;">
         </div>
-    </header>
-
-    <div class="mobile-menu-overlay"></div>
-    
-    <div class="container-main">
-
-
-        
-        <nav class="services-menu">
-    <ul class="services-nav">
-        <li><a href="/"><i class="fas fa-home"></i> صفحه اصلی</a></li>
-        <li><a href="/"><i class="fas fa-book"></i> جزوه ياب</a></li>
-        <li><a href="/"><i class="fas fa-users"></i> خدمات غيرحضوري</a></li>
-        <li><a href="/"><i class="fas fa-directions"></i> مکان يابي در دانشگاه</a></li>
-        <li><a href="/"><i class="fas fa-tags"></i> تخفيف ها</a></li>
-        <li><a href="/#aboutus"><i class="fas fa-info-circle"></i> درباره ما</a></li>
-        <li><a href="/#contact"><i class="fas fa-headset"></i> تماس با ادمين</a></li>
-    </ul>
-</nav>
-
-        <main>
-            <div id="vouchers-container" class="vouchers-container">
-    <div id="loading">در حال بارگذاری کارت‌های تخفیف...</div>
-  </div>
-           <!-- Discount Service -->
-            <div class="service-item " data-category="DISCOUNT">
-                <h2><i class="fas fa-tags"></i> فرم ثبت نام و پیش پرداخت تخفيف </h2>
-                          
-                <div class="formcontainer">
-                    <form id="DiscountForm">
-                        <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" required></label>
-                       <label>شماره تماس (مانند مثال): <input type="text" id="phoneNumber_discount" inputmode="numeric" pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required> </label>
-                       <label>سه رقم آخر شماره دانشجويي/پرسنلي: <input type="text" id="DiscountVerifCode"  inputmode="numeric" placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required></label>
-                        
-                        <!-- FIXED CAPTCHA SECTION -->
-                        <div id="captchaContainer_discount">
-                            <div id="captchaQuestion_discount" style="
-                                padding: 10px;
-                                margin: 10px 0;
-                                background: #f0f0f0;
-                                border: 1px solid #ccc;
-                                border-radius: 5px;
-                                font-size: 16px;
-                                font-weight: bold;
-                                text-align: center;
-                                color: #000;
-                            "></div>
-                            <label for="captchaAnswer_discount">پاسخ را وارد کنيد:</label>
-                            <input type="number" id="captchaAnswer_discount" placeholder="" required>
-                        </div>
-                        
-                        <div id="captchaError_discount" style="color:red; display:none;">? پاسخ اشتباه است.</div>
-                        <button type="submit">تاييد ثبت نام</button>
-                    </form>
-                    <div id="DiscountRequestStatus"></div> 
-                    <div id="DiscountSuccessMessage" style="display: none;">
-                        ? تخفيف شما با موفقيت ثبت شد!<br><br>
-                        <span style="color: blue;">
-                            مهلت استفاده: 30 آبان 1404، ساعت 24:00. 
-                        </span>
-                    </div>
-                </div>
-                <!-- Modal راهنما -->
-  <div id="helpModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6);">
-    <div style="background:white; margin:10% auto; padding:24px; width:90%; max-width:500px; border-radius:14px; direction:rtl; text-align:center; position:relative;">
-      <span onclick="this.parentElement.parentElement.style.display='none'" style="position:absolute; top:12px; left:16px; font-size:1.4rem; cursor:pointer;">&times;</span>
-      <h3>راهنمای کارت تخفیف</h3>
-      <p id="modal-text"></p>
+        <div class="header-text">                    
+          <h2>سامانه خدمات دانشجویی</h2>
+        </div>
+      </div>
     </div>
-  </div>
-            </div>
+  </header>
 
-            
+  <div class="mobile-menu-overlay"></div>
 
-            <!-- Enhanced Contact Admin Section -->
-            <div class="service-item hidden" data-category="contact">
-                <h2><i class="fas fa-headset"></i> تماس با ادمين</h2>
-                <div class="contact-grid">
-                    <div class="contact-method">
-                        <i class="fab fa-telegram"></i>
-                        <h3>پشتيباني تلگرام</h3>
-                        <p>@dezuni_admin</p>
-                        <a href="https://t.me/dezuni_admin" target="_blank" class="btn">ارتباط در تلگرام</a>
-                    </div>
-                    <div class="contact-method">
-                        <i class="fab fa-telegram"></i>
-                        <h3>کانال اطلاع رساني دزيوني</h3>
-                        <p>@dezuni_ch</p>
-                        <a href="https://t.me/dezuni_ch" target="_blank" class="btn">ارتباط در تلگرام</a>
-                    </div>
-                    <div class="contact-method">
-                        <i class="fas fa-envelope"></i>
-                        <h3>ايميل پشتيباني</h3>
-                        <p>unidez.ir@gmail.com</p>
-                        <a href="mailto:support@university.ac.ir" class="btn">ارسال ايميل</a>
-                    </div>
-                   <!-- <div class="contact-method">
-                        <i class="fas fa-phone"></i>
-                        <h3>تلفن تماس</h3>
-                        <p>???-????????</p>
-                        <a href="tel:+982112345678" class="btn">تماس تلفني</a> 
-                    </div> -->
-                </div>
-            </div>
-        </main>
+  <main>
+    <!-- ظرف کارت‌های تخفیف -->
+    <div id="vouchers-container">
+      <div id="loading">در حال بارگذاری کارت‌های تخفیف...</div>
     </div>
 
-    <footer>
-        <div class="container">
-            <p>© <span id="current-year"></span> کليه حقوق اين سامانه متعلق به دزيوني است.</p>
-            <div class="telegram-contact">
-                <a href="https://t.me/dezuni_admin" target="_blank"><i class="fab fa-telegram"></i> پشتيباني تلگرام: @dezuni_admin</a>
-            </div>
-        </div>
-    </footer>
-    <!--<script src="/script.js"></script>-->
-    <script src="./fastfood_script.js"></script>
-    <!--<script src="/script_jozvehyab.js"></script>
-    <script src="/script_map.js"></script>
-    <script src="/script_request.js"></script>
-    <script src="/script_discount.js"></script>-->
-<script>
-// تبدیل عدد به "XX هزار تومان" با ارقام فارسی
-function formatToToman(value) {
-  const num = parseInt(value) || 0;
-  const thousand = Math.floor(num / 1000);
-  return new Intl.NumberFormat('fa-IR').format(thousand) + ' هزار تومان';
-}
-
-// نمایش پاپ‌آپ راهنما
-function showHelp(card) {
-  document.getElementById('modal-text').innerHTML = `
-    <strong>${formatToToman(card.credit)}</strong> خرید کن، ولی فقط <strong>${formatToToman(card.total_pay)}</strong> بپرداز! 🎉<br><br>
-    همین الان <strong>${formatToToman(card.adv_pay)}</strong> رو بده تا کارت تخفیف‌ات رزرو بشه،<br>
-    و <strong>${formatToToman(card.in_shop_pay)}</strong> رو موقع خرید در فروشگاه بپرداز.<br><br>
-    یعنی <strong>${formatToToman(card.dis_amo)}</strong> سود کردی! 💸
-  `;
-  document.getElementById('helpModal').style.display = 'block';
-}
-
-// اسکرول به فرم
-function scrollToForm() {
-  const form = document.getElementById('reservation-form');
-  if (form) window.scrollTo({ top: form.offsetTop - 80, behavior: 'smooth' });
-}
-
-// بارگذاری داده از Google Apps Script
-async function loadVouchers() {
-  const container = document.getElementById('vouchers-container');
-  const API_URL = 'https://script.google.com/macros/s/AKfycbxfBqJKr9LPQzJMFMGZi7VIc2IS1ts9_AyMpgV_AHbiwAIoUfK421MhnS--t6OuAnOlEw/exec'; // ← اینجا لینک Deploy شده را بذار
-
-  try {
-    const response = await fetch(API_URL);
-    const cards = await response.json();
-    container.innerHTML = '';
-
-    if (!Array.isArray(cards) || cards.length === 0) {
-      container.innerHTML = '<p style="text-align:center; color:#888;">هیچ کارتی موجود نیست.</p>';
-      return;
-    }
-
-    let hasActive = false;
-    cards.forEach(card => {
-      const isActive = card.status === 'active';
-      if (isActive) hasActive = true;
-
-      const html = `
-        <div class="voucher-card ${!isActive ? 'dimmed' : ''}">
-          <div class="voucher-header">${card.title || 'کارت تخفیف'}</div>
-          <div class="voucher-body">
-            <div class="voucher-item">
-              <span class="label">مبلغ اعتبار:</span>
-              <span class="value highlight-credit">${formatToToman(card.credit)}</span>
-            </div>
-            <div class="voucher-item">
-              <span class="label">مبلغ تخفیف:</span>
-              <span class="value highlight-discount">${formatToToman(card.dis_amo)}</span>
-            </div>
-            <div class="voucher-item">
-              <span class="label">پرداخت کل:</span>
-              <span class="value highlight-payment">${formatToToman(card.total_pay)}</span>
-            </div>
-            <div class="voucher-item">
-              <span class="label">پرداخت در فروشگاه:</span>
-              <span class="value highlight-payment">${formatToToman(card.in_shop_pay)}</span>
-            </div>
-            <div class="voucher-item">
-              <span class="label">پیش پرداخت:</span>
-              <span class="value highlight-payment">${formatToToman(card.adv_pay)}</span>
-            </div>
-            ${isActive 
-              ? `<a href="#" class="deposit-link" onclick="scrollToForm(); return false;">رزرو کارت تخفیف</a>`
-              : `<div class="deposit-link disabled">غیرفعال</div>`
-            }
-            <a href="#" class="help-link" onclick="showHelp(${JSON.stringify(card)}); return false;">اگه توضیح بیشتر میخوای، اینجا کلیک کن!</a>
+    <!-- فرم رزرو (مخفی تا زمانی که کارت فعال وجود داشته باشد) -->
+    <div id="reservation-form">
+      <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
+      <div class="formcontainer">
+        <form id="DiscountForm">
+          <label>نام و نام خانوادگی: <input type="text" id="fullName_discount" required></label>
+          <label>شماره تماس (مانند مثال): 
+            <input type="text" id="phoneNumber_discount" inputmode="numeric" 
+                   pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
+          </label>
+          <label>سه رقم آخر شماره دانشجویی/پرسنلی: 
+            <input type="text" id="DiscountVerifCode" inputmode="numeric" 
+                   placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
+          </label>
+          
+          <div id="captchaContainer_discount">
+            <div id="captchaQuestion_discount" style="
+              padding: 10px; margin: 10px 0;
+              background: #f0f0f0; border: 1px solid #ccc;
+              border-radius: 5px; font-size: 16px;
+              font-weight: bold; text-align: center;
+            "></div>
+            <label for="captchaAnswer_discount">پاسخ را وارد کنید:</label>
+            <input type="number" id="captchaAnswer_discount" required>
           </div>
+          
+          <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
+          <button type="submit">تایید ثبت‌نام</button>
+        </form>
+        <div id="DiscountRequestStatus"></div> 
+        <div id="DiscountSuccessMessage" style="display: none;">
+          ✅ تخفیف شما با موفقیت ثبت شد!<br><br>
+          <span style="color: blue;">مهلت استفاده: 30 آبان 1404، ساعت 24:00.</span>
         </div>
-      `;
-      container.innerHTML += html;
-    });
+      </div>
+    </div>
 
-    if (hasActive) {
-      document.getElementById('reservation-form').style.display = 'block';
+    <!-- Modal راهنما -->
+    <div id="helpModal">
+      <div class="modal-content">
+        <span class="close" onclick="document.getElementById('helpModal').style.display='none'">&times;</span>
+        <h3>راهنمای کارت تخفیف</h3>
+        <p id="modal-text"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="current-year"></span> کلیه حقوق این سامانه متعلق به دزیونی است.</p>
+      <div class="telegram-contact">
+        <a href="https://t.me/dezuni_admin" target="_blank">
+          <i class="fab fa-telegram"></i> پشتیبانی تلگرام: @dezuni_admin
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- اسکریپت اختصاصی این صفحه -->
+  <script>
+    // تنظیم سال
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // تبدیل عدد به "XX هزار تومان" با ارقام فارسی
+    function formatToToman(value) {
+      const num = parseInt(value) || 0;
+      const thousand = Math.floor(num / 1000);
+      return new Intl.NumberFormat('fa-IR').format(thousand) + ' هزار تومان';
     }
 
-  } catch (e) {
-    container.innerHTML = '<p style="text-align:center; color:red;">خطا در بارگذاری داده‌ها.</p>';
-    console.error(e);
-  }
-}
+    // نمایش راهنما
+    function showHelp(card) {
+      const text = `
+        <strong>${formatToToman(card.credit)}</strong> خرید کن، ولی فقط <strong>${formatToToman(card.total_pay)}</strong> بپرداز! 🎉<br><br>
+        همین الان <strong>${formatToToman(card.adv_pay)}</strong> رو بده تا کارت تخفیف‌ات رزرو بشه،<br>
+        و <strong>${formatToToman(card.in_shop_pay)}</strong> رو موقع خرید در فروشگاه بپرداز.<br><br>
+        یعنی <strong>${formatToToman(card.dis_amo)}</strong> سود کردی! 💸
+      `;
+      document.getElementById('modal-text').innerHTML = text;
+      document.getElementById('helpModal').style.display = 'block';
+    }
 
-// اجرا در بارگذاری صفحه
-document.addEventListener('DOMContentLoaded', loadVouchers);
-</script>
+    // اسکرول به فرم
+    function scrollToForm() {
+      const form = document.getElementById('reservation-form');
+      if (form) {
+        window.scrollTo({
+          top: form.offsetTop - 80,
+          behavior: 'smooth'
+        });
+      }
+    }
+
+    // بارگذاری داده‌ها از Google Apps Script
+    async function loadVouchers() {
+      const container = document.getElementById('vouchers-container');
+      const API_URL = 'https://script.google.com/macros/s/AKfycbxfBqJKr9LPQzJMFMGZi7VIc2IS1ts9_AyMpgV_AHbiwAIoUfK421MhnS--t6OuAnOlEw/exec';
+
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw new Error('پاسخ نامعتبر از سرور');
+        const cards = await response.json();
+
+        container.innerHTML = '';
+
+        if (!Array.isArray(cards) || cards.length === 0) {
+          container.innerHTML = '<p style="text-align:center; color:#888;">هیچ کارت تخفیفی موجود نیست.</p>';
+          return;
+        }
+
+        let hasActive = false;
+        cards.forEach(card => {
+          // تبدیل رشته‌های عددی به عدد (در صورت نیاز)
+          const isActive = card.status === 'active';
+          if (isActive) hasActive = true;
+
+          const cardHtml = `
+            <div class="voucher-card ${!isActive ? 'dimmed' : ''}">
+              <div class="voucher-header">${card.title || 'کارت تخفیف'}</div>
+              <div class="voucher-body">
+                <div class="voucher-item">
+                  <span class="label">مبلغ اعتبار:</span>
+                  <span class="value highlight-credit">${formatToToman(card.credit)}</span>
+                </div>
+                <div class="voucher-item">
+                  <span class="label">مبلغ تخفیف:</span>
+                  <span class="value highlight-discount">${formatToToman(card.dis_amo)}</span>
+                </div>
+                <div class="voucher-item">
+                  <span class="label">پرداخت کل:</span>
+                  <span class="value highlight-payment">${formatToToman(card.total_pay)}</span>
+                </div>
+                <div class="voucher-item">
+                  <span class="label">پرداخت در فروشگاه:</span>
+                  <span class="value highlight-payment">${formatToToman(card.in_shop_pay)}</span>
+                </div>
+                <div class="voucher-item">
+                  <span class="label">پیش پرداخت:</span>
+                  <span class="value highlight-payment">${formatToToman(card.adv_pay)}</span>
+                </div>
+                ${isActive 
+                  ? `<a href="#" class="deposit-link" onclick="scrollToForm(); return false;">رزرو کارت تخفیف</a>`
+                  : `<div class="deposit-link disabled">غیرفعال</div>`
+                }
+                <a href="#" class="help-link" onclick="showHelp(${JSON.stringify(card)}); return false;">
+                  اگه توضیح بیشتر میخوای، اینجا کلیک کن!
+                </a>
+              </div>
+            </div>
+          `;
+          container.innerHTML += cardHtml;
+        });
+
+        if (hasActive) {
+          document.getElementById('reservation-form').style.display = 'block';
+        }
+
+      } catch (error) {
+        console.error('خطا:', error);
+        container.innerHTML = '<p style="text-align:center; color:red;">خطا در بارگذاری داده‌ها. لطفاً دوباره تلاش کنید.</p>';
+      }
+    }
+
+    // اجرای اولیه
+    document.addEventListener('DOMContentLoaded', loadVouchers);
+  </script>
+
+  <!-- اسکریپت تخفیف (اگر نیاز به منطق فرم داری) -->
+  <script src="/script_discount.js"></script>
+</body>
 </html>
