@@ -86,7 +86,7 @@
 
 
 
-
+/*
     
      * {
     box-sizing: border-box;
@@ -138,6 +138,8 @@ h1 {
 .content {
     padding: 30px;
 }
+*/
+
 
 .filter-buttons {
     display: flex;
