@@ -86,9 +86,9 @@
 
 
 
+
 /*
-    
-     * {
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -105,9 +105,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
+}    */
 
-.discountlogocontainer {
+.discount_container {
     max-width: 1200px;
     width: 100%;
     background-color: white;
@@ -138,10 +138,8 @@ h1 {
 .content {
     padding: 30px;
 }
-*/
 
-
-.service-item[data-category="DISCOUNT"] .filter-buttons {
+.filter-buttons {
     display: flex;
     justify-content: center;
     gap: 15px;
@@ -149,7 +147,7 @@ h1 {
     flex-wrap: wrap;
 }
 
-.service-item[data-category="DISCOUNT"] .filter-btn {
+.filter-btn {
     padding: 10px 20px;
     border: none;
     border-radius: 25px;
@@ -160,16 +158,16 @@ h1 {
     font-weight: 500;
 }
 
-.service-item[data-category="DISCOUNT"] .filter-btn:hover {
+.filter-btn:hover {
     background-color: #dee2e6;
 }
 
-.service-item[data-category="DISCOUNT"] .filter-btn.active {
+.filter-btn.active {
     background-color: #3498db;
     color: white;
 }
 
-.service-item[data-category="DISCOUNT"] .discount-badge {
+.discount-badge {
     position: absolute;
     top: -5px;
     left: -5px;
@@ -181,7 +179,7 @@ h1 {
     font-weight: bold;
 }
 
-.service-item[data-category="DISCOUNT"] .example-box {
+.example-box {
     background-color: #f8f9fa;
     border-radius: 10px;
     padding: 25px;
@@ -189,7 +187,7 @@ h1 {
     border: 1px solid #e9ecef;
 }
 
-.service-item[data-category="DISCOUNT"] .example-title {
+.example-title {
     color: #2c3e50;
     margin-bottom: 15px;
     font-size: 1.4rem;
@@ -198,18 +196,18 @@ h1 {
     gap: 10px;
 }
 
-.service-item[data-category="DISCOUNT"] .example-title i {
+.example-title i {
     color: #3498db;
 }
 
 /* استایل برای چیدمان 4 تایی */
-.service-item[data-category="DISCOUNT"] .links-grid {
+.links-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
 
-.service-item[data-category="DISCOUNT"] .service-item1 {
+.service-item1 {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -227,18 +225,18 @@ h1 {
     position: relative;
 }
 
-.service-item[data-category="DISCOUNT"] .service-item1:hover {
+.service-item1:hover {
     background-color: #e8f4fd;
     border-color: #3498db;
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
 }
 
-.service-item[data-category*="DISCOUNT"] {
+.service-item1[data-category*="DISCOUNT"] {
     border: 2px solid #e74c3c;
 }
 
-.service-item[data-category="DISCOUNT"] .logo {
+.discountlogos {
     width: 60px;
     height: 60px;
     display: flex;
@@ -252,69 +250,24 @@ h1 {
     flex-shrink: 0;
 }
 
-.service-item[data-category*="DISCOUNT"] .logo {
+.service-item1[data-category*="DISCOUNT"] .discountlogos {
     background: linear-gradient(135deg, #e74c3c, #c0392b);
 }
 
-.service-item[data-category="DISCOUNT"] .logo-img {
+.discountlogos-img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.service-item[data-category="DISCOUNT"] .text {
+.text {
     font-size: 14px;
     font-weight: 500;
     margin-top: 5px;
 }
 
-/*.code-container {
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    padding: 20px;
-    border-radius: 8px;
-    overflow-x: auto;
-    margin-top: 20px;
-    direction: ltr;
-}
-
-.code-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    color: #ecf0f1;
-}
-
-.code-title {
-    font-size: 1.1rem;
-    font-weight: 500;
-}*/
-
-.service-item[data-category="DISCOUNT"] .copy-btn {
-    background-color: #3498db;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.3s;
-}
-
-.service-item[data-category="DISCOUNT"] .copy-btn:hover {
-    background-color: #2980b9;
-}
-
-/*pre {
-    margin: 0;
-    font-family: 'Courier New', monospace;
-    font-size: 14px;
-    line-height: 1.5;
-}*/
-
-.service-item[data-category="DISCOUNT"] .explanation {
+.explanation {
     margin-top: 30px;
     padding: 20px;
     background-color: #e8f4fd;
@@ -322,7 +275,7 @@ h1 {
     border-right: 4px solid #3498db;
 }
 
-.service-item[data-category="DISCOUNT"] .explanation h3 {
+.explanation h3 {
     color: #2c3e50;
     margin-bottom: 15px;
     display: flex;
@@ -330,22 +283,14 @@ h1 {
     gap: 10px;
 }
 
-.service-item[data-category="DISCOUNT"] .explanation ul {
+.explanation ul {
     padding-right: 20px;
 }
 
-.service-item[data-category="DISCOUNT"] .explanation li {
+.explanation li {
     margin-bottom: 10px;
 }
 
-/*footer {
-    text-align: center;
-    margin-top: 30px;
-    padding: 20px;
-    color: #7f8c8d;
-    font-size: 0.9rem;
-    border-top: 1px solid #e9ecef;
-}*/
 
 @media (max-width: 900px) {
     .links-grid {
