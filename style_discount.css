@@ -76,11 +76,11 @@
             margin-top: 10px;
         }
 
-/*.service-item[data-category="DISCOUNT"] .logo {
+.service-item[data-category="DISCOUNT"] .logo {
     width: 60px;
     height: 60px;
     object-fit: contain;
-}*/
+}
 
 
 
