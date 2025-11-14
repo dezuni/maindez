@@ -11,6 +11,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // check for version updates (this will reload if needed)
   checkVersion();
+
+        console.log('صفحه با موفقیت بارگذاری شد');
+    console.log('تعداد خدمات: ' + document.querySelectorAll('.service-item1').length);
+    console.log('تعداد خدمات دارای تخفیف: ' + document.querySelectorAll('.service-item1[data-category*="DISCOUNT"]').length);
+    
+    // به طور پیش‌فرض خدمات دارای تخفیف را نمایش بده
+    const discountButton = document.querySelector('.filter-btn[data-filter="DISCOUNT"]');
+    if (discountButton) {
+        discountButton.click();
+    }
 });
 
 // Current app version - update with each deployment
