@@ -135,3 +135,58 @@ if (document.readyState === 'loading') {
 } else {
     initDiscountForm();
 }
+
+
+/********  new lines for discount logos ********/
+// فیلتر کردن خدمات بر اساس دسته‌بندی
+document.querySelectorAll('.filter-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        // حذف کلاس active از همه دکمه‌ها
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // اضافه کردن کلاس active به دکمه کلیک شده
+        button.classList.add('active');
+        
+        const filter = button.getAttribute('data-filter');
+        const serviceItems = document.querySelectorAll('.service-item');
+        
+        serviceItems.forEach(item => {
+            if (filter === 'all') {
+                item.style.display = 'flex';
+            } else if (item.getAttribute('data-category').includes(filter)) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+});
+
+function copyCode() {
+    const codeElement = document.querySelector('pre code');
+    const textArea = document.createElement('textarea');
+    textArea.value = codeElement.textContent;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    
+    const button = document.querySelector('.copy-btn');
+    const originalText = button.textContent;
+    button.textContent = 'کپی شد!';
+    button.style.backgroundColor = '#2ecc71';
+    
+    setTimeout(() => {
+        button.textContent = originalText;
+        button.style.backgroundColor = '#3498db';
+    }, 2000);
+}
+
+// مقداردهی اولیه - نمایش همه خدمات هنگام بارگذاری صفحه
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('صفحه با موفقیت بارگذاری شد');
+    console.log('تعداد خدمات: ' + document.querySelectorAll('.service-item').length);
+    console.log('تعداد خدمات دارای تخفیف: ' + document.querySelectorAll('.service-item[data-category*="DISCOUNT"]').length);
+});
