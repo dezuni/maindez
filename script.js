@@ -19,10 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // به طور پیش‌فرض خدمات دارای تخفیف را نمایش بده
     //const discountButton = document.querySelector('.filter-btn[data-filter="DISCOUNT SHOPPING FOOD"]');
-    const discountButton = document.querySelectorDiscount('.filter-btn[data-filter=""]');
-    if (discountButton) {
-        discountButton.click();
-    } 
+    //const discountButton = document.querySelector('.filter-btn[data-filter=""]');
+    //if (discountButton) {
+      //  discountButton.click();
+    //} 
     
 });
 
