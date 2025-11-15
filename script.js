@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('تعداد خدمات دارای تخفیف: ' + document.querySelectorAll('.service-item1[data-category*="DISCOUNT"]').length);
     
     // به طور پیش‌فرض خدمات دارای تخفیف را نمایش بده
-    const discountButton = document.querySelector('.filter-btn[data-filter="DISCOUNT"]');
+    const discountButton = document.querySelector('.filter-btn[data-filter="DISCOUNT SHOPPING FOOD"]');
     if (discountButton) {
         discountButton.click();
     }
