@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // discount stores logos
     console.log('صفحه با موفقیت بارگذاری شد');
     console.log('تعداد خدمات: ' + document.querySelectorAll('.service-item1').length);
-    console.log('تعداد خدمات دارای تخفیف: ' + document.querySelectorAll('.service-item1[data-category*="DISCOUNT"]').length);
+    console.log('تعداد خدمات دارای تخفیف: ' + document.querySelectorAll('.service-item1[data-category*=""]').length);
     
     // به طور پیش‌فرض خدمات دارای تخفیف را نمایش بده
     //const discountButton = document.querySelector('.filter-btn[data-filter="DISCOUNT SHOPPING FOOD"]');
