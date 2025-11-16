@@ -481,10 +481,7 @@
                                 : `<div class="deposit-link disabled">غیرفعال</div>`
                             }
                             <div class="voucher-help-text">
-                                ✨ با پرداخت فقط <strong>${formatToToman(card.adv_pay)}</strong> هزار تومان، 
-                                کارت تخفیف شما رزرو می‌شود. مابقی مبلغ (<strong>${formatToToman(card.in_shop_pay)}</strong>) 
-                                را هنگام خرید در محل پرداخت کنید. در نهایت، 
-                                <strong>${formatToToman(card.dis_amo)}</strong> تومان صرفه‌جویی خواهید کرد!
+                                ✨ توضیح: فقط با پرداخت <strong>${formatToToman(total_pay)}</strong>  هزار تومان، <strong>${formatToToman(credit)}</strong> هزار تومان خرید کن!
                             </div>
                             <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 12px;">
                                 <a href="#" class="help-link" onclick="toggleHelp('${cardId}'); return false;">
