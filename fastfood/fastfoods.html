@@ -13,16 +13,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پیش پرداخت کارت تخفیف</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- ✅ لینک رسمی و پایدار فونت Vazirmatn از CDN -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+
+    <!-- سایر استایل‌ها -->
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/style_jozvehyab.css">
     <link rel="stylesheet" href="/style_map.css">
     <link rel="stylesheet" href="/style_request.css">
     <link rel="stylesheet" href="/style_discount.css">
 
-    <!-- فونت فارسی -->
-    <link href="https://vazirmatn.github.io/Vazirmatn/fonts/webfonts/vazirmatn.min.css" rel="stylesheet">
     <style>
-        /* ظاهر کارت‌های تخفیف — هماهنگ با استایل فعلی */
+        /* ✅ اعمال فونت Vazirmatn در کل صفحه */
+        body, h1, h2, h3, h4, h5, h6, p, div, span, label, input, textarea, button, a, li {
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif !important;
+            font-feature-settings: "cv01", "cv02", "cv03", "cv04", "cv05", "cv06", "cv07", "cv08", "cv09", "cv10";
+        }
+
+        /* بقیه سبک‌های شما (همان‌طور که قبل بود) */
         #vouchers-section {
             padding: 20px;
             background: #f9f9f9;
@@ -76,12 +86,11 @@
             color: #6b7280;
         }
 
-        /* رنگ‌های بهبودیافته برای خوانایی بیشتر */
-        .voucher-value.credit { color: #059669; font-weight: bold; }     /* سبز تیره - اعتبار */
-        .voucher-value.discount { color: #dc2626; font-weight: bold; }  /* قرمز - تخفیف */
-        .voucher-value.total { color: #3b82f6; font-weight: bold; }     /* آبی - کل پرداخت */
-        .voucher-value.inshop { color: #8b5cf6; font-weight: bold; }    /* بنفش - در فروشگاه */
-        .voucher-value.advance { color: #d97706; font-weight: bold; }   /* نارنجی - پیش‌پرداخت */
+        .voucher-value.credit { color: #059669; font-weight: bold; }
+        .voucher-value.discount { color: #dc2626; font-weight: bold; }
+        .voucher-value.total { color: #3b82f6; font-weight: bold; }
+        .voucher-value.inshop { color: #8b5cf6; font-weight: bold; }
+        .voucher-value.advance { color: #d97706; font-weight: bold; }
 
         .divider {
             height: 1px;
@@ -131,7 +140,6 @@
         .voucher-help-text {
             direction: rtl;
             text-align: right;
-            font-family: 'Vazirmatn', sans-serif;
             margin-top: 12px;
             padding: 12px;
             background: #f8fafc;
@@ -148,17 +156,17 @@
             color: #666;
         }
 
-        /* بهبود فرم رزرو */
+        /* فرم رزرو — با عرض محدود */
         #reservation-form {
-    background: white;
-    padding: 24px;
-    border-radius: 14px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    margin: 20px auto 40px auto; /* بالا، چپ/راست خودکار، پایین */
-    max-width: 450px; /* همان عرض کارت‌ها */
-    width: 100%;
-    display: none;
-}
+            background: white;
+            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            margin: 20px auto 40px auto;
+            max-width: 450px;
+            width: 100%;
+            display: none;
+        }
 
         #reservation-form h3 {
             text-align: center;
@@ -187,6 +195,7 @@
             font-size: 1rem;
             direction: ltr;
             text-align: left;
+            font-family: 'Vazirmatn', sans-serif; /* فونت برای input هم */
         }
 
         .formcontainer input:focus {
@@ -205,6 +214,7 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.2s;
+            font-family: 'Vazirmatn', sans-serif;
         }
 
         .formcontainer button:hover {
@@ -229,7 +239,6 @@
             display: none;
         }
 
-        /* ریسپانسیو */
         @media (max-width: 768px) {
             .vouchers-container {
                 flex-direction: column;
