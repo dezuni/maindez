@@ -73,18 +73,21 @@
         }
 
         .voucher-label {
-            color: #555;
+            color: #6b7280;
         }
 
-        .voucher-value {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #2c6f00;
-        }
+        /* رنگ‌های بهبودیافته برای خوانایی بیشتر */
+        .voucher-value.credit { color: #059669; font-weight: bold; }     /* سبز تیره - اعتبار */
+        .voucher-value.discount { color: #dc2626; font-weight: bold; }  /* قرمز - تخفیف */
+        .voucher-value.total { color: #3b82f6; font-weight: bold; }     /* آبی - کل پرداخت */
+        .voucher-value.inshop { color: #8b5cf6; font-weight: bold; }    /* بنفش - در فروشگاه */
+        .voucher-value.advance { color: #d97706; font-weight: bold; }   /* نارنجی - پیش‌پرداخت */
 
-        .highlight-discount { color: #d97706; }
-        .highlight-total { color: #0d9488; }
-        .highlight-adv { color: #0ea5e9; }
+        .divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 10px 0;
+        }
 
         .deposit-link {
             display: block;
@@ -125,13 +128,106 @@
             text-decoration: underline;
         }
 
+        .voucher-help-text {
+            direction: rtl;
+            text-align: right;
+            font-family: 'Vazirmatn', sans-serif;
+            margin-top: 12px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #2c3e50;
+            border: 1px solid #e2e8f0;
+        }
+
         #loading-vouchers {
             text-align: center;
             padding: 20px;
             color: #666;
         }
 
-        /* ریسپانسیو: در موبایل زیر هم */
+        /* بهبود فرم رزرو */
+        #reservation-form {
+            background: white;
+            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            margin-top: 20px;
+            display: none;
+        }
+
+        #reservation-form h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1e3a8a;
+            font-weight: bold;
+        }
+
+        .formcontainer form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .formcontainer label {
+            display: flex;
+            flex-direction: column;
+            font-weight: 500;
+            color: #4b5563;
+        }
+
+        .formcontainer input {
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .formcontainer input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .formcontainer button {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .formcontainer button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+        }
+
+        #DiscountRequestStatus {
+            margin-top: 12px;
+            text-align: center;
+            color: #d32f2f;
+        }
+
+        #DiscountSuccessMessage {
+            margin-top: 16px;
+            padding: 16px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            color: #065f46;
+            text-align: center;
+            display: none;
+        }
+
+        /* ریسپانسیو */
         @media (max-width: 768px) {
             .vouchers-container {
                 flex-direction: column;
@@ -186,8 +282,8 @@
                     </div>
                 </div>
 
-                <!-- فرم رزرو (مخفی تا کارت فعال وجود داشته باشد) -->
-                <div id="reservation-form" style="display:none;">
+                <!-- فرم رزرو -->
+                <div id="reservation-form">
                     <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
                     <div class="formcontainer">
                         <form id="DiscountForm">
@@ -219,7 +315,7 @@
                             <button type="submit">تاييد ثبت نام</button>
                         </form>
                         <div id="DiscountRequestStatus"></div> 
-                        <div id="DiscountSuccessMessage" style="display: none;">
+                        <div id="DiscountSuccessMessage">
                             ✅ تخفيف شما با موفقيت ثبت شد!<br><br>
                             <span style="color: blue;">
                                 مهلت استفاده: 30 آبان 1404، ساعت 24:00. 
@@ -229,7 +325,7 @@
                 </div>
             </div>
 
-            <!-- بخش تماس (بدون تغییر) -->
+            <!-- بخش تماس -->
             <div class="service-item hidden" data-category="contact">
                 <h2><i class="fas fa-headset"></i> تماس با ادمين</h2>
                 <div class="contact-grid">
@@ -265,19 +361,12 @@
         </div>
     </footer>
 
-    <!-- Modal راهنما (برای کارت‌ها) -->
-    <div id="helpModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6);">
-        <div style="background:white; margin:10% auto; padding:24px; width:90%; max-width:500px; border-radius:14px; direction:rtl; text-align:center; position:relative;">
-            <span onclick="this.parentElement.parentElement.style.display='none'" style="position:absolute; top:12px; left:16px; font-size:1.4rem; cursor:pointer; color:#6b7280;">&times;</span>
-            <h3>راهنمای کارت تخفیف</h3>
-            <p id="modal-text" style="line-height:1.6; color:#4b5563;"></p>
-        </div>
-    </div>
-
-    <!-- اسکریپت اختصاصی این صفحه -->
     <script>
         // تنظیم سال
         document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // ⚙️ تغییر این مقدار برای هر صفحه: 'fastfood', 'clothing', 'medical', 'gym', ...
+        const CURRENT_CATEGORY = 'fastfood';
 
         // تبدیل عدد به "XX هزار تومان" با ارقام فارسی
         function formatToToman(value) {
@@ -286,22 +375,11 @@
             return new Intl.NumberFormat('fa-IR').format(thousand) + ' هزار تومان';
         }
 
-        function showHelp(card) {
-            const text = `
-                <strong>${formatToToman(card.credit)}</strong> خرید کن، ولی فقط <strong>${formatToToman(card.total_pay)}</strong> بپرداز!<br><br>
-                همین الان <strong>${formatToToman(card.adv_pay)}</strong> رو بده تا کارت تخفیف‌ات رزرو بشه،<br>
-                و <strong>${formatToToman(card.in_shop_pay)}</strong> رو موقع خرید در فروشگاه بپرداز.<br><br>
-                یعنی <strong>${formatToToman(card.dis_amo)}</strong> سود کردی!
-            `;
-            document.getElementById('modal-text').innerHTML = text;
-            document.getElementById('helpModal').style.display = 'block';
-        }
-
-        function scrollToForm() {
-            const form = document.getElementById('reservation-form');
-            if (form) {
-                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+        // نمایش/پنهان کردن راهنما زیر کارت
+        function toggleHelp(cardId) {
+            const helpEl = document.getElementById(`help-text-${cardId}`);
+            const isVisible = helpEl.style.display === 'block';
+            helpEl.style.display = isVisible ? 'none' : 'block';
         }
 
         // بارگذاری داده‌ها
@@ -321,41 +399,68 @@
                     return;
                 }
 
+                const filteredCards = cards.filter(card =>
+                    card.dis_card_id && card.dis_card_id.trim().toLowerCase() === CURRENT_CATEGORY.toLowerCase()
+                );
+
+                if (filteredCards.length === 0) {
+                    container.innerHTML = '<p style="text-align:center; color:#888;">در این دسته کارتی موجود نیست.</p>';
+                    return;
+                }
+
                 let hasActive = false;
-                cards.forEach(card => {
+                filteredCards.forEach(card => {
                     const isActive = card.status === 'active';
                     if (isActive) hasActive = true;
+
+                    const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
 
                     const html = `
                         <div class="voucher-card ${!isActive ? 'dimmed' : ''}">
                             <div class="voucher-title">${card.title || 'کارت تخفیف'}</div>
                             <div class="voucher-item">
                                 <span class="voucher-label">مبلغ اعتبار:</span>
-                                <span class="voucher-value">${formatToToman(card.credit)}</span>
+                                <span class="voucher-value credit">${formatToToman(card.credit)}</span>
                             </div>
                             <div class="voucher-item">
                                 <span class="voucher-label">مبلغ تخفیف:</span>
-                                <span class="voucher-value highlight-discount">${formatToToman(card.dis_amo)}</span>
+                                <span class="voucher-value discount">${formatToToman(card.dis_amo)}</span>
                             </div>
+                            <div class="divider"></div>
                             <div class="voucher-item">
                                 <span class="voucher-label">پرداخت کل:</span>
-                                <span class="voucher-value highlight-total">${formatToToman(card.total_pay)}</span>
+                                <span class="voucher-value total">${formatToToman(card.total_pay)}</span>
                             </div>
                             <div class="voucher-item">
                                 <span class="voucher-label">پرداخت در فروشگاه:</span>
-                                <span class="voucher-value">${formatToToman(card.in_shop_pay)}</span>
+                                <span class="voucher-value inshop">${formatToToman(card.in_shop_pay)}</span>
                             </div>
+                            <div class="divider"></div>
                             <div class="voucher-item">
                                 <span class="voucher-label">پیش پرداخت:</span>
-                                <span class="voucher-value highlight-adv">${formatToToman(card.adv_pay)}</span>
+                                <span class="voucher-value advance">${formatToToman(card.adv_pay)}</span>
                             </div>
                             ${isActive 
                                 ? `<a href="#" class="deposit-link" onclick="scrollToForm(); return false;">رزرو کارت تخفیف</a>`
                                 : `<div class="deposit-link disabled">غیرفعال</div>`
                             }
-                            <a href="#" class="help-link" onclick="showHelp(${JSON.stringify(card)}); return false;">
-                                اگه توضیح بیشتر میخوای، اینجا کلیک کن!
+                            <div class="voucher-help-text">
+                                ✨ با پرداخت فقط <strong>${formatToToman(card.adv_pay)}</strong> هزار تومان، 
+                                کارت تخفیف شما رزرو می‌شود. مابقی مبلغ (<strong>${formatToToman(card.in_shop_pay)}</strong>) 
+                                را هنگام خرید در محل پرداخت کنید. در نهایت، 
+                                <strong>${formatToToman(card.dis_amo)}</strong> تومان صرفه‌جویی خواهید کرد!
+                            </div>
+                            <a href="#" class="help-link" onclick="toggleHelp('${cardId}'); return false;">
+                                📌 راهنمای جزئی‌تر
                             </a>
+                            <div id="help-text-${cardId}" class="voucher-help-text" style="display:none;">
+                                <strong>چگونه کارت تخفیف کار می‌کند؟</strong><br>
+                                - ابتدا <strong>${formatToToman(card.adv_pay)}</strong> را پرداخت کنید تا کارت رزرو شود.<br>
+                                - سپس با مراجعه به فروشگاه، برای خرید <strong>${formatToToman(card.credit)}</strong> اعتبار، 
+                                  فقط <strong>${formatToToman(card.in_shop_pay)}</strong> را پرداخت کنید.<br>
+                                - در مجموع، شما <strong>${formatToToman(card.total_pay)}</strong> پرداخت کرده‌اید 
+                                  و <strong>${formatToToman(card.dis_amo)}</strong> تومان سود کرده‌اید!
+                            </div>
                         </div>
                     `;
                     container.innerHTML += html;
@@ -368,6 +473,13 @@
             } catch (error) {
                 console.error('خطا:', error);
                 container.innerHTML = '<p style="text-align:center; color:red;">خطا در بارگذاری کارت‌ها. لطفاً دوباره تلاش کنید.</p>';
+            }
+        }
+
+        function scrollToForm() {
+            const form = document.getElementById('reservation-form');
+            if (form) {
+                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
