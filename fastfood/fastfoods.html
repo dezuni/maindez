@@ -137,20 +137,6 @@
             text-decoration: underline;
         }
 
-        .address-link {
-            display: block;
-            text-align: center;
-            color: #10b981;
-            margin-top: 8px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-decoration: none;
-        }
-
-        .address-link:hover {
-            text-decoration: underline;
-        }
-
         .voucher-help-text {
             direction: rtl;
             text-align: right;
@@ -162,6 +148,20 @@
             line-height: 1.6;
             color: #2c3e50;
             border: 1px solid #e2e8f0;
+        }
+
+        .address-text {
+            direction: rtl;
+            text-align: right;
+            margin-top: 12px;
+            padding: 12px;
+            background: #fffbeb;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #854d0e;
+            border: 1px solid #fed7aa;
+            display: none;
         }
 
         #loading-vouchers {
@@ -297,7 +297,6 @@
         </nav>
 
         <main>
-            <!-- جایگزینی بخش فرم با کارت‌های پویا -->
             <div class="service-item" data-category="DISCOUNT">
                 <h2><i class="fas fa-tags"></i> کارت‌های تخفیف فست‌فود و رستوران ها</h2>
                 
@@ -307,7 +306,6 @@
                     </div>
                 </div>
 
-                <!-- فرم رزرو -->
                 <div id="reservation-form">
                     <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
                     <div class="formcontainer">
@@ -350,7 +348,6 @@
                 </div>
             </div>
 
-            <!-- بخش تماس -->
             <div class="service-item hidden" data-category="contact">
                 <h2><i class="fas fa-headset"></i> تماس با ادمين</h2>
                 <div class="contact-grid">
@@ -407,6 +404,13 @@
             helpEl.style.display = isVisible ? 'none' : 'block';
         }
 
+        // نمایش/پنهان کردن آدرس فروشگاه
+        function toggleAddress(cardId) {
+            const addrEl = document.getElementById(`address-text-${cardId}`);
+            const isVisible = addrEl.style.display === 'block';
+            addrEl.style.display = isVisible ? 'none' : 'block';
+        }
+
         // بارگذاری داده‌ها
         async function loadVouchers() {
             const container = document.getElementById('vouchers-container');
@@ -439,8 +443,6 @@
                     if (isActive) hasActive = true;
 
                     const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
-
-                    // بررسی وجود آدرس معتبر
                     const hasAddress = card.address && card.address.trim() !== '';
 
                     const html = `
@@ -478,10 +480,17 @@
                                 را هنگام خرید در محل پرداخت کنید. در نهایت، 
                                 <strong>${formatToToman(card.dis_amo)}</strong> تومان صرفه‌جویی خواهید کرد!
                             </div>
-                            <a href="#" class="help-link" onclick="toggleHelp('${cardId}'); return false;">
-                                📌 راهنمای جزئی‌تر
-                            </a>
-                            <div id="help-text-${cardId}" class="voucher-help-text" style="display:none;">
+                            <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 12px;">
+                                <a href="#" class="help-link" onclick="toggleHelp('${cardId}'); return false;">
+                                    📌 راهنمای جزئی‌تر
+                                </a>
+                                ${hasAddress ? `
+                                    <a href="#" class="help-link" style="color:#d97706;" onclick="toggleAddress('${cardId}'); return false;">
+                                        📍 نمایش آدرس فروشگاه
+                                    </a>
+                                ` : ''}
+                            </div>
+                            <div id="help-text-${cardId}" class="voucher-help-text" style="display:none; margin-top:12px;">
                                 <strong>چگونه کارت تخفیف کار می‌کند؟</strong><br>
                                 - ابتدا <strong>${formatToToman(card.adv_pay)}</strong> را پرداخت کنید تا کارت رزرو شود.<br>
                                 - سپس با مراجعه به فروشگاه، برای خرید <strong>${formatToToman(card.credit)}</strong> اعتبار، 
@@ -490,9 +499,9 @@
                                   و <strong>${formatToToman(card.dis_amo)}</strong> تومان سود کرده‌اید!
                             </div>
                             ${hasAddress ? `
-                                <a href="${card.address}" target="_blank" class="address-link">
-                                    📍 مشاهده آدرس در نقشه
-                                </a>
+                                <div id="address-text-${cardId}" class="address-text" style="display:none; margin-top:12px;">
+                                    ${card.address}
+                                </div>
                             ` : ''}
                         </div>
                     `;
@@ -519,7 +528,7 @@
         document.addEventListener('DOMContentLoaded', loadVouchers);
     </script>
 
-    <!-- اسکریپت تخفیف (اگر نیاز به منطق فرم داری) -->
+    <!-- اسکریپت تخفیف -->
     <script src="/script_discount.js"></script>
     <!-- اسکریپت منوی موبایل -->
     <script src="./fastfood_script.js"></script>
