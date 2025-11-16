@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تایمرهای مهلت ثبت نام</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c2461, #1e3799, #4a69bd);
+            color: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            color: #e6f7ff;
+        }
+        
+        .timers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .timer-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .timer-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .discount-info {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .discount-id {
+            font-size: 1.1rem;
+            color: #87ceeb;
+            margin-bottom: 8px;
+        }
+        
+        .discount-type {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e6f7ff;
+        }
+        
+        .timer-title {
+            text-align: center;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #b3e0ff;
+        }
+        
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .time-unit {
+            background: linear-gradient(135deg, rgba(30, 55, 153, 0.7), rgba(74, 105, 189, 0.7));
+            border-radius: 12px;
+            padding: 15px 8px;
+            min-width: 70px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+        
+        .time-value {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+            color: #e6f7ff;
+        }
+        
+        .time-label {
+            font-size: 0.9rem;
+            margin-top: 5px;
+            opacity: 0.9;
+            color: #b3e0ff;
+        }
+        
+        .expired-message {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #ff6b6b;
+            padding: 20px;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+        
+        .loading {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #b3e0ff;
+            padding: 40px;
+        }
+        
+        .urgent {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { 
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
+            }
+            50% { 
+                transform: scale(1.03);
+            }
+            100% { 
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
+            }
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #4a69bd, #87ceeb);
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .timers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timer-card {
+                padding: 20px;
+            }
+            
+            .time-unit {
+                min-width: 60px;
+                padding: 12px 5px;
+            }
+            
+            .time-value {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">صفحه محصولات غذایی</h1>
+        
+        <div id="timers-container" class="timers-grid">
+            <div class="loading">در حال بارگذاری تایمرها...</div>
+        </div>
+    </div>
+
+    <script>
+        // تابع برای تبدیل اعداد انگلیسی به فارسی
+        function toPersianNumber(number) {
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return number.toString().replace(/\d/g, digit => persianDigits[parseInt(digit)]);
+        }
+        
+        // شناسه نوع تخفیف برای این صفحه (مثلاً محصولات غذایی)
+        const currentDiscountType = 'food_products';
+        
+        // تابع برای دریافت داده‌ها از Google Apps Script
+        async function fetchDiscountData() {
+            try {
+                // URL اسکریپت گوگل اپ (باید جایگزین کنید)
+                const scriptUrl = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+                
+                const response = await fetch(`${scriptUrl}?discount_type=${currentDiscountType}`);
+                const data = await response.json();
+                
+                return data;
+            } catch (error) {
+                console.error('خطا در دریافت داده‌ها:', error);
+                return [];
+            }
+        }
+        
+        // تابع برای ایجاد تایمر
+        function createTimer(discount) {
+            const timerCard = document.createElement('div');
+            timerCard.className = 'timer-card';
+            timerCard.id = `timer-${discount.discount_ID}`;
+            
+            const discountInfo = `
+                <div class="discount-info">
+                    <div class="discount-id">شناسه: ${discount.discount_ID}</div>
+                    <div class="discount-type">${discount.discount_type}</div>
+                </div>
+                <div class="timer-title">فرصت باقی مانده تا پایان مهلت ثبت نام</div>
+            `;
+            
+            timerCard.innerHTML = discountInfo;
+            
+            // بررسی تاریخ انقضا
+            const expiryDate = new Date(`${discount.discount_registration_expiry_date}T${discount.discount_registration_expiry_time}`);
+            const now = new Date();
+            
+            if (expiryDate <= now) {
+                // مهلت تمام شده
+                timerCard.innerHTML += `
+                    <div class="expired-message">
+                        مهلت ثبت نام تمام شده است
+                    </div>
+                `;
+                return timerCard;
+            }
+            
+            // تایمر فعال
+            const timerHTML = `
+                <div class="progress-bar">
+                    <div class="progress" id="progress-${discount.discount_ID}"></div>
+                </div>
+                <div class="timer">
+                    <div class="time-unit">
+                        <span class="time-value" id="days-${discount.discount_ID}">00</span>
+                        <span class="time-label">روز</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-value" id="hours-${discount.discount_ID}">00</span>
+                        <span class="time-label">ساعت</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-value" id="minutes-${discount.discount_ID}">00</span>
+                        <span class="time-label">دقیقه</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="time-value" id="seconds-${discount.discount_ID}">00</span>
+                        <span class="time-label">ثانیه</span>
+                    </div>
+                </div>
+            `;
+            
+            timerCard.innerHTML += timerHTML;
+            
+            // محاسبه کل زمان برای نوار پیشرفت
+            const totalTime = expiryDate - new Date(expiryDate.getFullYear(), expiryDate.getMonth(), expiryDate.getDate() - 10);
+            
+            // تابع به‌روزرسانی تایمر
+            function updateTimer() {
+                const now = new Date();
+                const timeRemaining = expiryDate - now;
+                
+                // بروزرسانی نوار پیشرفت
+                const progressPercent = ((totalTime - timeRemaining) / totalTime) * 100;
+                const progressBar = document.getElementById(`progress-${discount.discount_ID}`);
+                if (progressBar) {
+                    progressBar.style.width = `${Math.min(progressPercent, 100)}%`;
+                }
+                
+                // اگر زمان به پایان رسیده باشد
+                if (timeRemaining <= 0) {
+                    timerCard.innerHTML = `
+                        <div class="discount-info">
+                            <div class="discount-id">شناسه: ${discount.discount_ID}</div>
+                            <div class="discount-type">${discount.discount_type}</div>
+                        </div>
+                        <div class="expired-message">
+                            مهلت ثبت نام تمام شده است
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // محاسبه روز، ساعت، دقیقه و ثانیه باقی‌مانده
+                const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+                
+                // نمایش مقادیر
+                document.getElementById(`days-${discount.discount_ID}`).textContent = toPersianNumber(days);
+                document.getElementById(`hours-${discount.discount_ID}`).textContent = toPersianNumber(hours);
+                document.getElementById(`minutes-${discount.discount_ID}`).textContent = toPersianNumber(minutes);
+                document.getElementById(`seconds-${discount.discount_ID}`).textContent = toPersianNumber(seconds);
+                
+                // اگر زمان کمتر از ۲۴ ساعت باقی مانده
+                if (days === 0 && hours < 24) {
+                    const timeUnits = timerCard.querySelectorAll('.time-unit');
+                    timeUnits.forEach(unit => {
+                        unit.classList.add('urgent');
+                    });
+                }
+            }
+            
+            // شروع تایمر
+            updateTimer();
+            const timerInterval = setInterval(updateTimer, 1000);
+            
+            // ذخیره interval برای پاکسازی در صورت نیاز
+            timerCard.dataset.intervalId = timerInterval;
+            
+            return timerCard;
+        }
+        
+        // تابع اصلی برای بارگذاری و نمایش تایمرها
+        async function loadTimers() {
+            const container = document.getElementById('timers-container');
+            
+            try {
+                const discountData = await fetchDiscountData();
+                
+                if (discountData.length === 0) {
+                    container.innerHTML = '<div class="loading">هیچ تایمر فعالی وجود ندارد</div>';
+                    return;
+                }
+                
+                container.innerHTML = '';
+                
+                discountData.forEach(discount => {
+                    const timerElement = createTimer(discount);
+                    container.appendChild(timerElement);
+                });
+                
+            } catch (error) {
+                container.innerHTML = '<div class="loading">خطا در بارگذاری تایمرها</div>';
+                console.error('خطا:', error);
+            }
+        }
+        
+        // بارگذاری اولیه تایمرها
+        loadTimers();
+        
+        // به‌روزرسانی تایمرها هر 5 دقیقه
+        setInterval(loadTimers, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
