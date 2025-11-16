@@ -425,69 +425,55 @@
                     if (isActive) hasActive = true;
 
                     const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
-const html = `
-    <div class="voucher-card ${!isActive ? 'dimmed' : ''}">
-        <div class="voucher-title">${card.title || 'کارت تخفیف'}</div>
-        <div class="voucher-item">
-            <span class="voucher-label">مبلغ اعتبار:</span>
-            <span class="voucher-value credit">${formatToToman(card.credit)}</span>
-        </div>
-        <div class="voucher-item">
-            <span class="voucher-label">مبلغ تخفیف:</span>
-            <span class="voucher-value discount">${formatToToman(card.dis_amo)}</span>
-        </div>
-        <div class="divider"></div>
-        <div class="voucher-item">
-            <span class="voucher-label">هزینه کل:</span>
-            <span class="voucher-value total">${formatToToman(card.total_pay)}</span>
-        </div>
-        <div class="voucher-item">
-            <span class="voucher-label">پرداخت در فروشگاه:</span>
-            <span class="voucher-value inshop">${formatToToman(card.in_shop_pay)}</span>
-        </div>
-        <div class="voucher-item">
-            <span class="voucher-label">پیش پرداخت:</span>
-            <span class="voucher-value advance">${formatToToman(card.adv_pay)}</span>
-        </div>
-        <div class="divider"></div>
-        <div class="voucher-item">
-            <span class="voucher-label">تاریخ انقضا:</span>
-            <span class="voucher-value" style="color:#6b7280; font-weight:normal;">
-                ${card.expire_date || 'مشخص نشده'}
-            </span>
-        </div>
-        ${isActive 
-            ? `<a href="#" class="deposit-link" onclick="scrollToForm(); return false;">رزرو کارت تخفیف</a>`
-            : `<div class="deposit-link disabled">غیرفعال</div>`
-        }
-        <div class="voucher-help-text">
-            ✨ توضیح: فقط با پرداخت <strong>${formatToToman(total_pay)}</strong>  هزار تومان، <strong>${formatToToman(credit)}</strong> هزار تومان خرید کن!
-        </div>
-        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 12px;">
-            <a href="#" class="help-link" onclick="toggleHelp('${cardId}'); return false;">
-                📌 راهنمای جزئی‌تر
-            </a>
-            ${hasAddress ? `
-                <a href="#" class="help-link" style="color:#d97706;" onclick="toggleAddress('${cardId}'); return false;">
-                    📍 نمایش آدرس فروشگاه
-                </a>
-            ` : ''}
-        </div>
-        <div id="help-text-${cardId}" class="voucher-help-text" style="display:none; margin-top:12px;">
-            <strong>چگونه کارت تخفیف کار می‌کند؟</strong><br>
-            - ابتدا <strong>${formatToToman(card.adv_pay)}</strong> را پرداخت کنید تا کارت رزرو شود.<br>
-            - سپس با مراجعه به فروشگاه، برای خرید <strong>${formatToToman(card.credit)}</strong> اعتبار، 
-              فقط <strong>${formatToToman(card.in_shop_pay)}</strong> را پرداخت کنید.<br>
-            - در مجموع، شما <strong>${formatToToman(card.total_pay)}</strong> پرداخت کرده‌اید 
-              و <strong>${formatToToman(card.dis_amo)}</strong> تومان سود کرده‌اید!
-        </div>
-        ${hasAddress ? `
-            <div id="address-text-${cardId}" class="address-text" style="display:none; margin-top:12px;">
-                ${card.address}
-            </div>
-        ` : ''}
-    </div>
-`;
+
+                    const html = `
+                        <div class="voucher-card ${!isActive ? 'dimmed' : ''}">
+                            <div class="voucher-title">${card.title || 'کارت تخفیف'}</div>
+                            <div class="voucher-item">
+                                <span class="voucher-label">مبلغ اعتبار:</span>
+                                <span class="voucher-value credit">${formatToToman(card.credit)}</span>
+                            </div>
+                            <div class="voucher-item">
+                                <span class="voucher-label">مبلغ تخفیف:</span>
+                                <span class="voucher-value discount">${formatToToman(card.dis_amo)}</span>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="voucher-item">
+                                <span class="voucher-label">پرداخت کل:</span>
+                                <span class="voucher-value total">${formatToToman(card.total_pay)}</span>
+                            </div>
+                            <div class="voucher-item">
+                                <span class="voucher-label">پرداخت در فروشگاه:</span>
+                                <span class="voucher-value inshop">${formatToToman(card.in_shop_pay)}</span>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="voucher-item">
+                                <span class="voucher-label">پیش پرداخت:</span>
+                                <span class="voucher-value advance">${formatToToman(card.adv_pay)}</span>
+                            </div>
+                            ${isActive 
+                                ? `<a href="#" class="deposit-link" onclick="scrollToForm(); return false;">رزرو کارت تخفیف</a>`
+                                : `<div class="deposit-link disabled">غیرفعال</div>`
+                            }
+                            <div class="voucher-help-text">
+                                ✨ با پرداخت فقط <strong>${formatToToman(card.adv_pay)}</strong> هزار تومان، 
+                                کارت تخفیف شما رزرو می‌شود. مابقی مبلغ (<strong>${formatToToman(card.in_shop_pay)}</strong>) 
+                                را هنگام خرید در محل پرداخت کنید. در نهایت، 
+                                <strong>${formatToToman(card.dis_amo)}</strong> تومان صرفه‌جویی خواهید کرد!
+                            </div>
+                            <a href="#" class="help-link" onclick="toggleHelp('${cardId}'); return false;">
+                                📌 راهنمای جزئی‌تر
+                            </a>
+                            <div id="help-text-${cardId}" class="voucher-help-text" style="display:none;">
+                                <strong>چگونه کارت تخفیف کار می‌کند؟</strong><br>
+                                - ابتدا <strong>${formatToToman(card.adv_pay)}</strong> را پرداخت کنید تا کارت رزرو شود.<br>
+                                - سپس با مراجعه به فروشگاه، برای خرید <strong>${formatToToman(card.credit)}</strong> اعتبار، 
+                                  فقط <strong>${formatToToman(card.in_shop_pay)}</strong> را پرداخت کنید.<br>
+                                - در مجموع، شما <strong>${formatToToman(card.total_pay)}</strong> پرداخت کرده‌اید 
+                                  و <strong>${formatToToman(card.dis_amo)}</strong> تومان سود کرده‌اید!
+                            </div>
+                        </div>
+                    `;
                     container.innerHTML += html;
                 });
 
