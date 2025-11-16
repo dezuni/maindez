@@ -30,7 +30,7 @@
         async function fetchDiscountData() {
             try {
                 // URL اسکریپت گوگل اپ (باید جایگزین کنید)
-                const scriptUrl = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+                const scriptUrl = 'https://script.google.com/macros/s/AKfycbxZvWsvFz6sMqnRclvh8Yqw3SbpBu9XUjMXNQJGb7rbk-tipvEtdRSVTI0V6A8MbJBs/exec';
                 
                 const response = await fetch(`${scriptUrl}?discount_type=${currentDiscountType}`);
                 const data = await response.json();
