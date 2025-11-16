@@ -137,6 +137,20 @@
             text-decoration: underline;
         }
 
+        .address-link {
+            display: block;
+            text-align: center;
+            color: #10b981;
+            margin-top: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .address-link:hover {
+            text-decoration: underline;
+        }
+
         .voucher-help-text {
             direction: rtl;
             text-align: right;
@@ -195,7 +209,7 @@
             font-size: 1rem;
             direction: ltr;
             text-align: left;
-            font-family: 'Vazirmatn', sans-serif; /* فونت برای input هم */
+            font-family: 'Vazirmatn', sans-serif;
         }
 
         .formcontainer input:focus {
@@ -426,6 +440,9 @@
 
                     const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
 
+                    // بررسی وجود آدرس معتبر
+                    const hasAddress = card.address && card.address.trim() !== '';
+
                     const html = `
                         <div class="voucher-card ${!isActive ? 'dimmed' : ''}">
                             <div class="voucher-title">${card.title || 'کارت تخفیف'}</div>
@@ -472,6 +489,11 @@
                                 - در مجموع، شما <strong>${formatToToman(card.total_pay)}</strong> پرداخت کرده‌اید 
                                   و <strong>${formatToToman(card.dis_amo)}</strong> تومان سود کرده‌اید!
                             </div>
+                            ${hasAddress ? `
+                                <a href="${card.address}" target="_blank" class="address-link">
+                                    📍 مشاهده آدرس در نقشه
+                                </a>
+                            ` : ''}
                         </div>
                     `;
                     container.innerHTML += html;
