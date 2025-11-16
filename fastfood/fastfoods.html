@@ -449,27 +449,33 @@
                         <div class="voucher-card ${!isActive ? 'dimmed' : ''}">
                             <div class="voucher-title">${card.title || 'کارت تخفیف'}</div>
                             <div class="voucher-item">
-                                <span class="voucher-label">مبلغ اعتبار:</span>
-                                <span class="voucher-value credit">${formatToToman(card.credit)}</span>
-                            </div>
-                            <div class="voucher-item">
-                                <span class="voucher-label">مبلغ تخفیف:</span>
-                                <span class="voucher-value discount">${formatToToman(card.dis_amo)}</span>
-                            </div>
-                            <div class="divider"></div>
-                            <div class="voucher-item">
-                                <span class="voucher-label">پرداخت کل:</span>
-                                <span class="voucher-value total">${formatToToman(card.total_pay)}</span>
-                            </div>
-                            <div class="voucher-item">
-                                <span class="voucher-label">پرداخت در فروشگاه:</span>
-                                <span class="voucher-value inshop">${formatToToman(card.in_shop_pay)}</span>
-                            </div>
-                            <div class="divider"></div>
-                            <div class="voucher-item">
-                                <span class="voucher-label">پیش پرداخت:</span>
-                                <span class="voucher-value advance">${formatToToman(card.adv_pay)}</span>
-                            </div>
+    <span class="voucher-label">مبلغ اعتبار:</span>
+    <span class="voucher-value credit">${formatToToman(card.credit)}</span>
+</div>
+<div class="voucher-item">
+    <span class="voucher-label">مبلغ تخفیف:</span>
+    <span class="voucher-value discount">${formatToToman(card.dis_amo)}</span>
+</div>
+<div class="divider"></div>
+<div class="voucher-item">
+    <span class="voucher-label">هزینه کل:</span>
+    <span class="voucher-value total">${formatToToman(card.total_pay)}</span>
+</div>
+<div class="voucher-item">
+    <span class="voucher-label">پرداخت در فروشگاه:</span>
+    <span class="voucher-value inshop">${formatToToman(card.in_shop_pay)}</span>
+</div>
+<div class="voucher-item">
+    <span class="voucher-label">پیش پرداخت:</span>
+    <span class="voucher-value advance">${formatToToman(card.adv_pay)}</span>
+</div>
+<div class="divider"></div>
+<div class="voucher-item">
+    <span class="voucher-label">تاریخ انقضا:</span>
+    <span class="voucher-value" style="color:#6b7280; font-weight:normal;">
+        ${card.expire_date || 'مشخص نشده'}
+    </span>
+</div>
                             ${isActive 
                                 ? `<a href="#" class="deposit-link" onclick="scrollToForm(); return false;">رزرو کارت تخفیف</a>`
                                 : `<div class="deposit-link disabled">غیرفعال</div>`
