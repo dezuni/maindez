@@ -476,7 +476,7 @@
                             <div class="voucher-item">
                                 <span class="voucher-label">تاریخ انقضای کارت تخفیف:</span>
                                 <span class="voucher-value" style="color:#6b7280; font-weight:normal;">
-                                    ${card.expire_date || 'مشخص نشده'}
+                                   ${(typeof card.expire_date === 'string' ? card.expire_date : 'مشخص نشده')}
                                 </span>
                             </div>
                             ${isActive 
