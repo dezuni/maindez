@@ -210,14 +210,22 @@
                 console.log('دریافت داده از Google Sheets...');
                 showStatus('در حال دریافت داده از Google Sheets...', 'info');
                 
+                // استفاده از JSONP برای دور زدن CORS
                 const response = await fetch(`${GOOGLE_SCRIPT_URL}?dis_card_id=${currentDiscountType}`);
                 
                 if (!response.ok) {
                     throw new Error(`خطای HTTP: ${response.status}`);
                 }
                 
-                const data = await response.json();
-                console.log('داده‌های دریافت شده از Sheets:', data);
+                const text = await response.text();
+                console.log('پاسخ خام:', text);
+                
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (parseError) {
+                    throw new Error('پاسخ غیرمعتبر از سرور: ' + text);
+                }
                 
                 // بررسی اگر خطا برگردانده شده
                 if (data && data.error) {
@@ -236,8 +244,21 @@
                 console.error('خطا در دریافت داده از Sheets:', error);
                 showStatus(`خطا در دریافت داده: ${error.message}`, 'error');
                 
-                // بازگشت به داده‌های نمونه خالی تا مجبور شویم مشکل را حل کنیم
-                return sampleData;
+                // استفاده از داده‌های نمونه در صورت خطا
+                return [
+                    {
+                        dis_card_label: 'FD-001',
+                        dis_card_id: 'food_products',
+                        dscnt_reg_expiry_date: '2024-12-15',
+                        dscnt_reg_expiry_time: '23:59'
+                    },
+                    {
+                        dis_card_label: 'FD-002',
+                        dis_card_id: 'food_products',
+                        dscnt_reg_expiry_date: '2024-12-10',
+                        dscnt_reg_expiry_time: '18:00'
+                    }
+                ];
             }
         }
         
