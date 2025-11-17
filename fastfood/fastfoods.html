@@ -311,17 +311,14 @@
                     <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
                     <div class="formcontainer">
                         <form id="DiscountForm">
-                            <!-- فیلدهای پنهان -->
+                            <!-- فیلدهای پنهان برای ارسال به شیت -->
                             <input type="hidden" id="selectedStoreName" name="store_name">
                             <input type="hidden" id="selectedCardLabel" name="dis_card_label">
 
-                            <!-- نمایش اطلاعات کارت -->
-                            <div style="background:#f0f8ff; padding:12px; border-radius:8px; margin-bottom:16px;">
-                                <p style="margin:4px 0; font-weight:bold; color:#1e3a8a;">فروشگاه انتخابی:</p>
-                                <p id="displayStoreName" style="margin:4px 0; color:#374151;">در حال بارگذاری...</p>
-                                <p style="margin:4px 0; font-weight:bold; color:#1e3a8a; margin-top:8px;">برچسب کارت:</p>
-                                <p id="displayCardLabel" style="margin:4px 0; color:#374151;">در حال بارگذاری...</p>
-                            </div>
+                            <!-- فیلد فقط-خواندنی برای نام فروشگاه -->
+                            <label>فروشگاه:
+                                <input type="text" id="displayStoreName" readonly style="background:#f8fafc; color:#4b5563;">
+                            </label>
 
                             <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" name="fullName" required></label>
                             <label>شماره تماس (مانند مثال): 
@@ -331,23 +328,14 @@
                                 <input type="text" id="DiscountVerifCode" name="studentCode" inputmode="numeric" placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
                             </label>
                             
-                            <div id="captchaContainer_discount">
-                                <div id="captchaQuestion_discount" style="
-                                    padding: 10px;
-                                    margin: 10px 0;
-                                    background: #f0f0f0;
-                                    border: 1px solid #ccc;
-                                    border-radius: 5px;
-                                    font-size: 16px;
-                                    font-weight: bold;
-                                    text-align: center;
-                                    color: #000;
-                                "></div>
-                                <label for="captchaAnswer_discount">پاسخ را وارد کنيد:</label>
-                                <input type="number" id="captchaAnswer_discount" name="captcha" placeholder="" required>
+                            <!-- کپچای جمع -->
+                            <div id="mathCaptcha" style="padding: 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
+                                <p id="mathQuestion" style="margin: 0 0 8px 0; font-weight: 500; color: #1e3a8a;">در حال بارگذاری سؤال...</p>
+                                <label for="mathAnswer">پاسخ جمع را وارد کنید:
+                                    <input type="number" id="mathAnswer" name="mathAnswer" required style="width: 80px; padding: 6px;">
+                                </label>
                             </div>
                             
-                            <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
                             <button type="submit">تاييد ثبت نام</button>
                         </form>
                         <div id="DiscountRequestStatus"></div> 
@@ -420,20 +408,27 @@
             addrEl.style.display = isVisible ? 'none' : 'block';
         }
 
-        // ذخیره کارت انتخابی
-        let selectedCard = null;
+        // تولید سؤال جمع
+        function generateMathCaptcha() {
+            const a = Math.floor(Math.random() * 10) + 1; // 1 تا 10
+            const b = Math.floor(Math.random() * 10) + 1; // 1 تا 10
+            window.correctAnswer = a + b;
+            document.getElementById('mathQuestion').textContent = `جمع عدد ${a} و ${b} چند است؟`;
+            document.getElementById('mathAnswer').value = '';
+        }
 
+        // ذخیره کارت انتخابی و نمایش فرم
         function scrollToForm(card) {
-            selectedCard = card;
-            document.getElementById('displayStoreName').textContent = card.store_name || 'نامشخص';
-            document.getElementById('displayCardLabel').textContent = card.dis_card_label || 'نامشخص';
-            document.getElementById('selectedStoreName').value = card.store_name || '';
-            document.getElementById('selectedCardLabel').value = card.dis_card_label || '';
+            document.getElementById('selectedStoreName').value = card.store_name || 'نامشخص';
+            document.getElementById('selectedCardLabel').value = card.dis_card_label || 'نامشخص';
+            document.getElementById('displayStoreName').value = card.store_name || 'نامشخص';
             
             const form = document.getElementById('reservation-form');
             if (form) {
                 form.style.display = 'block';
                 form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // تولید سؤال جدید
+                generateMathCaptcha();
             }
         }
 
@@ -555,13 +550,13 @@
                 fullName: document.getElementById('fullName_discount').value,
                 phone: document.getElementById('phoneNumber_discount').value,
                 studentCode: document.getElementById('DiscountVerifCode').value,
-                captcha: document.getElementById('captchaAnswer_discount').value,
+                mathAnswer: document.getElementById('mathAnswer').value,
                 store_name: document.getElementById('selectedStoreName').value,
                 dis_card_label: document.getElementById('selectedCardLabel').value
             };
 
             // ⚠️ جایگزین کنید با لینک اسکریپت گوگل خودتان
-            const FORM_SCRIPT_URL = 'AKfycbySBZxk0wpDeVKeN8w0laD3pgcHwFLGeJ11IvCcLc1Z76OvPkuNwjZG5R7lhi0N2Ac';
+            const FORM_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_FOR_FORM';
 
             try {
                 const response = await fetch(FORM_SCRIPT_URL, {
@@ -573,10 +568,8 @@
                 if (response.ok) {
                     document.getElementById('DiscountSuccessMessage').style.display = 'block';
                     document.getElementById('DiscountRequestStatus').textContent = '';
-                    // پاک کردن فرم
                     document.getElementById('DiscountForm').reset();
-                    document.getElementById('displayStoreName').textContent = 'ثبت‌شده';
-                    document.getElementById('displayCardLabel').textContent = 'ثبت‌شده';
+                    document.getElementById('displayStoreName').value = 'ثبت‌شده';
                 } else {
                     document.getElementById('DiscountRequestStatus').textContent = '❌ خطا در ثبت اطلاعات. لطفاً دوباره تلاش کنید.';
                 }
