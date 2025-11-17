@@ -4,7 +4,7 @@ let discountRate = 10;
 // discount registration deadline
 let YYYY = 2025; // year
 let MM = 11;      // month
-let DD = 7;      // day
+let DD = 18;      // day
 let RegistrationDeadline = new Date(YYYY, MM-1, DD, 24, 00, 00);
 
 // discount expiration date
