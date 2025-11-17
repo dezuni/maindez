@@ -146,11 +146,24 @@
                 box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
             }
         }
+
+        .success-message {
+            text-align: center;
+            color: #4ade80;
+            background: rgba(74, 222, 128, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="page-title">صفحه محصولات غذایی</h1>
+        
+        <!-- Status message -->
+        <div id="status-container"></div>
         
         <div id="timers-container" class="timers-grid">
             <div class="loading">در حال بارگذاری تایمرها...</div>
@@ -161,12 +174,12 @@
         // شناسه نوع تخفیف برای این صفحه
         const currentDiscountType = 'fastfood';
         
-        // داده‌های نمونه (در حالت واقعی از Google Sheets می‌آید)
+        // داده‌های نمونه با تاریخ‌های معتبر
         const sampleData = [
             {
                 dis_card_label: 'FD-001',
                 dis_card_id: 'fastfood',
-                dscnt_reg_expiry_date: '2025-11-25',
+                dscnt_reg_expiry_date: '2025-12-15',
                 dscnt_reg_expiry_time: '23:59'
             },
             {
@@ -178,10 +191,17 @@
             {
                 dis_card_label: 'FD-003',
                 dis_card_id: 'food_products', 
-                dscnt_reg_expiry_date: '2024-11-25',
+                dscnt_reg_expiry_date: '2024-11-30',
                 dscnt_reg_expiry_time: '12:00'
             }
         ];
+
+        // تابع برای نمایش وضعیت
+        function showStatus(message, type = 'info') {
+            const statusContainer = document.getElementById('status-container');
+            const color = type === 'success' ? '#4ade80' : type === 'error' ? '#ff6b6b' : '#b3e0ff';
+            statusContainer.innerHTML = `<div class="success-message" style="color: ${color}; background: rgba(${type === 'success' ? '74,222,128' : type === 'error' ? '255,107,107' : '179,224,255'}, 0.1); border-color: rgba(${type === 'success' ? '74,222,128' : type === 'error' ? '255,107,107' : '179,224,255'}, 0.3)">${message}</div>`;
+        }
 
         // تابع برای تبدیل اعداد انگلیسی به فارسی
         function toPersianNumber(number) {
@@ -189,24 +209,35 @@
             return number.toString().replace(/\d/g, digit => persianDigits[parseInt(digit)]);
         }
         
-        // تابع برای دریافت داده‌ها (نسخه واقعی)
-        async function fetchDiscountData() {
-            try {
-                // در حالت واقعی این آدرس باید جایگزین شود
-                const scriptUrl = 'https://script.google.com/macros/s/AKfycbxZvWsvFz6sMqnRclvh8Yqw3SbpBu9XUjMXNQJGb7rbk-tipvEtdRSVTI0V6A8MbJBs/exec';
-                const response = await fetch(`${scriptUrl}?dis_card_id=${currentDiscountType}`);
+        // تابع برای اعتبارسنجی تاریخ
+        function isValidDate(dateString) {
+            if (!dateString) return false;
+            const date = new Date(dateString);
+            return date instanceof Date && !isNaN(date);
+        }
+        
+        // تابع برای دریافت داده‌ها - فقط از داده‌های نمونه استفاده می‌کند
+        function fetchDiscountData() {
+            return new Promise((resolve) => {
+                console.log('بارگذاری داده‌های نمونه...');
                 
-                if (!response.ok) {
-                    throw new Error('خطا در دریافت داده‌ها');
-                }
+                // فیلتر کردن داده‌ها بر اساس نوع
+                const filteredData = sampleData.filter(item => {
+                    // بررسی اعتبار تاریخ
+                    const expiryDateTime = `${item.dscnt_reg_expiry_date}T${item.dscnt_reg_expiry_time}`;
+                    if (!isValidDate(expiryDateTime)) {
+                        console.warn(`تاریخ نامعتبر برای ${item.dis_card_label}: ${expiryDateTime}`);
+                        return false;
+                    }
+                    return item.dis_card_id === currentDiscountType;
+                });
                 
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                console.warn('استفاده از داده‌های نمونه به دلیل:', error);
-                // برگرداندن داده‌های نمونه در صورت خطا
-                return sampleData.filter(item => item.dis_card_id === currentDiscountType);
-            }
+                // تأخیر مصنوعی برای شبیه‌سازی بارگذاری
+                setTimeout(() => {
+                    console.log('داده‌های بارگذاری شده:', filteredData);
+                    resolve(filteredData);
+                }, 1000);
+            });
         }
         
         // تابع برای ایجاد تایمر
@@ -312,6 +343,9 @@
             updateTimer();
             const timerInterval = setInterval(updateTimer, 1000);
             
+            // ذخیره interval برای پاکسازی
+            timerCard.dataset.intervalId = timerInterval;
+            
             return timerCard;
         }
         
@@ -320,28 +354,62 @@
             const container = document.getElementById('timers-container');
             
             try {
-                const discountData = await fetchDiscountData();
+                console.log('شروع بارگذاری تایمرها...');
+                showStatus('در حال بارگذاری تایمرها...', 'info');
                 
-                if (discountData.length === 0) {
+                const discountData = await fetchDiscountData();
+                console.log('داده‌های دریافت شده:', discountData);
+                
+                if (!discountData || discountData.length === 0) {
                     container.innerHTML = '<div class="loading">هیچ تایمر فعالی وجود ندارد</div>';
+                    showStatus('هیچ تایمر فعالی برای نمایش وجود ندارد', 'info');
                     return;
                 }
                 
                 container.innerHTML = '';
                 
                 discountData.forEach(discount => {
+                    console.log('ایجاد تایمر برای:', discount.dis_card_label);
                     const timerElement = createTimer(discount);
                     container.appendChild(timerElement);
                 });
                 
+                console.log('تایمرها با موفقیت بارگذاری شدند');
+                showStatus(`تایمرها با موفقیت بارگذاری شدند (${discountData.length} تایمر فعال)`, 'success');
+                
             } catch (error) {
-                container.innerHTML = '<div class="loading">خطا در بارگذاری تایمرها ها ها ها</div>';
-                console.error('خطا:', error);
+                console.error('خطا در بارگذاری تایمرها:', error);
+                container.innerHTML = '<div class="loading">خطا در بارگذاری تایمرها</div>';
+                showStatus('خطا در بارگذاری تایمرها. لطفاً صفحه را رفرش کنید.', 'error');
             }
         }
         
-        // بارگذاری اولیه تایمرها
-        loadTimers();
+        // تابع برای پاکسازی تایمرها
+        function cleanupTimers() {
+            const timerCards = document.querySelectorAll('.timer-card');
+            timerCards.forEach(card => {
+                const intervalId = card.dataset.intervalId;
+                if (intervalId) {
+                    clearInterval(intervalId);
+                }
+            });
+        }
+        
+        // بارگذاری اولیه تایمرها وقتی صفحه کاملاً لود شد
+        window.addEventListener('load', function() {
+            console.log('صفحه کاملاً لود شد، شروع بارگذاری تایمرها...');
+            loadTimers();
+        });
+        
+        // پاکسازی وقتی کاربر از صفحه خارج می‌شود
+        window.addEventListener('beforeunload', cleanupTimers);
+        
+        // بارگذاری مجدد تایمرها هر 30 ثانیه
+        setInterval(() => {
+            console.log('بارگذاری مجدد تایمرها...');
+            cleanupTimers();
+            loadTimers();
+        }, 30000);
     </script>
 </body>
 </html>
