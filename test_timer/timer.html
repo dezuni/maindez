@@ -171,7 +171,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="page-title">صفحه محصولات غذایی</h1>
+        <h1 class="page-title">صفحه فست فود</h1>
         
         <!-- Status message -->
         <div id="status-container"></div>
@@ -186,11 +186,8 @@
         const currentDiscountType = 'fastfood';
         
         // آدرس واقعی Google Apps Script - این را جایگزین کنید
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbx53SDyKOSlESCXpuvfjUFbWEJuBmIBi_qfUBfF-ZVMH86rmUdFsOiu5OORaaWwQkhi/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx53SDyKOSlESCXpuvfjUFbWEJuBmIBi_qfUBfF-ZVMH86rmUdFsOiu5OORaaWwQkhi/exec';
         
-        // داده‌های نمونه (فقط برای fallback)
-        //const sampleData = [];
-
         // تابع برای نمایش وضعیت
         function showStatus(message, type = 'info') {
             const statusContainer = document.getElementById('status-container');
@@ -210,26 +207,28 @@
                 console.log('دریافت داده از Google Sheets...');
                 showStatus('در حال دریافت داده از Google Sheets...', 'info');
                 
-                // استفاده از JSONP برای دور زدن CORS
                 const response = await fetch(`${GOOGLE_SCRIPT_URL}?dis_card_id=${currentDiscountType}`);
                 
+                console.log('وضعیت پاسخ:', response.status, response.statusText);
+                
                 if (!response.ok) {
-                    throw new Error(`خطای HTTP: ${response.status}`);
+                    throw new Error(`خطای HTTP: ${response.status} - ${response.statusText}`);
                 }
                 
                 const text = await response.text();
-                console.log('پاسخ خام:', text);
+                console.log('پاسخ خام از سرور:', text);
                 
                 let data;
                 try {
                     data = JSON.parse(text);
                 } catch (parseError) {
-                    throw new Error('پاسخ غیرمعتبر از سرور: ' + text);
+                    console.error('خطا در تجزیه JSON:', parseError);
+                    throw new Error('پاسخ غیرمعتبر از سرور: ' + text.substring(0, 100));
                 }
                 
                 // بررسی اگر خطا برگردانده شده
                 if (data && data.error) {
-                    throw new Error(data.error);
+                    throw new Error('خطا از سرور: ' + data.error);
                 }
                 
                 // بررسی اگر داده‌ای دریافت نشده
@@ -237,7 +236,8 @@
                     throw new Error('هیچ داده‌ای از Sheets دریافت نشد');
                 }
                 
-                showStatus('داده‌ها با موفقیت از Sheets دریافت شد', 'success');
+                console.log('داده‌های پردازش شده:', data);
+                showStatus(`داده‌ها با موفقیت از Sheets دریافت شد (${data.length} تایمر)`, 'success');
                 return data;
                 
             } catch (error) {
@@ -247,16 +247,16 @@
                 // استفاده از داده‌های نمونه در صورت خطا
                 return [
                     {
-                        dis_card_label: 'FD-001788',
+                        dis_card_label: 'amo_normal',
                         dis_card_id: 'fastfood',
-                        dscnt_reg_expiry_date: '2025-11-21',
-                        dscnt_reg_expiry_time: '23:59'
+                        dscnt_reg_expiry_date: '2025-11-20',
+                        dscnt_reg_expiry_time: '03:30'
                     },
                     {
-                        dis_card_label: 'FD-002',
-                        dis_card_id: 'food_products',
-                        dscnt_reg_expiry_date: '2024-12-10',
-                        dscnt_reg_expiry_time: '18:00'
+                        dis_card_label: 'amo_best',
+                        dis_card_id: 'fastfood',
+                        dscnt_reg_expiry_date: '2025-11-21',
+                        dscnt_reg_expiry_time: '03:30'
                     }
                 ];
             }
@@ -379,7 +379,7 @@
                 console.log('شروع بارگذاری تایمرها...');
                 
                 const discountData = await fetchDiscountData();
-                console.log('داده‌های دریافت شده:', discountData);
+                console.log('داده‌های دریافت شده برای نمایش:', discountData);
                 
                 if (!discountData || discountData.length === 0) {
                     container.innerHTML = '<div class="loading">هیچ تایمر فعالی در Sheets پیدا نشد</div>';
