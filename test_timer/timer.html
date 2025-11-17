@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تایمرهای مهلت ثبت نام</title>
     <style>
-        /* استایل‌ها همانند قبل */
         * {
             margin: 0;
             padding: 0;
@@ -61,13 +60,13 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
         
-        .discount-id {
+        .discount-label {
             font-size: 1.1rem;
             color: #87ceeb;
             margin-bottom: 8px;
         }
         
-        .discount-type {
+        .discount-id {
             font-size: 1.3rem;
             font-weight: bold;
             color: #e6f7ff;
@@ -160,23 +159,29 @@
 
     <script>
         // شناسه نوع تخفیف برای این صفحه
-        const currentDiscountType = 'fastfood';
+        const currentDiscountType = 'food_products';
         
         // داده‌های نمونه (در حالت واقعی از Google Sheets می‌آید)
         const sampleData = [
-              {
+            {
                 dis_card_label: 'FD-001',
-                dis_card_id: 'fastfood',
-                dscnt_reg_expiry_date: '2025-11-20',
+                dis_card_id: 'food_products',
+                dscnt_reg_expiry_date: '2024-12-15',
                 dscnt_reg_expiry_time: '23:59'
-              },
-              {
-                dis_card_label: 'SH-001', 
-                dis_card_id: 'shop',
-                dscnt_reg_expiry_date: '2025-11-22',
+            },
+            {
+                dis_card_label: 'FD-002',
+                dis_card_id: 'food_products',
+                dscnt_reg_expiry_date: '2024-12-10',
                 dscnt_reg_expiry_time: '18:00'
-              }
-            ];
+            },
+            {
+                dis_card_label: 'FD-003',
+                dis_card_id: 'food_products', 
+                dscnt_reg_expiry_date: '2024-11-25',
+                dscnt_reg_expiry_time: '12:00'
+            }
+        ];
 
         // تابع برای تبدیل اعداد انگلیسی به فارسی
         function toPersianNumber(number) {
@@ -188,7 +193,7 @@
         async function fetchDiscountData() {
             try {
                 // در حالت واقعی این آدرس باید جایگزین شود
-                const scriptUrl = 'https://script.google.com/macros/s/AKfycbxZvWsvFz6sMqnRclvh8Yqw3SbpBu9XUjMXNQJGb7rbk-tipvEtdRSVTI0V6A8MbJBs/exec';
+                const scriptUrl = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
                 const response = await fetch(`${scriptUrl}?dis_card_id=${currentDiscountType}`);
                 
                 if (!response.ok) {
@@ -212,8 +217,8 @@
             
             const discountInfo = `
                 <div class="discount-info">
-                    <div class="discount-id">شناسه: ${discount.dis_card_label}</div>
-                    <div class="discount-type">${discount.dis_card_id}</div>
+                    <div class="discount-label">شناسه: ${discount.dis_card_label}</div>
+                    <div class="discount-id">${discount.dis_card_id}</div>
                 </div>
                 <div class="timer-title">فرصت باقی مانده تا پایان مهلت ثبت نام</div>
             `;
@@ -267,8 +272,8 @@
                 if (timeRemaining <= 0) {
                     timerCard.innerHTML = `
                         <div class="discount-info">
-                            <div class="discount-id">شناسه: ${discount.dis_card_label}</div>
-                            <div class="discount-type">${discount.dis_card_id}</div>
+                            <div class="discount-label">شناسه: ${discount.dis_card_label}</div>
+                            <div class="discount-id">${discount.dis_card_id}</div>
                         </div>
                         <div class="expired-message">
                             مهلت ثبت نام تمام شده است
