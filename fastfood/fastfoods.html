@@ -209,7 +209,7 @@
             font-size: 1rem;
             direction: ltr;
             text-align: left;
-            font-family: 'Vazirmatn', sans-serif; /* فونت برای input هم */
+            font-family: 'Vazirmatn', sans-serif;
         }
 
         .formcontainer input:focus {
@@ -297,7 +297,6 @@
         </nav>
 
         <main>
-            <!-- جایگزینی بخش فرم با کارت‌های پویا -->
             <div class="service-item" data-category="DISCOUNT">
                 <h2><i class="fas fa-tags"></i> کارت‌های تخفیف فست‌فود و رستوران ها</h2>
                 
@@ -312,12 +311,24 @@
                     <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
                     <div class="formcontainer">
                         <form id="DiscountForm">
-                            <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" required></label>
+                            <!-- فیلدهای پنهان -->
+                            <input type="hidden" id="selectedStoreName" name="store_name">
+                            <input type="hidden" id="selectedCardLabel" name="dis_card_label">
+
+                            <!-- نمایش اطلاعات کارت -->
+                            <div style="background:#f0f8ff; padding:12px; border-radius:8px; margin-bottom:16px;">
+                                <p style="margin:4px 0; font-weight:bold; color:#1e3a8a;">فروشگاه انتخابی:</p>
+                                <p id="displayStoreName" style="margin:4px 0; color:#374151;">در حال بارگذاری...</p>
+                                <p style="margin:4px 0; font-weight:bold; color:#1e3a8a; margin-top:8px;">برچسب کارت:</p>
+                                <p id="displayCardLabel" style="margin:4px 0; color:#374151;">در حال بارگذاری...</p>
+                            </div>
+
+                            <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" name="fullName" required></label>
                             <label>شماره تماس (مانند مثال): 
-                                <input type="text" id="phoneNumber_discount" inputmode="numeric" pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
+                                <input type="text" id="phoneNumber_discount" name="phone" inputmode="numeric" pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
                             </label>
                             <label>سه رقم آخر شماره دانشجويي/پرسنلي: 
-                                <input type="text" id="DiscountVerifCode" inputmode="numeric" placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
+                                <input type="text" id="DiscountVerifCode" name="studentCode" inputmode="numeric" placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
                             </label>
                             
                             <div id="captchaContainer_discount">
@@ -333,7 +344,7 @@
                                     color: #000;
                                 "></div>
                                 <label for="captchaAnswer_discount">پاسخ را وارد کنيد:</label>
-                                <input type="number" id="captchaAnswer_discount" placeholder="" required>
+                                <input type="number" id="captchaAnswer_discount" name="captcha" placeholder="" required>
                             </div>
                             
                             <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
@@ -350,7 +361,6 @@
                 </div>
             </div>
 
-            <!-- بخش تماس -->
             <div class="service-item hidden" data-category="contact">
                 <h2><i class="fas fa-headset"></i> تماس با ادمين</h2>
                 <div class="contact-grid">
@@ -390,31 +400,43 @@
         // تنظیم سال
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // ⚙️ تغییر این مقدار برای هر صفحه: 'fastfood', 'clothing', 'medical', 'gym', ...
         const CURRENT_CATEGORY = 'fastfood';
 
-        // تبدیل عدد به "XX هزار تومان" با ارقام فارسی
         function formatToToman(value) {
             const num = parseInt(value) || 0;
             const thousand = Math.floor(num);
             return new Intl.NumberFormat('fa-IR').format(thousand) + ' هزار تومان';
         }
 
-        // نمایش/پنهان کردن راهنما زیر کارت
         function toggleHelp(cardId) {
             const helpEl = document.getElementById(`help-text-${cardId}`);
             const isVisible = helpEl.style.display === 'block';
             helpEl.style.display = isVisible ? 'none' : 'block';
         }
 
-        // نمایش/پنهان کردن آدرس
         function toggleAddress(cardId) {
             const addrEl = document.getElementById(`address-text-${cardId}`);
             const isVisible = addrEl.style.display === 'block';
             addrEl.style.display = isVisible ? 'none' : 'block';
         }
 
-        // بارگذاری داده‌ها
+        // ذخیره کارت انتخابی
+        let selectedCard = null;
+
+        function scrollToForm(card) {
+            selectedCard = card;
+            document.getElementById('displayStoreName').textContent = card.store_name || 'نامشخص';
+            document.getElementById('displayCardLabel').textContent = card.dis_card_label || 'نامشخص';
+            document.getElementById('selectedStoreName').value = card.store_name || '';
+            document.getElementById('selectedCardLabel').value = card.dis_card_label || '';
+            
+            const form = document.getElementById('reservation-form');
+            if (form) {
+                form.style.display = 'block';
+                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
         async function loadVouchers() {
             const container = document.getElementById('vouchers-container');
             const API_URL = 'https://script.google.com/macros/s/AKfycbxfBqJKr9LPQzJMFMGZi7VIc2IS1ts9_AyMpgV_AHbiwAIoUfK421MhnS--t6OuAnOlEw/exec';
@@ -480,7 +502,7 @@
                                 </span>
                             </div>
                             ${isActive 
-                                ? `<a href="#" class="deposit-link" onclick="scrollToForm(); return false;">رزرو کارت تخفیف</a>`
+                                ? `<a href="#" class="deposit-link" onclick="scrollToForm(${JSON.stringify(card)}); return false;">رزرو کارت تخفیف</a>`
                                 : `<div class="deposit-link disabled">غیرفعال</div>`
                             }
                             <div class="voucher-help-text">
@@ -525,18 +547,48 @@
             }
         }
 
-        function scrollToForm() {
-            const form = document.getElementById('reservation-form');
-            if (form) {
-                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // سابمیت فرم
+        document.getElementById('DiscountForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = {
+                fullName: document.getElementById('fullName_discount').value,
+                phone: document.getElementById('phoneNumber_discount').value,
+                studentCode: document.getElementById('DiscountVerifCode').value,
+                captcha: document.getElementById('captchaAnswer_discount').value,
+                store_name: document.getElementById('selectedStoreName').value,
+                dis_card_label: document.getElementById('selectedCardLabel').value
+            };
+
+            // ⚠️ جایگزین کنید با لینک اسکریپت گوگل خودتان
+            const FORM_SCRIPT_URL = 'AKfycbySBZxk0wpDeVKeN8w0laD3pgcHwFLGeJ11IvCcLc1Z76OvPkuNwjZG5R7lhi0N2Ac';
+
+            try {
+                const response = await fetch(FORM_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    document.getElementById('DiscountSuccessMessage').style.display = 'block';
+                    document.getElementById('DiscountRequestStatus').textContent = '';
+                    // پاک کردن فرم
+                    document.getElementById('DiscountForm').reset();
+                    document.getElementById('displayStoreName').textContent = 'ثبت‌شده';
+                    document.getElementById('displayCardLabel').textContent = 'ثبت‌شده';
+                } else {
+                    document.getElementById('DiscountRequestStatus').textContent = '❌ خطا در ثبت اطلاعات. لطفاً دوباره تلاش کنید.';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('DiscountRequestStatus').textContent = '❌ ارتباط با سرور برقرار نشد.';
             }
-        }
+        });
 
         document.addEventListener('DOMContentLoaded', loadVouchers);
     </script>
 
-    <!-- اسکریپت تخفیف (اگر نیاز به منطق فرم داری) -->
-    <script src="/script_discount.js"></script>
     <!-- اسکریپت منوی موبایل -->
     <script src="./fastfood_script.js"></script>
 </body>
