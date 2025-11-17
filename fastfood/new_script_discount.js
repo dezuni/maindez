@@ -46,10 +46,17 @@ document.getElementById('DiscountForm').addEventListener('submit', async functio
       throw new Error('خطا در ثبت اطلاعات');
     }
   } catch (err) {
-    statusEl.textContent = '❌ مهلت ثبت‌نام به پایان رسیده است.';
-    statusEl.style.color = '#d32f2f';
-    console.error(err);
+  console.error('خطای واقعی:', err);
+  
+  if (err.name === 'TypeError' && err.message.includes('fetch')) {
+    statusEl.textContent = '❌ ارتباط با سرور برقرار نشد. لطفاً اینترنت خود را بررسی کنید.';
+  } else if (err.message.includes('500') || err.message.includes('403')) {
+    statusEl.textContent = '❌ سرور در دسترس نیست. لطفاً بعداً تلاش کنید.';
+  } else {
+    statusEl.textContent = '❌ خطایی رخ داد. با پشتیبانی تماس بگیرید.';
   }
+  statusEl.style.color = '#d32f2f';
+}
 });
 
 // Optional: Generate CAPTCHA dynamically (simple example)
