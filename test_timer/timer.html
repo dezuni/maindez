@@ -186,31 +186,16 @@
         const currentDiscountType = 'fastfood';
         
         // آدرس واقعی Google Apps Script - این را جایگزین کنید
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZvWsvFz6sMqnRclvh8Yqw3SbpBu9XUjMXNQJGb7rbk-tipvEtdRSVTI0V6A8MbJBs/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvWCjumqokGOvYg2c3iMKXvijOmt3zOAWBkxJwHsjujg4XLgM7xngUjz5Lof64pOTe/exec';
         
         // داده‌های نمونه (فقط برای fallback)
-        /*
-        const sampleData = [
-            {
-                dis_card_label: 'FD-001',
-                dis_card_id: 'food_products',
-                dscnt_reg_expiry_date: '2024-12-15',
-                dscnt_reg_expiry_time: '23:59'
-            },
-            {
-                dis_card_label: 'FD-002',
-                dis_card_id: 'food_products',
-                dscnt_reg_expiry_date: '2024-12-10',
-                dscnt_reg_expiry_time: '18:00'
-            }
-        ]; */
+        //const sampleData = [];
 
         // تابع برای نمایش وضعیت
         function showStatus(message, type = 'info') {
             const statusContainer = document.getElementById('status-container');
-            const color = type === 'success' ? '#4ade80' : type === 'error' ? '#ff6b6b' : '#b3e0ff';
-            const bgColor = type === 'success' ? '74,222,128' : type === 'error' ? '255,107,107' : '179,224,255';
-            statusContainer.innerHTML = `<div class="${type}-message">${message}</div>`;
+            const className = type === 'success' ? 'success-message' : type === 'error' ? 'error-message' : 'loading';
+            statusContainer.innerHTML = `<div class="${className}">${message}</div>`;
         }
 
         // تابع برای تبدیل اعداد انگلیسی به فارسی
@@ -223,6 +208,7 @@
         async function fetchDiscountData() {
             try {
                 console.log('دریافت داده از Google Sheets...');
+                showStatus('در حال دریافت داده از Google Sheets...', 'info');
                 
                 const response = await fetch(`${GOOGLE_SCRIPT_URL}?dis_card_id=${currentDiscountType}`);
                 
@@ -233,18 +219,25 @@
                 const data = await response.json();
                 console.log('داده‌های دریافت شده از Sheets:', data);
                 
+                // بررسی اگر خطا برگردانده شده
                 if (data && data.error) {
                     throw new Error(data.error);
                 }
                 
+                // بررسی اگر داده‌ای دریافت نشده
+                if (!data || data.length === 0) {
+                    throw new Error('هیچ داده‌ای از Sheets دریافت نشد');
+                }
+                
+                showStatus('داده‌ها با موفقیت از Sheets دریافت شد', 'success');
                 return data;
                 
             } catch (error) {
-                console.warn('خطا در دریافت داده از Sheets، استفاده از داده‌های نمونه:', error);
-                showStatus('اتصال به Sheets برقرار نشد. استفاده از داده‌های نمونه', 'error');
+                console.error('خطا در دریافت داده از Sheets:', error);
+                showStatus(`خطا در دریافت داده: ${error.message}`, 'error');
                 
-                // بازگشت به داده‌های نمونه
-                return sampleData.filter(item => item.dis_card_id === currentDiscountType);
+                // بازگشت به داده‌های نمونه خالی تا مجبور شویم مشکل را حل کنیم
+                return sampleData;
             }
         }
         
@@ -363,14 +356,12 @@
             
             try {
                 console.log('شروع بارگذاری تایمرها...');
-                showStatus('در حال دریافت داده از Google Sheets...', 'info');
                 
                 const discountData = await fetchDiscountData();
                 console.log('داده‌های دریافت شده:', discountData);
                 
                 if (!discountData || discountData.length === 0) {
-                    container.innerHTML = '<div class="loading">هیچ تایمر فعالی وجود ندارد</div>';
-                    showStatus('هیچ تایمر فعالی برای نمایش وجود ندارد', 'info');
+                    container.innerHTML = '<div class="loading">هیچ تایمر فعالی در Sheets پیدا نشد</div>';
                     return;
                 }
                 
@@ -383,12 +374,10 @@
                 });
                 
                 console.log('تایمرها با موفقیت بارگذاری شدند');
-                showStatus(`تایمرها با موفقیت بارگذاری شدند (${discountData.length} تایمر فعال)`, 'success');
                 
             } catch (error) {
                 console.error('خطا در بارگذاری تایمرها:', error);
-                container.innerHTML = '<div class="loading">خطا در بارگذاری تایمرها</div>';
-                showStatus('خطا در بارگذاری تایمرها. لطفاً صفحه را رفرش کنید.', 'error');
+                container.innerHTML = '<div class="loading">خطا در بارگذاری تایمرها از Sheets</div>';
             }
         }
         
