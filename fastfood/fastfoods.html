@@ -14,7 +14,7 @@
     <title>پیش پرداخت کارت تخفیف</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- ✅ لینک رسمی و پایدار فونت Vazirmatn از CDN -->
+    <!-- ✅ لینک فونت Vazirmatn -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
 
@@ -26,13 +26,11 @@
     <link rel="stylesheet" href="/style_discount.css">
 
     <style>
-        /* ✅ اعمال فونت Vazirmatn در کل صفحه */
         body, h1, h2, h3, h4, h5, h6, p, div, span, label, input, textarea, button, a, li {
             font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif !important;
             font-feature-settings: "cv01", "cv02", "cv03", "cv04", "cv05", "cv06", "cv07", "cv08", "cv09", "cv10";
         }
 
-        /* بقیه سبک‌های شما (همان‌طور که قبل بود) */
         #vouchers-section {
             padding: 20px;
             background: #f9f9f9;
@@ -170,7 +168,6 @@
             color: #666;
         }
 
-        /* فرم رزرو — با عرض محدود */
         #reservation-form {
             background: white;
             padding: 24px;
@@ -209,7 +206,7 @@
             font-size: 1rem;
             direction: ltr;
             text-align: left;
-            font-family: 'Vazirmatn', sans-serif; /* فونت برای input هم */
+            font-family: 'Vazirmatn', sans-serif;
         }
 
         .formcontainer input:focus {
@@ -297,7 +294,6 @@
         </nav>
 
         <main>
-            <!-- جایگزینی بخش فرم با کارت‌های پویا -->
             <div class="service-item" data-category="DISCOUNT">
                 <h2><i class="fas fa-tags"></i> کارت‌های تخفیف فست‌فود و رستوران ها</h2>
                 
@@ -312,32 +308,42 @@
                     <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
                     <div class="formcontainer">
                         <form id="DiscountForm">
-                            <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" required></label>
+                            <input type="hidden" id="selected_store_name">
+                            <input type="hidden" id="selected_dis_card_label">
+
+                            <label>نام فروشگاه:
+                                <input type="text" id="display_store_name" readonly style="background:#f1f5f9; cursor:not-allowed;">
+                            </label>
+
+                            <label>نام و نام خانوادگی: 
+                                <input type="text" id="fullName_discount" required>
+                            </label>
+
                             <label>شماره تماس (مانند مثال): 
                                 <input type="text" id="phoneNumber_discount" inputmode="numeric" pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
                             </label>
-                            <label>سه رقم آخر شماره دانشجويي/پرسنلي: 
+
+                            <label>سه رقم آخر شماره دانشجویی/پرسنلی: 
                                 <input type="text" id="DiscountVerifCode" inputmode="numeric" placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
                             </label>
-                            
+
                             <div id="captchaContainer_discount">
                                 <div id="captchaQuestion_discount" style="
-                                    padding: 10px;
-                                    margin: 10px 0;
-                                    background: #f0f0f0;
-                                    border: 1px solid #ccc;
-                                    border-radius: 5px;
-                                    font-size: 16px;
+                                    padding: 12px;
+                                    background: #f0f9ff;
+                                    border: 1px solid #bae6fd;
+                                    border-radius: 8px;
                                     font-weight: bold;
                                     text-align: center;
-                                    color: #000;
+                                    color: #0c4a6e;
+                                    font-size: 1.1rem;
                                 "></div>
-                                <label for="captchaAnswer_discount">پاسخ را وارد کنيد:</label>
-                                <input type="number" id="captchaAnswer_discount" placeholder="" required>
+                                <label for="captchaAnswer_discount">محاسبه کنید و پاسخ را وارد کنید:</label>
+                                <input type="number" id="captchaAnswer_discount" required style="width: 100%; padding: 10px; margin-top: 6px;">
                             </div>
-                            
-                            <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
-                            <button type="submit">تاييد ثبت نام</button>
+                            <div id="captchaError_discount" style="color: red; display: none; margin-top: 6px;">❌ پاسخ اشتباه است.</div>
+
+                            <button type="submit" id="submitBtn">تأیید ثبت‌نام</button>
                         </form>
                         <div id="DiscountRequestStatus"></div> 
                         <div id="DiscountSuccessMessage">
@@ -350,7 +356,6 @@
                 </div>
             </div>
 
-            <!-- بخش تماس -->
             <div class="service-item hidden" data-category="contact">
                 <h2><i class="fas fa-headset"></i> تماس با ادمين</h2>
                 <div class="contact-grid">
@@ -387,34 +392,30 @@
     </footer>
 
     <script>
-        // تنظیم سال
         document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // ⚙️ تغییر این مقدار برای هر صفحه: 'fastfood', 'clothing', 'medical', 'gym', ...
         const CURRENT_CATEGORY = 'fastfood';
 
-        // تبدیل عدد به "XX هزار تومان" با ارقام فارسی
+        // 🔴 آدرس Web App ثبت فرم (شیت فرم)
+        const FORM_SUBMIT_API = "https://script.google.com/macros/s/AKfycbxAfaW7GA4na-o9031v69jciWJ2OFxqRjzfRosx9OFz6agI_b_Gmub09akTIISubCHs6w/exec";
+
+        // داده‌های موقت فروشگاه انتخاب‌شده
+        let selectedStoreData = null;
+
         function formatToToman(value) {
             const num = parseInt(value) || 0;
             const thousand = Math.floor(num);
             return new Intl.NumberFormat('fa-IR').format(thousand) + ' هزار تومان';
         }
 
-        // نمایش/پنهان کردن راهنما زیر کارت
-        function toggleHelp(cardId) {
-            const helpEl = document.getElementById(`help-text-${cardId}`);
-            const isVisible = helpEl.style.display === 'block';
-            helpEl.style.display = isVisible ? 'none' : 'block';
+        function generateCaptcha() {
+            const a = Math.floor(Math.random() * 10) + 1;
+            const b = Math.floor(Math.random() * 10) + 1;
+            window.expectedCaptcha = a + b;
+            document.getElementById('captchaQuestion_discount').textContent = `${a} + ${b} = ?`;
+            document.getElementById('captchaAnswer_discount').value = '';
+            document.getElementById('captchaError_discount').style.display = 'none';
         }
 
-        // نمایش/پنهان کردن آدرس
-        function toggleAddress(cardId) {
-            const addrEl = document.getElementById(`address-text-${cardId}`);
-            const isVisible = addrEl.style.display === 'block';
-            addrEl.style.display = isVisible ? 'none' : 'block';
-        }
-
-        // بارگذاری داده‌ها
         async function loadVouchers() {
             const container = document.getElementById('vouchers-container');
             const API_URL = 'https://script.google.com/macros/s/AKfycbxfBqJKr9LPQzJMFMGZi7VIc2IS1ts9_AyMpgV_AHbiwAIoUfK421MhnS--t6OuAnOlEw/exec';
@@ -480,7 +481,7 @@
                                 </span>
                             </div>
                             ${isActive 
-                                ? `<a href="#" class="deposit-link" onclick="scrollToForm(); return false;">رزرو کارت تخفیف</a>`
+                                ? `<a href="#" class="deposit-link" onclick="selectVoucher(event, ${JSON.stringify({store_name: card.store_name, dis_card_label: card.dis_card_label})}); scrollToForm(); return false;">رزرو کارت تخفیف</a>`
                                 : `<div class="deposit-link disabled">غیرفعال</div>`
                             }
                             <div class="voucher-help-text">
@@ -525,6 +526,14 @@
             }
         }
 
+        function selectVoucher(event, data) {
+            selectedStoreData = data;
+            document.getElementById('display_store_name').value = data.store_name || 'نام فروشگاه';
+            document.getElementById('selected_store_name').value = data.store_name || '';
+            document.getElementById('selected_dis_card_label').value = data.dis_card_label || '';
+            generateCaptcha();
+        }
+
         function scrollToForm() {
             const form = document.getElementById('reservation-form');
             if (form) {
@@ -532,12 +541,85 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', loadVouchers);
+        function toggleHelp(cardId) {
+            const el = document.getElementById(`help-text-${cardId}`);
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function toggleAddress(cardId) {
+            const el = document.getElementById(`address-text-${cardId}`);
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+        }
+
+        document.getElementById('DiscountForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const userAnswer = parseInt(document.getElementById('captchaAnswer_discount').value);
+            if (userAnswer !== window.expectedCaptcha) {
+                document.getElementById('captchaError_discount').style.display = 'block';
+                return;
+            }
+
+            const name = document.getElementById('fullName_discount').value.trim();
+            const phone = document.getElementById('phoneNumber_discount').value.trim();
+            const verifyCode = document.getElementById('DiscountVerifCode').value.trim();
+            const store_name = document.getElementById('selected_store_name').value;
+            const dis_card_label = document.getElementById('selected_dis_card_label').value;
+
+            if (!selectedStoreData) {
+                alert('لطفاً ابتدا یک کارت تخفیف را انتخاب کنید.');
+                return;
+            }
+
+            if (!/^\d{3}$/.test(verifyCode)) {
+                alert('سه رقم آخر شماره دانشجویی/پرسنلی باید دقیقاً ۳ رقم باشد.');
+                return;
+            }
+
+            const statusEl = document.getElementById('DiscountRequestStatus');
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'در حال ارسال...';
+
+            try {
+                const response = await fetch(FORM_SUBMIT_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name,
+                        phone,
+                        store_name,
+                        dis_card_label
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    document.getElementById('DiscountSuccessMessage').style.display = 'block';
+                    statusEl.textContent = '';
+                    document.getElementById('DiscountForm').reset();
+                    document.getElementById('display_store_name').value = '';
+                    selectedStoreData = null;
+                    generateCaptcha();
+                } else {
+                    throw new Error(result.error || 'خطا در ثبت اطلاعات');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                statusEl.textContent = '❌ خطا در ثبت اطلاعات. لطفاً دوباره تلاش کنید.';
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'تأیید ثبت‌نام';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadVouchers();
+            generateCaptcha();
+        });
     </script>
 
-    <!-- اسکریپت تخفیف (اگر نیاز به منطق فرم داری) -->
-    <script src="/script_discount.js"></script>
-    <!-- اسکریپت منوی موبایل -->
     <script src="./fastfood_script.js"></script>
 </body>
 </html>
