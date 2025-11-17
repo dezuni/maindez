@@ -25,7 +25,7 @@ document.getElementById('DiscountForm').addEventListener('submit', async functio
 
   try {
     // ✅ بدون Content-Type! مرورگر خودش تنظیم می‌کنه
-    const response = await fetch('https://script.google.com/macros/s/AKfycbw0s8XOqYZCKOcSByxHAJwM13QRmDZSiv2N5J_LSPRl1_vta2P8GZ9vmwCQ3AK8Ad1t/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbysb8ZPfP_r791_wxuLAyr3YA5EaFl2kaGXs8hL4d18PBOb7u0awGmhZBPsLoIbBBrp/exec', {
       method: 'POST',
       body: formData  // ⚠️ نه JSON.stringify
     });
