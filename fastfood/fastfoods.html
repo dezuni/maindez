@@ -13,12 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پیش پرداخت کارت تخفیف</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- ✅ لینک رسمی و پایدار فونت Vazirmatn از CDN -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
-
-    <!-- سایر استایل‌ها -->
     <link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/style_jozvehyab.css">
     <link rel="stylesheet" href="/style_map.css">
@@ -26,13 +22,11 @@
     <link rel="stylesheet" href="/style_discount.css">
 
     <style>
-        /* ✅ اعمال فونت Vazirmatn در کل صفحه */
         body, h1, h2, h3, h4, h5, h6, p, div, span, label, input, textarea, button, a, li {
             font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif !important;
             font-feature-settings: "cv01", "cv02", "cv03", "cv04", "cv05", "cv06", "cv07", "cv08", "cv09", "cv10";
         }
 
-        /* بقیه سبک‌های شما (همان‌طور که قبل بود) */
         #vouchers-section {
             padding: 20px;
             background: #f9f9f9;
@@ -170,7 +164,6 @@
             color: #666;
         }
 
-        /* فرم رزرو — با عرض محدود */
         #reservation-form {
             background: white;
             padding: 24px;
@@ -306,21 +299,18 @@
                     </div>
                 </div>
 
-                <!-- فرم رزرو -->
                 <div id="reservation-form">
                     <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
                     <div class="formcontainer">
                         <form id="DiscountForm">
-                            <!-- فیلدهای پنهان برای ارسال به شیت -->
                             <input type="hidden" id="selectedStoreName" name="store_name">
                             <input type="hidden" id="selectedCardLabel" name="dis_card_label">
 
-                            <!-- فیلد فقط-خواندنی برای نام فروشگاه -->
                             <label>فروشگاه:
                                 <input type="text" id="displayStoreName" readonly style="background:#f8fafc; color:#4b5563;">
                             </label>
 
-                            <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" name="fullName" required></label>
+                            <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" name="name" required></label>
                             <label>شماره تماس (مانند مثال): 
                                 <input type="text" id="phoneNumber_discount" name="phone" inputmode="numeric" pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
                             </label>
@@ -328,14 +318,14 @@
                                 <input type="text" id="DiscountVerifCode" name="studentCode" inputmode="numeric" placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
                             </label>
                             
-                            <!-- کپچای جمع -->
                             <div id="mathCaptcha" style="padding: 12px; background: #f8fafc; border-radius: 8px; border: 1px solid #e2e8f0;">
                                 <p id="mathQuestion" style="margin: 0 0 8px 0; font-weight: 500; color: #1e3a8a;">در حال بارگذاری سؤال...</p>
                                 <label for="mathAnswer">پاسخ جمع را وارد کنید:
-                                    <input type="number" id="mathAnswer" name="mathAnswer" required style="width: 80px; padding: 6px;">
+                                    <input type="number" id="mathAnswer" required style="width: 80px; padding: 6px;">
                                 </label>
                             </div>
                             
+                            <div id="mathError" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
                             <button type="submit">تاييد ثبت نام</button>
                         </form>
                         <div id="DiscountRequestStatus"></div> 
@@ -385,9 +375,7 @@
     </footer>
 
     <script>
-        // تنظیم سال
         document.getElementById('current-year').textContent = new Date().getFullYear();
-
         const CURRENT_CATEGORY = 'fastfood';
 
         function formatToToman(value) {
@@ -408,26 +396,30 @@
             addrEl.style.display = isVisible ? 'none' : 'block';
         }
 
-        // تولید سؤال جمع
+        // متغیرهای جهانی برای کپچا
+        let correctAnswer = 0;
+
         function generateMathCaptcha() {
-            const a = Math.floor(Math.random() * 10) + 1; // 1 تا 10
-            const b = Math.floor(Math.random() * 10) + 1; // 1 تا 10
-            window.correctAnswer = a + b;
+            const a = Math.floor(Math.random() * 10) + 1;
+            const b = Math.floor(Math.random() * 10) + 1;
+            correctAnswer = a + b;
             document.getElementById('mathQuestion').textContent = `جمع عدد ${a} و ${b} چند است؟`;
             document.getElementById('mathAnswer').value = '';
+            document.getElementById('mathError').style.display = 'none';
         }
 
-        // ذخیره کارت انتخابی و نمایش فرم
-        function scrollToForm(card) {
-            document.getElementById('selectedStoreName').value = card.store_name || 'نامشخص';
-            document.getElementById('selectedCardLabel').value = card.dis_card_label || 'نامشخص';
-            document.getElementById('displayStoreName').value = card.store_name || 'نامشخص';
+        function scrollToForm(linkElement) {
+            const storeName = linkElement.getAttribute('data-store') || 'نامشخص';
+            const cardLabel = linkElement.getAttribute('data-label') || 'نامشخص';
+            
+            document.getElementById('selectedStoreName').value = storeName;
+            document.getElementById('selectedCardLabel').value = cardLabel;
+            document.getElementById('displayStoreName').value = storeName;
             
             const form = document.getElementById('reservation-form');
             if (form) {
                 form.style.display = 'block';
                 form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                // تولید سؤال جدید
                 generateMathCaptcha();
             }
         }
@@ -497,7 +489,7 @@
                                 </span>
                             </div>
                             ${isActive 
-                                ? `<a href="#" class="deposit-link" onclick="scrollToForm(${JSON.stringify(card)}); return false;">رزرو کارت تخفیف</a>`
+                                ? `<a href="#" class="deposit-link" data-store="${card.store_name || 'نامشخص'}" data-label="${card.dis_card_label || 'نامشخص'}" onclick="scrollToForm(this); return false;">رزرو کارت تخفیف</a>`
                                 : `<div class="deposit-link disabled">غیرفعال</div>`
                             }
                             <div class="voucher-help-text">
@@ -542,21 +534,27 @@
             }
         }
 
-        // سابمیت فرم
+        // سابمیت فرم با اعتبارسنجی کپچا
         document.getElementById('DiscountForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
+            const userAnswer = parseInt(document.getElementById('mathAnswer').value);
+            if (userAnswer !== correctAnswer) {
+                document.getElementById('mathError').style.display = 'block';
+                return;
+            }
+            document.getElementById('mathError').style.display = 'none';
+
             const formData = {
-                fullName: document.getElementById('fullName_discount').value,
+                name: document.getElementById('fullName_discount').value,
                 phone: document.getElementById('phoneNumber_discount').value,
-                studentCode: document.getElementById('DiscountVerifCode').value,
-                mathAnswer: document.getElementById('mathAnswer').value,
                 store_name: document.getElementById('selectedStoreName').value,
                 dis_card_label: document.getElementById('selectedCardLabel').value
+                // studentCode و mathAnswer ارسال نمی‌شوند — چون در شیت ستون ندارند
             };
 
-            // ⚠️ جایگزین کنید با لینک اسکریپت گوگل خودتان
-            const FORM_SCRIPT_URL = 'AKfycbySBZxk0wpDeVKeN8w0laD3pgcHwFLGeJ11IvCcLc1Z76OvPkuNwjZG5R7lhi0N2Ac';
+            // ✅ لینک اسکریپت فرم شما
+            const FORM_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbySBZxk0wpDeVKeN8w0laD3pgcHwFLGeJ11IvCcLc1Z76OvPkuNwjZG5R7lhi0N2Ac/exec';
 
             try {
                 const response = await fetch(FORM_SCRIPT_URL, {
@@ -571,7 +569,7 @@
                     document.getElementById('DiscountForm').reset();
                     document.getElementById('displayStoreName').value = 'ثبت‌شده';
                 } else {
-                    document.getElementById('DiscountRequestStatus').textContent = '❌ خطا در ثبت اطلاعات. لطفاً دوباره تلاش کنید.';
+                    document.getElementById('DiscountRequestStatus').textContent = '❌ خطا در ثبت اطلاعات.';
                 }
             } catch (error) {
                 console.error('Error:', error);
@@ -582,7 +580,6 @@
         document.addEventListener('DOMContentLoaded', loadVouchers);
     </script>
 
-    <!-- اسکریپت منوی موبایل -->
     <script src="./fastfood_script.js"></script>
 </body>
 </html>
