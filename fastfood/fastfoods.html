@@ -618,7 +618,241 @@
             loadVouchers();
             generateCaptcha();
         });
-    </script>
+    <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+    const CURRENT_CATEGORY = 'fastfood';
+    const FORM_SUBMIT_API = "https://script.google.com/macros/s/AKfycbxAfaW7GA4na-o9031v69jciWJ2OFxqRjzfRosx9OFz6agI_b_Gmub09akTIISubCHs6w/exec";
+    let selectedStoreData = null;
+
+    function formatToToman(value) {
+        const num = parseInt(value) || 0;
+        const thousand = Math.floor(num);
+        return new Intl.NumberFormat('fa-IR').format(thousand) + ' هزار تومان';
+    }
+
+    function generateCaptcha() {
+        const a = Math.floor(Math.random() * 10) + 1;
+        const b = Math.floor(Math.random() * 10) + 1;
+        window.expectedCaptcha = a + b;
+        document.getElementById('captchaQuestion_discount').textContent = `${a} + ${b} = ?`;
+        document.getElementById('captchaAnswer_discount').value = '';
+        document.getElementById('captchaError_discount').style.display = 'none';
+    }
+
+    async function loadVouchers() {
+        const container = document.getElementById('vouchers-container');
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxfBqJKr9LPQzJMFMGZi7VIc2IS1ts9_AyMpgV_AHbiwAIoUfK421MhnS--t6OuAnOlEw/exec';
+
+        try {
+            const response = await fetch(API_URL);
+            if (!response.ok) throw new Error('خطا در دریافت داده');
+            const cards = await response.json();
+
+            container.innerHTML = '';
+
+            if (!Array.isArray(cards) || cards.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#888;">هیچ کارتی موجود نیست.</p>';
+                return;
+            }
+
+            const filteredCards = cards.filter(card =>
+                card.dis_card_id && card.dis_card_id.trim().toLowerCase() === CURRENT_CATEGORY.toLowerCase()
+            );
+
+            if (filteredCards.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#888;">در این دسته کارتی موجود نیست.</p>';
+                return;
+            }
+
+            let hasActive = false;
+            filteredCards.forEach(card => {
+                const isActive = card.status === 'active';
+                if (isActive) hasActive = true;
+
+                const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
+                const hasAddress = card.address && card.address.trim() !== '';
+
+                // ✅ بررسی وجود فیلدها (برای دیباگ)
+                const storeName = card.store_name || card.store || 'نام فروشگاه نامشخص';
+                const cardLabel = card.dis_card_label || card.label || '';
+
+                const html = `
+                    <div class="voucher-card ${!isActive ? 'dimmed' : ''}">
+                        <div class="voucher-title">${card.title || 'کارت تخفیف'}</div>
+                        <div class="voucher-item">
+                            <span class="voucher-label">مبلغ اعتبار:</span>
+                            <span class="voucher-value credit">${formatToToman(card.credit)}</span>
+                        </div>
+                        <div class="voucher-item">
+                            <span class="voucher-label">مبلغ تخفیف:</span>
+                            <span class="voucher-value discount">${formatToToman(card.dis_amo)}</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="voucher-item">
+                            <span class="voucher-label">هزینه کل:</span>
+                            <span class="voucher-value total">${formatToToman(card.total_pay)}</span>
+                        </div>
+                        <div class="voucher-item">
+                            <span class="voucher-label">پرداخت در فروشگاه:</span>
+                            <span class="voucher-value inshop">${formatToToman(card.in_shop_pay)}</span>
+                        </div>
+                        <div class="voucher-item">
+                            <span class="voucher-label">پیش پرداخت:</span>
+                            <span class="voucher-value advance">${formatToToman(card.adv_pay)}</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="voucher-item">
+                            <span class="voucher-label">تاریخ انقضای کارت تخفیف:</span>
+                            <span class="voucher-value" style="color:#6b7280; font-weight:normal;">
+                               ${(typeof card.expire_date === 'string' ? card.expire_date : 'مشخص نشده')}
+                            </span>
+                        </div>
+                        ${isActive 
+                            ? `<a href="#" class="deposit-link" onclick="selectAndScroll(${JSON.stringify({store_name: storeName, dis_card_label: cardLabel})}); return false;">رزرو کارت تخفیف</a>`
+                            : `<div class="deposit-link disabled">غیرفعال</div>`
+                        }
+                        <div class="voucher-help-text">
+                            توضیح: فقط با پرداخت <strong>${formatToToman(card.total_pay)}</strong>، 
+                            <strong>${formatToToman(card.credit)}</strong> خرید کن!
+                        </div>
+                        <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 12px;">
+                            <a href="#" class="help-link" onclick="toggleHelp('${cardId}'); return false;">
+                                📌 راهنمای جزئی‌تر
+                            </a>
+                            ${hasAddress ? `
+                                <a href="#" class="help-link" style="color:#d97706;" onclick="toggleAddress('${cardId}'); return false;">
+                                    📍 آدرس
+                                </a>
+                            ` : ''}
+                        </div>
+                        <div id="help-text-${cardId}" class="voucher-help-text" style="display:none; margin-top:12px;">
+                            <strong>چگونه کارت تخفیف کار می‌کند؟</strong><br>
+                            - ابتدا <strong>${formatToToman(card.adv_pay)}</strong> را پرداخت کنید تا کارت رزرو شود.<br>
+                            - سپس با مراجعه به فروشگاه، برای خرید <strong>${formatToToman(card.credit)}</strong> اعتبار، 
+                              فقط <strong>${formatToToman(card.in_shop_pay)}</strong> را پرداخت کنید.<br>
+                            - در مجموع، شما <strong>${formatToToman(card.total_pay)}</strong> پرداخت کرده‌اید 
+                              و <strong>${formatToToman(card.dis_amo)}</strong> تومان سود کرده‌اید!
+                        </div>
+                        ${hasAddress ? `
+                            <div id="address-text-${cardId}" class="address-text" style="display:none; margin-top:12px;">
+                                ${card.address}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+
+            if (hasActive) {
+                document.getElementById('reservation-form').style.display = 'block';
+            }
+        } catch (error) {
+            console.error('خطا:', error);
+            container.innerHTML = '<p style="text-align:center; color:red;">خطا در بارگذاری کارت‌ها.</p>';
+        }
+    }
+
+    // ✅ تابع ترکیبی: انتخاب + اسکرول
+    function selectAndScroll(data) {
+        // ابتدا فرم را نمایش بده (اگر مخفی بود)
+        const form = document.getElementById('reservation-form');
+        if (form.style.display === 'none' || form.style.display === '') {
+            form.style.display = 'block';
+        }
+
+        // داده‌ها را ذخیره کن
+        selectedStoreData = data;
+        document.getElementById('display_store_name').value = data.store_name || 'نام فروشگاه';
+        document.getElementById('selected_store_name').value = data.store_name || '';
+        document.getElementById('selected_dis_card_label').value = data.dis_card_label || '';
+
+        // تازه‌سازی کپچا
+        generateCaptcha();
+
+        // سپس اسکرول کن (با تأخیر کوچک برای اطمینان)
+        setTimeout(() => {
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
+
+    function toggleHelp(cardId) {
+        const el = document.getElementById(`help-text-${cardId}`);
+        el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function toggleAddress(cardId) {
+        const el = document.getElementById(`address-text-${cardId}`);
+        el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+
+    document.getElementById('DiscountForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const userAnswer = parseInt(document.getElementById('captchaAnswer_discount').value);
+        if (userAnswer !== window.expectedCaptcha) {
+            document.getElementById('captchaError_discount').style.display = 'block';
+            return;
+        }
+
+        const name = document.getElementById('fullName_discount').value.trim();
+        const phone = document.getElementById('phoneNumber_discount').value.trim();
+        const verifyCode = document.getElementById('DiscountVerifCode').value.trim();
+        const store_name = document.getElementById('selected_store_name').value;
+        const dis_card_label = document.getElementById('selected_dis_card_label').value;
+
+        if (!selectedStoreData) {
+            alert('لطفاً ابتدا یک کارت تخفیف را انتخاب کنید.');
+            return;
+        }
+
+        if (!/^\d{3}$/.test(verifyCode)) {
+            alert('سه رقم آخر شماره دانشجویی/پرسنلی باید دقیقاً ۳ رقم باشد.');
+            return;
+        }
+
+        const statusEl = document.getElementById('DiscountRequestStatus');
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'در حال ارسال...';
+
+        try {
+            const response = await fetch(FORM_SUBMIT_API, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name,
+                    phone,
+                    store_name,
+                    dis_card_label
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                document.getElementById('DiscountSuccessMessage').style.display = 'block';
+                statusEl.textContent = '';
+                document.getElementById('DiscountForm').reset();
+                document.getElementById('display_store_name').value = '';
+                selectedStoreData = null;
+                generateCaptcha();
+            } else {
+                throw new Error(result.error || 'خطا در ثبت اطلاعات');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            statusEl.textContent = '❌ خطا در ثبت اطلاعات. لطفاً دوباره تلاش کنید.';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'تأیید ثبت‌نام';
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadVouchers();
+        generateCaptcha();
+    });
+</script>
 
     <script src="./fastfood_script.js"></script>
 </body>
