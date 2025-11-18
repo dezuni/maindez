@@ -325,6 +325,8 @@
                     <div class="formcontainer">
                         <form id="DiscountForm">
                             <!-- فیلدهای جدید فقط خواندنی -->
+                            <input type="hidden" id="selectedStoreNameInput" name="store_name">
+                            <input type="hidden" id="selectedCardLabelInput" name="dis_card_label">
                             <label>نام فروشگاه:
                                 <div id="selectedStoreName" class="readonly-field">—</div>
                             </label>
@@ -437,13 +439,18 @@
 
         // اسکرول به فرم و نمایش اطلاعات کارت انتخاب‌شده
         function scrollToForm(storeName, cardLabel) {
+            // نمایش در فیلدهای فقط خواندنی (اختیاری برای کاربر)
             document.getElementById('selectedStoreName').textContent = storeName || '—';
             document.getElementById('selectedCardLabel').textContent = cardLabel || '—';
-            
-            const form = document.getElementById('reservation-form');
-            form.style.display = 'block';
-            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+    
+                // ⬇️ ذخیره در فیلدهای پنهان برای ارسال به سرور
+                document.getElementById('selectedStoreNameInput').value = storeName || '';
+                document.getElementById('selectedCardLabelInput').value = cardLabel || '';
+    
+                const form = document.getElementById('reservation-form');
+                    form.style.display = 'block';
+                    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
 
         // بارگذاری داده‌ها
         async function loadVouchers() {
