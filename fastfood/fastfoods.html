@@ -5,7 +5,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-E00MPED2X0"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
+      function gtag(){dataLayer.push(arguments);} 
       gtag('js', new Date());
       gtag('config', 'G-E00MPED2X0');
     </script>
@@ -20,267 +20,60 @@
 
     <!-- سایر استایل‌ها -->
     <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="/style_jozvehyab.css">
-    <link rel="stylesheet" href="/style_map.css">
-    <link rel="stylesheet" href="/style_request.css">
-    <link rel="stylesheet" href="/style_discount.css">
 
     <style>
-        /* ✅ اعمال فونت Vazirmatn در کل صفحه */
         body, h1, h2, h3, h4, h5, h6, p, div, span, label, input, textarea, button, a, li {
             font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif !important;
             font-feature-settings: "cv01", "cv02", "cv03", "cv04", "cv05", "cv06", "cv07", "cv08", "cv09", "cv10";
         }
-
-        #vouchers-section {
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 12px;
-            margin-bottom: 30px;
-        }
-
-        .vouchers-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .voucher-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            padding: 20px;
-            width: 100%;
-            max-width: 450px;
-            transition: transform 0.2s;
-        }
-
-        .voucher-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-        }
-
-        .voucher-card.dimmed {
-            opacity: 0.55;
-            pointer-events: none;
-        }
-
-        .voucher-title {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #1e3a8a;
-            margin-bottom: 16px;
-            text-align: center;
-        }
-
-        .voucher-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            font-size: 0.95rem;
-        }
-
-        .voucher-label {
-            color: #6b7280;
-        }
-
+        /* (کدهای CSS همانند قبل — برای خلاصه بودن اینجا کوتاه شده‌اند) */
+        #vouchers-section { padding: 20px; background: #f9f9f9; border-radius: 12px; margin-bottom: 30px; }
+        .vouchers-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        .voucher-card { background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 20px; width: 100%; max-width: 450px; transition: transform 0.2s; }
+        .voucher-card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+        .voucher-card.dimmed { opacity: 0.55; pointer-events: none; }
+        .voucher-title { font-size: 1.3rem; font-weight: bold; color: #1e3a8a; margin-bottom: 16px; text-align: center; }
+        .voucher-item { display: flex; justify-content: space-between; padding: 8px 0; font-size: 0.95rem; }
+        .voucher-label { color: #6b7280; }
         .voucher-value.credit { color: #059669; font-weight: bold; }
         .voucher-value.discount { color: #dc2626; font-weight: bold; }
         .voucher-value.total { color: #3b82f6; font-weight: bold; }
         .voucher-value.inshop { color: #8b5cf6; font-weight: bold; }
         .voucher-value.advance { color: #d97706; font-weight: bold; }
-
-        .divider {
-            height: 1px;
-            background: #e5e7eb;
-            margin: 10px 0;
-        }
-
-        .deposit-link {
-            display: block;
-            background: linear-gradient(135deg, #fb8500, #ff9e10);
-            color: white !important;
-            text-align: center;
-            padding: 12px;
-            border-radius: 10px;
-            margin-top: 16px;
-            font-weight: bold;
-            text-decoration: none;
-            font-size: 1.05rem;
-            transition: all 0.2s;
-        }
-
-        .deposit-link:hover:not(.disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(251, 133, 0, 0.3);
-        }
-
-        .deposit-link.disabled {
-            background: #ccc !important;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .help-link {
-            display: block;
-            text-align: center;
-            color: #3b82f6;
-            margin-top: 12px;
-            font-size: 0.9rem;
-            text-decoration: none;
-        }
-
-        .help-link:hover {
-            text-decoration: underline;
-        }
-
-        .voucher-help-text {
-            direction: rtl;
-            text-align: right;
-            margin-top: 12px;
-            padding: 12px;
-            background: #f8fafc;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #2c3e50;
-            border: 1px solid #e2e8f0;
-        }
-
-        .address-text {
-            direction: rtl;
-            text-align: right;
-            margin-top: 12px;
-            padding: 12px;
-            background: #fffbeb;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #854d0e;
-            border: 1px solid #fed7aa;
-            display: none;
-        }
-
-        #loading-vouchers {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-        }
-
-        #reservation-form {
-            background: white;
-            padding: 24px;
-            border-radius: 14px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-            margin: 20px auto 40px auto;
-            max-width: 450px;
-            width: 100%;
-            display: none;
-        }
-
-        #reservation-form h3 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #1e3a8a;
-            font-weight: bold;
-        }
-
-        .formcontainer form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .formcontainer label {
-            display: flex;
-            flex-direction: column;
-            font-weight: 500;
-            color: #4b5563;
-        }
-
-        .formcontainer input {
-            padding: 10px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 1rem;
-            direction: ltr;
-            text-align: left;
-            font-family: 'Vazirmatn', sans-serif;
-        }
-
-        .formcontainer input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-        }
-
-        .formcontainer button {
-            background: linear-gradient(135deg, #0ea5e9, #0284c7);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 1.05rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-family: 'Vazirmatn', sans-serif;
-        }
-
-        .formcontainer button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
-        }
-
-        #DiscountRequestStatus {
-            margin-top: 12px;
-            text-align: center;
-            color: #d32f2f;
-        }
-
-        #DiscountSuccessMessage {
-            margin-top: 16px;
-            padding: 16px;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: 8px;
-            color: #065f46;
-            text-align: center;
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .vouchers-container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .voucher-card {
-                max-width: 100%;
-            }
-        }
+        .divider { height: 1px; background: #e5e7eb; margin: 10px 0; }
+        .deposit-link { display: block; background: linear-gradient(135deg, #fb8500, #ff9e10); color: white !important; text-align: center; padding: 12px; border-radius: 10px; margin-top: 16px; font-weight: bold; text-decoration: none; font-size: 1.05rem; transition: all 0.2s; }
+        .deposit-link:hover:not(.disabled) { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(251, 133, 0, 0.3); }
+        .deposit-link.disabled { background: #ccc !important; cursor: not-allowed; transform: none; box-shadow: none; }
+        .help-link { display: block; text-align: center; color: #3b82f6; margin-top: 12px; font-size: 0.9rem; text-decoration: none; }
+        .help-link:hover { text-decoration: underline; }
+        .voucher-help-text { direction: rtl; text-align: right; margin-top: 12px; padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 0.9rem; line-height: 1.6; color: #2c3e50; border: 1px solid #e2e8f0; }
+        .address-text { direction: rtl; text-align: right; margin-top: 12px; padding: 12px; background: #fffbeb; border-radius: 8px; font-size: 0.9rem; line-height: 1.6; color: #854d0e; border: 1px solid #fed7aa; display: none; }
+        #loading-vouchers { text-align: center; padding: 20px; color: #666; }
+        #reservation-form { background: white; padding: 24px; border-radius: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.08); margin: 20px auto 40px auto; max-width: 450px; width: 100%; display: none; }
+        #reservation-form h3 { text-align: center; margin-bottom: 20px; color: #1e3a8a; font-weight: bold; }
+        .formcontainer form { display: flex; flex-direction: column; gap: 16px; }
+        .formcontainer label { display: flex; flex-direction: column; font-weight: 500; color: #4b5563; }
+        .formcontainer input { padding: 10px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 1rem; direction: ltr; text-align: left; font-family: 'Vazirmatn', sans-serif; }
+        .formcontainer input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
+        .formcontainer button { background: linear-gradient(135deg, #0ea5e9, #0284c7); color: white; border: none; padding: 12px; border-radius: 10px; font-size: 1.05rem; font-weight: bold; cursor: pointer; transition: all 0.2s; font-family: 'Vazirmatn', sans-serif; }
+        .formcontainer button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4); }
+        #DiscountRequestStatus { margin-top: 12px; text-align: center; color: #d32f2f; }
+        #DiscountSuccessMessage { margin-top: 16px; padding: 16px; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; color: #065f46; text-align: center; display: none; }
+        @media (max-width: 768px) { .vouchers-container { flex-direction: column; align-items: center; } .voucher-card { max-width: 100%; } }
     </style>
 </head>
 <body>
     <header>
         <div class="container-header">
             <div class="header-content">
-                <button class="mobile-menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="logo">
-                    <img src="/logo.png" alt="لوگوي دانشگاه" style="max-width: 40%; height: auto;">
-                </div>
-                <div class="header-text">                    
-                    <h2>سامانه خدمات دانشجویی</h2>
-                </div>
+                <button class="mobile-menu-toggle"><i class="fas fa-bars"></i></button>
+                <div class="logo"><img src="/logo.png" alt="لوگوي دانشگاه" style="max-width: 40%; height: auto;"></div>
+                <div class="header-text"><h2>سامانه خدمات دانشجویی</h2></div>
             </div>
         </div>
     </header>
 
     <div class="mobile-menu-overlay"></div>
-    
     <div class="container-main">
         <nav class="services-menu">
             <ul class="services-nav">
@@ -297,7 +90,6 @@
         <main>
             <div class="service-item" data-category="DISCOUNT">
                 <h2><i class="fas fa-tags"></i> کارت‌های تخفیف فست‌فود و رستوران ها</h2>
-                
                 <div id="vouchers-section">
                     <div class="vouchers-container" id="vouchers-container">
                         <div id="loading-vouchers">در حال بارگذاری کارت‌های تخفیف...</div>
@@ -315,57 +107,25 @@
                             <label>سه رقم آخر شماره دانشجويي/پرسنلي: 
                                 <input type="text" id="DiscountVerifCode" inputmode="numeric" placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
                             </label>
-                            
+
+                            <!-- hidden inputs to receive selected card info from the voucher list -->
+                            <input type="hidden" id="selectedStoreName" name="store_name" value="">
+                            <input type="hidden" id="selectedCardLabel" name="dis_card_label" value="">
+
                             <div id="captchaContainer_discount">
-                                <div id="captchaQuestion_discount" style="
-                                    padding: 10px;
-                                    margin: 10px 0;
-                                    background: #f0f0f0;
-                                    border: 1px solid #ccc;
-                                    border-radius: 5px;
-                                    font-size: 16px;
-                                    font-weight: bold;
-                                    text-align: center;
-                                    color: #000;
-                                "></div>
+                                <div id="captchaQuestion_discount" style="padding: 10px; margin: 10px 0; background: #f0f0f0; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; font-weight: bold; text-align: center; color: #000;"></div>
                                 <label for="captchaAnswer_discount">پاسخ را وارد کنيد:</label>
                                 <input type="number" id="captchaAnswer_discount" placeholder="" required>
                             </div>
-                            
+
                             <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
                             <button type="submit">تاييد ثبت نام</button>
                         </form>
                         <div id="DiscountRequestStatus"></div> 
                         <div id="DiscountSuccessMessage">
                             ✅ تخفيف شما با موفقيت ثبت شد!<br><br>
-                            <span style="color: blue;">
-                                مهلت استفاده: 30 آبان 1404، ساعت 24:00. 
-                            </span>
+                            <span style="color: blue;">مهلت استفاده: 30 آبان 1404، ساعت 24:00.</span>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="service-item hidden" data-category="contact">
-                <h2><i class="fas fa-headset"></i> تماس با ادمين</h2>
-                <div class="contact-grid">
-                    <div class="contact-method">
-                        <i class="fab fa-telegram"></i>
-                        <h3>پشتيباني تلگرام</h3>
-                        <p>@dezuni_admin</p>
-                        <a href="https://t.me/dezuni_admin" target="_blank" class="btn">ارتباط در تلگرام</a>
-                    </div>
-                    <div class="contact-method">
-                        <i class="fab fa-telegram"></i>
-                        <h3>کانال اطلاع رساني دزيوني</h3>
-                        <p>@dezuni_ch</p>
-                        <a href="https://t.me/dezuni_ch" target="_blank" class="btn">ارتباط در تلگرام</a>
-                    </div>
-                    <div class="contact-method">
-                        <i class="fas fa-envelope"></i>
-                        <h3>ايميل پشتيباني</h3>
-                        <p>unidez.ir@gmail.com</p>
-                        <a href="mailto:support@university.ac.ir" class="btn">ارسال ايميل</a>
                     </div>
                 </div>
             </div>
@@ -375,15 +135,11 @@
     <footer>
         <div class="container">
             <p>© <span id="current-year"></span> کليه حقوق اين سامانه متعلق به دزيوني است.</p>
-            <div class="telegram-contact">
-                <a href="https://t.me/dezuni_admin" target="_blank"><i class="fab fa-telegram"></i> پشتيباني تلگرام: @dezuni_admin</a>
-            </div>
+            <div class="telegram-contact"><a href="https://t.me/dezuni_admin" target="_blank"><i class="fab fa-telegram"></i> پشتيباني تلگرام: @dezuni_admin</a></div>
         </div>
     </footer>
 
-    <!-- ✅ تمام منطق در یک اسکریپت -->
     <script>
-        // تنظیم سال
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
         const CURRENT_CATEGORY = 'fastfood';
@@ -404,20 +160,14 @@
             document.getElementById('captchaQuestion_discount').textContent = `حاصل جمع ${a} + ${b} چند می‌شود؟`;
         }
 
-        function scrollToForm(storeName = '', cardLabel = '') {
-            selectedStoreName = storeName;
-            selectedCardLabel = cardLabel;
-            document.getElementById('reservation-form')?.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function toggleHelp(cardId) {
-            const el = document.getElementById(`help-text-${cardId}`);
-            el.style.display = el.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function toggleAddress(cardId) {
-            const el = document.getElementById(`address-text-${cardId}`);
-            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+        function escapeHtml(str) {
+            if (!str && str !== 0) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
         async function handleFormSubmit(e) {
@@ -434,7 +184,8 @@
             }
 
             const currentDate = new Date();
-            const deadline = new Date(2026, 10, 18, 24, 0, 0); // 18 آبان 1405
+            // مثال: ست کردن زمان انقضا (در صورت نیاز آن را تنظیم کنید)
+            const deadline = new Date(2026, 10, 18, 23, 59, 59); // توجه: ماهها از 0 شروع می‌شوند
             if (currentDate > deadline) {
                 statusEl.textContent = '❌ مهلت ثبت نام به پایان رسیده است.';
                 statusEl.style.color = 'red';
@@ -444,16 +195,17 @@
             const formData = new FormData();
             formData.append("phone", document.getElementById("phoneNumber_discount").value);
             formData.append("name", document.getElementById("fullName_discount").value);
-            formData.append("discount", 10);
             formData.append("password", document.getElementById("DiscountVerifCode").value);
-            formData.append("status", "registered");
             formData.append("time_used", "");
             formData.append("date_used", "");
-            formData.append("Expiration_Date", new Date(2025, 10, 21).toISOString().split('T')[0]);
-            formData.append("store_name", selectedStoreName);
-            formData.append("dis_card_label", selectedCardLabel);
             formData.append("Registration_Date", new Date().toISOString().split('T')[0]);
             formData.append("date of register", new Date().toISOString().split('T')[0]);
+
+            // read selected values from hidden inputs (or fall back to variables)
+            const storeValue = selectedStoreName || document.getElementById('selectedStoreName')?.value || '';
+            const labelValue = selectedCardLabel || document.getElementById('selectedCardLabel')?.value || '';
+            formData.append("store_name", storeValue);
+            formData.append("dis_card_label", labelValue);
 
             statusEl.textContent = 'در حال ارسال...';
             statusEl.style.color = '#3b82f6';
@@ -471,6 +223,9 @@
                 generateCaptcha();
                 selectedStoreName = '';
                 selectedCardLabel = '';
+                // also clear hidden inputs
+                document.getElementById('selectedStoreName').value = '';
+                document.getElementById('selectedCardLabel').value = '';
 
             } catch (err) {
                 console.error(err);
@@ -505,85 +260,92 @@
                 }
 
                 let hasActive = false;
-                filteredCards.forEach(card => {
+
+                // برای عملکرد امن‌تر از template literal اما با escape استفاده می‌کنیم
+                filteredCards.forEach((card, index) => {
                     const isActive = card.status === 'active';
                     if (isActive) hasActive = true;
 
-                    const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
+                    const cardId = (card.dis_card_id || 'card') + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w\-]/g, '');
                     const hasAddress = card.address && card.address.trim() !== '';
 
-                    const html = `
+                    const safeTitle = escapeHtml(card.title || 'کارت تخفیف');
+                    const safeCredit = formatToToman(card.credit);
+                    const safeDisAmo = formatToToman(card.dis_amo);
+                    const safeTotal = formatToToman(card.total_pay);
+                    const safeInShop = formatToToman(card.in_shop_pay);
+                    const safeAdv = formatToToman(card.adv_pay);
+                    const safeExpire = typeof card.expire_date === 'string' ? escapeHtml(card.expire_date) : 'مشخص نشده';
+
+                    // ساختار کارت با data- attributes
+                    const cardHtml = `
                         <div class="voucher-card ${!isActive ? 'dimmed' : ''}">
-                            <div class="voucher-title">${card.title || 'کارت تخفیف'}</div>
-                            <div class="voucher-item">
-                                <span class="voucher-label">مبلغ اعتبار:</span>
-                                <span class="voucher-value credit">${formatToToman(card.credit)}</span>
-                            </div>
-                            <div class="voucher-item">
-                                <span class="voucher-label">مبلغ تخفیف:</span>
-                                <span class="voucher-value discount">${formatToToman(card.dis_amo)}</span>
-                            </div>
+                            <div class="voucher-title">${safeTitle}</div>
+                            <div class="voucher-item"><span class="voucher-label">مبلغ اعتبار:</span><span class="voucher-value credit">${safeCredit}</span></div>
+                            <div class="voucher-item"><span class="voucher-label">مبلغ تخفیف:</span><span class="voucher-value discount">${safeDisAmo}</span></div>
                             <div class="divider"></div>
-                            <div class="voucher-item">
-                                <span class="voucher-label">هزینه کل:</span>
-                                <span class="voucher-value total">${formatToToman(card.total_pay)}</span>
-                            </div>
-                            <div class="voucher-item">
-                                <span class="voucher-label">پرداخت در فروشگاه:</span>
-                                <span class="voucher-value inshop">${formatToToman(card.in_shop_pay)}</span>
-                            </div>
-                            <div class="voucher-item">
-                                <span class="voucher-label">پیش پرداخت:</span>
-                                <span class="voucher-value advance">${formatToToman(card.adv_pay)}</span>
-                            </div>
+                            <div class="voucher-item"><span class="voucher-label">هزینه کل:</span><span class="voucher-value total">${safeTotal}</span></div>
+                            <div class="voucher-item"><span class="voucher-label">پرداخت در فروشگاه:</span><span class="voucher-value inshop">${safeInShop}</span></div>
+                            <div class="voucher-item"><span class="voucher-label">پیش پرداخت:</span><span class="voucher-value advance">${safeAdv}</span></div>
                             <div class="divider"></div>
-                            <div class="voucher-item">
-                                <span class="voucher-label">تاریخ انقضای کارت تخفیف:</span>
-                                <span class="voucher-value" style="color:#6b7280; font-weight:normal;">
-                                   ${(typeof card.expire_date === 'string' ? card.expire_date : 'مشخص نشده')}
-                                </span>
-                            </div>
-                            ${isActive 
-                                ? `<a href="#" class="deposit-link" 
-                                     onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}'); return false;">
-                                      رزرو کارت تخفیف
-                                   </a>`
-                                : `<div class="deposit-link disabled">غیرفعال</div>`
-                            }
-                            <div class="voucher-help-text">
-                                توضیح: فقط با پرداخت <strong>${formatToToman(card.total_pay)}</strong>، 
-                                <strong>${formatToToman(card.credit)}</strong> خرید کن!
-                            </div>
+                            <div class="voucher-item"><span class="voucher-label">تاریخ انقضای کارت تخفیف:</span><span class="voucher-value" style="color:#6b7280; font-weight:normal;">${safeExpire}</span></div>
+                            ${isActive ? `<a href="#" class="deposit-link reserve-btn" data-store="${escapeHtml(card.store_name || '')}" data-label="${escapeHtml(card.dis_card_label || '')}">رزرو کارت تخفیف</a>` : `<div class="deposit-link disabled">غیرفعال</div>`}
+                            <div class="voucher-help-text">توضیح: فقط با پرداخت <strong>${safeTotal}</strong>، <strong>${safeCredit}</strong> خرید کن!</div>
                             <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 12px;">
-                                <a href="#" class="help-link" onclick="toggleHelp('${cardId}'); return false;">
-                                    📌 راهنمای جزئی‌تر
-                                </a>
-                                ${hasAddress ? `
-                                    <a href="#" class="help-link" style="color:#d97706;" onclick="toggleAddress('${cardId}'); return false;">
-                                        📍 آدرس
-                                    </a>
-                                ` : ''}
+                                <a href="#" class="help-link" data-helpid="${cardId}">📌 راهنمای جزئی‌تر</a>
+                                ${hasAddress ? `<a href="#" class="help-link address-toggle" data-addrid="${cardId}" style="color:#d97706;">📍 آدرس</a>` : ''}
                             </div>
-                            <div id="help-text-${cardId}" class="voucher-help-text" style="display:none; margin-top:12px;">
-                                <strong>چگونه کارت تخفیف کار می‌کند؟</strong><br>
-                                - ابتدا <strong>${formatToToman(card.adv_pay)}</strong> را پرداخت کنید تا کارت رزرو شود.<br>
-                                - سپس با مراجعه به فروشگاه، برای خرید <strong>${formatToToman(card.credit)}</strong> اعتبار، 
-                                  فقط <strong>${formatToToman(card.in_shop_pay)}</strong> را پرداخت کنید.<br>
-                                - در مجموع، شما <strong>${formatToToman(card.total_pay)}</strong> پرداخت کرده‌اید 
-                                  و <strong>${formatToToman(card.dis_amo)}</strong> تومان سود کرده‌اید!
-                            </div>
-                            ${hasAddress ? `
-                                <div id="address-text-${cardId}" class="address-text" style="display:none; margin-top:12px;">
-                                    ${card.address}
-                                </div>
-                            ` : ''}
+                            <div id="help-text-${cardId}" class="voucher-help-text" style="display:none; margin-top:12px;"> <strong>چگونه کارت تخفیف کار می‌کند؟</strong><br>- ابتدا <strong>${safeAdv}</strong> را پرداخت کنید تا کارت رزرو شود.<br>- سپس با مراجعه به فروشگاه، برای خرید <strong>${safeCredit}</strong> اعتبار، فقط <strong>${safeInShop}</strong> را پرداخت کنید.<br>- در مجموع، شما <strong>${safeTotal}</strong> پرداخت کرده‌اید و <strong>${safeDisAmo}</strong> تومان سود کرده‌اید!</div>
+                            ${hasAddress ? `<div id="address-text-${cardId}" class="address-text" style="display:none; margin-top:12px;">${escapeHtml(card.address)}</div>` : ''}
                         </div>
                     `;
-                    container.innerHTML += html;
+
+                    container.innerHTML += cardHtml;
                 });
 
+                // اضافه کردن listenerها بعد از درج HTML
                 if (hasActive) {
                     document.getElementById('reservation-form').style.display = 'block';
+                    // reserve buttons
+                    document.querySelectorAll('.reserve-btn').forEach(btn => {
+                        btn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const store = this.getAttribute('data-store') || '';
+                            const label = this.getAttribute('data-label') || '';
+                            const storeInput = document.getElementById('selectedStoreName');
+                            const labelInput = document.getElementById('selectedCardLabel');
+                            if (storeInput) storeInput.value = store;
+                            if (labelInput) labelInput.value = label;
+                            selectedStoreName = store;
+                            selectedCardLabel = label;
+                            document.getElementById('reservation-form').scrollIntoView({ behavior: 'smooth' });
+                        });
+                    });
+
+                    // help toggles
+                    document.querySelectorAll('.help-link').forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const helpId = this.getAttribute('data-helpid');
+                            if (helpId) {
+                                const el = document.getElementById(`help-text-${helpId}`);
+                                if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
+                            }
+                        });
+                    });
+
+                    // address toggles
+                    document.querySelectorAll('.address-toggle').forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const addrId = this.getAttribute('data-addrid');
+                            if (addrId) {
+                                const el = document.getElementById(`address-text-${addrId}`);
+                                if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
+                            }
+                        });
+                    });
+
                     document.getElementById('DiscountForm').addEventListener('submit', handleFormSubmit);
                 }
 
@@ -599,7 +361,7 @@
         });
     </script>
 
-    <!-- فقط اسکریپت منوی موبایل -->
+    <!-- فقط اسکریپت منوی موبایل (نگه دار یا تغییر بده) -->
     <script src="./fastfood_script.js"></script>
 </body>
 </html>
