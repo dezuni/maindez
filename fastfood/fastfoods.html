@@ -543,91 +543,10 @@
     </script>
 
     <!-- اسکریپت تخفیف (اگر نیاز به منطق فرم داری) -->
-   <!-- <script src="/script_discount.js"></script>-->
+    <script src="/script_discount.js"></script>
     <!-- اسکریپت منوی موبایل -->
     <script src="./fastfood_script.js"></script><script>
-// منطق ارسال فرم تخفیف — جایگزین script_discount.js
-document.getElementById('DiscountForm')?.addEventListener('submit', async function(e) {
-    e.preventDefault();
 
-    // گرفتن داده‌ها
-    const fullName = document.getElementById('fullName_discount').value.trim();
-    const phoneNumber = document.getElementById('phoneNumber_discount').value.trim();
-    const verifCode = document.getElementById('DiscountVerifCode').value.trim();
-    const captchaAnswer = document.getElementById('captchaAnswer_discount').value.trim();
-
-    const statusEl = document.getElementById('DiscountRequestStatus');
-    const successEl = document.getElementById('DiscountSuccessMessage');
-
-    // اعتبارسنجی CAPTCHA (اگر نیاز دارید، باید منطق سمت سرور هم داشته باشید، اما برای سادگی فرض می‌کنیم درست است)
-    // در عمل، CAPTCHA باید سمت سرور چک شود — اما اینجا فقط فرض می‌کنیم OK است.
-
-    // ✅ اضافه کردن داده‌های کارت انتخاب‌شده
-    const payload = {
-        name: fullName,
-        phone: phoneNumber,
-        password: verifCode,
-        store_name: selectedStoreName,
-        dis_card_label: selectedCardLabel,
-        // می‌توانید تاریخ، زمان، یا دیگر فیلدها را هم اضافه کنید
-    };
-
-    statusEl.textContent = 'در حال ارسال...';
-    statusEl.style.color = '#3b82f6';
-
-    try {
-        // 🔁 جایگزین کنید با آدرس واقعی اسکریپت گوگل شیت شما برای ثبت‌نام
-        const response = await fetch('https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/exec', {
-            method: 'POST',
-            mode: 'no-cors', // ⚠️ Google Apps Script فقط با no-cors کار می‌کند
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-
-        // چون no-cors است، response خالی است — اما اگر اسکریپت درست باشد، داده ذخیره می‌شود
-        // بنابراین فقط بر اساس عدم خطای شبکه تصمیم می‌گیریم
-
-        statusEl.textContent = '';
-        successEl.style.display = 'block';
-        document.getElementById('DiscountForm').reset();
-        document.getElementById('captchaError_discount').style.display = 'none';
-
-        // اختیاری: پاک کردن اطلاعات انتخاب‌شده پس از موفقیت
-        selectedStoreName = '';
-        selectedCardLabel = '';
-
-    } catch (error) {
-        console.error('خطا در ارسال:', error);
-        statusEl.textContent = '❌ خطایی در ارسال رخ داد. لطفاً دوباره تلاش کنید.';
-        statusEl.style.color = '#d32f2f';
-    }
-});
-
-// --- منطق CAPTCHA ساده (اختیاری) ---
-// برای مثال، یک CAPTCHA جمع ساده
-function generateCaptcha() {
-    const a = Math.floor(Math.random() * 10) + 1;
-    const b = Math.floor(Math.random() * 10) + 1;
-    window.correctCaptchaAnswer = a + b;
-    document.getElementById('captchaQuestion_discount').textContent = `${a} + ${b} = ?`;
-}
-
-// فراخوانی CAPTCHA در بارگذاری
-document.addEventListener('DOMContentLoaded', () => {
-    generateCaptcha();
-    document.getElementById('captchaAnswer_discount')?.addEventListener('input', () => {
-        const errorEl = document.getElementById('captchaError_discount');
-        const input = document.getElementById('captchaAnswer_discount').value;
-        if (input !== '' && parseInt(input) !== window.correctCaptchaAnswer) {
-            errorEl.style.display = 'block';
-        } else {
-            errorEl.style.display = 'none';
-        }
-    });
-});
-</script>
 
     
 </body>
