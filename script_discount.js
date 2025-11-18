@@ -91,8 +91,8 @@ function handleFormSubmit() {
     DiscountFormData.append("time_used", "");
     DiscountFormData.append("date_used", "");
     DiscountFormData.append("Expiration_Date", expiryDate.toString());
-    DiscountFormData.append("store_name", selectedStoreName);
-    DiscountFormData.append("dis_card_label", selectedCardLabel);
+    DiscountFormData.append("store_name", document.getElementById("selectedStoreNameInput").value);
+    DiscountFormData.append("dis_card_label", document.getElementById("selectedCardLabelInput").value);
 
     fetch("https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/exec", {
         method: "POST",
