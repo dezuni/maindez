@@ -438,10 +438,7 @@
                                    ${(typeof card.expire_date === 'string' ? card.expire_date : 'مشخص نشده')}
                                 </span>
                             </div>
-                            ${isActive 
-                                ? `<a href="#" class="deposit-link" onclick="scrollToForm(); return false;">رزرو کارت تخفیف</a>`
-                                : `<div class="deposit-link disabled">غیرفعال</div>`
-                            }
+                            
                             <div class="voucher-help-text">
                                 توضیح: فقط با پرداخت <strong>${formatToToman(card.total_pay)}</strong>، 
                                 <strong>${formatToToman(card.credit)}</strong> خرید کن!
@@ -484,12 +481,7 @@
             }
         }
 
-        function scrollToForm() {
-            const form = document.getElementById('reservation-form');
-            if (form) {
-                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
+        
 
         document.addEventListener('DOMContentLoaded', loadVouchers);
     </script>
