@@ -306,48 +306,7 @@
                         <div id="loading-vouchers">در حال بارگذاری کارت‌های تخفیف...</div>
                     </div>
                 </div>
-
-                <!-- فرم رزرو -->
-                <div id="reservation-form">
-                    <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
-                    <div class="formcontainer">
-                        <form id="DiscountForm">
-                            <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" required></label>
-                            <label>شماره تماس (مانند مثال): 
-                                <input type="text" id="phoneNumber_discount" inputmode="numeric" pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
-                            </label>
-                            <label>سه رقم آخر شماره دانشجويي/پرسنلي: 
-                                <input type="text" id="DiscountVerifCode" inputmode="numeric" placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
-                            </label>
-                            
-                            <div id="captchaContainer_discount">
-                                <div id="captchaQuestion_discount" style="
-                                    padding: 10px;
-                                    margin: 10px 0;
-                                    background: #f0f0f0;
-                                    border: 1px solid #ccc;
-                                    border-radius: 5px;
-                                    font-size: 16px;
-                                    font-weight: bold;
-                                    text-align: center;
-                                    color: #000;
-                                "></div>
-                                <label for="captchaAnswer_discount">پاسخ را وارد کنيد:</label>
-                                <input type="number" id="captchaAnswer_discount" placeholder="" required>
-                            </div>
-                            
-                            <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
-                            <button type="submit">تاييد ثبت نام</button>
-                        </form>
-                        <div id="DiscountRequestStatus"></div> 
-                        <div id="DiscountSuccessMessage">
-                            ✅ تخفيف شما با موفقيت ثبت شد!<br><br>
-                            <span style="color: blue;">
-                                مهلت استفاده: 30 آبان 1404، ساعت 24:00. 
-                            </span>
-                        </div>
-                    </div>
-                </div>
+              
             </div>
 
             <!-- بخش تماس -->
