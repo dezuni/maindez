@@ -319,6 +319,9 @@
                             <label>سه رقم آخر شماره دانشجويي/پرسنلي: 
                                 <input type="text" id="DiscountVerifCode" inputmode="numeric" placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
                             </label>
+                            <!-- ✅ فیلدهای مخفی برای اطلاعات کارت -->
+                            <input type="hidden" id="selectedStoreName" name="store_name">
+                            <input type="hidden" id="selectedCardLabel" name="dis_card_label">
                             
                             <div id="captchaContainer_discount">
                                 <div id="captchaQuestion_discount" style="
@@ -449,7 +452,9 @@
                     const hasAddress = card.address && card.address.trim() !== '';
 
                     const html = `
-                        <div class="voucher-card ${!isActive ? 'dimmed' : ''}">
+                        <div class="voucher-card ${!isActive ? 'dimmed' : ''}"
+                            data-store-name="${card.store_name || ''}" 
+                         data-card-label="${card.dis_card_label || ''}" >
                             <div class="voucher-title">${card.title || 'کارت تخفیف'}</div>
                             <div class="voucher-item">
                                 <span class="voucher-label">مبلغ اعتبار:</span>
@@ -480,7 +485,7 @@
                                 </span>
                             </div>
                             ${isActive 
-                                ? `<a href="#" class="deposit-link" onclick="scrollToForm(); return false;">رزرو کارت تخفیف</a>`
+                                ? `<a href="#" class="deposit-link" onclick="scrollToFormWithCard(cardElement); return false;">رزرو کارت تخفیف</a>`
                                 : `<div class="deposit-link disabled">غیرفعال</div>`
                             }
                             <div class="voucher-help-text">
@@ -525,12 +530,23 @@
             }
         }
 
-        function scrollToForm() {
-            const form = document.getElementById('reservation-form');
-            if (form) {
-                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
+        function scrollToFormWithCard(cardElement) {
+    if (!cardElement) return;
+
+    const storeName = cardElement.getAttribute('data-store-name') || '';
+    const cardLabel = cardElement.getAttribute('data-card-label') || '';
+
+    // ذخیره در فیلدهای مخفی
+    document.getElementById('selectedStoreName').value = storeName;
+    document.getElementById('selectedCardLabel').value = cardLabel;
+
+    // اسکرول به فرم
+    const form = document.getElementById('reservation-form');
+    if (form) {
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('fullName_discount')?.focus();
+    }
+}
 
         document.addEventListener('DOMContentLoaded', loadVouchers);
     </script>
