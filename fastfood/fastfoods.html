@@ -543,10 +543,181 @@
     </script>
 
     <!-- اسکریپت تخفیف (اگر نیاز به منطق فرم داری) -->
-    <script src="/script_discount.js"></script>
+   <!-- <script src="/script_discount.js"></script> -->
     <!-- اسکریپت منوی موبایل -->
     <script src="./fastfood_script.js"></script><script>
+// how much discount?
+let discountRate = 10;
 
+// discount registration deadline
+let YYYY = 2026; // year
+let MM = 11;      // month
+let DD = 18;      // day
+let RegistrationDeadline = new Date(YYYY, MM-1, DD, 24, 00, 00);
+
+// discount expiration date
+YYYY = 2025; // year
+MM = 11;      // month
+DD = 21;      // day
+const expiryDate = new Date(YYYY, MM-1, DD, 24, 00, 00);
+
+// Get the current date
+const currentDate = new Date();
+
+// Add a spinner for visual feedback
+const spinnerformDSCNT = document.createElement('div');
+spinnerformDSCNT.className = 'spinner';
+
+let correctAnswer1 = 0;
+
+function generateCaptcha1() {
+    const num3 = Math.floor(Math.random() * 10) + 1;
+    const num4 = Math.floor(Math.random() * 10) + 1;
+    correctAnswer1 = num3 + num4;
+    
+    const captchaElement = document.getElementById("captchaQuestion_discount");
+    if (captchaElement) {
+        captchaElement.textContent = `حاصل جمع ${num3} + ${num4} چند می‌شود؟`;
+        console.log('Captcha question set:', captchaElement.textContent);
+    } else {
+        console.error('Captcha element not found!');
+    }
+}
+
+
+// Initialize when page loads
+function initDiscountForm() {
+    console.log('Initializing discount form...');
+    
+    const form = document.getElementById("DiscountForm");
+    if (form) {
+        console.log('Discount form found');
+        generateCaptcha1(); // Generate first captcha
+        
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            handleFormSubmit();
+        });
+    } else {
+        console.error('Discount form not found!');
+    }
+}
+
+function handleFormSubmit() {
+    const userCaptcha1 = parseInt(document.getElementById("captchaAnswer_discount").value);
+    const DiscountRequestStatusDiv = document.getElementById('DiscountRequestStatus');
+        
+    if (userCaptcha1 !== correctAnswer1) {
+        DiscountRequestStatusDiv.textContent = "";
+        document.getElementById("DiscountSuccessMessage").style.display = "none";
+        document.getElementById("captchaError_discount").style.display = "block";
+        generateCaptcha1();
+        document.getElementById("captchaAnswer_discount").value = "";
+        return;
+    }
+    
+    if (currentDate > RegistrationDeadline) {
+        DiscountRequestStatusDiv.textContent = "❌ مهلت ثبت نام به پایان رسیده است.";
+        DiscountRequestStatusDiv.style.color = 'red';
+        return;
+    }
+    
+    DiscountRequestStatusDiv.textContent = 'در حال ارسال درخواست ...';
+    DiscountRequestStatusDiv.style.color = 'blue';
+    DiscountRequestStatusDiv.appendChild(spinnerformDSCNT);
+    
+    document.getElementById("captchaError_discount").style.display = "none";
+    document.getElementById("DiscountSuccessMessage").style.display = "none";
+
+    // Use FormData instead of JSON to avoid CORS
+    let DiscountFormData = new FormData();
+    DiscountFormData.append("phone", document.getElementById("phoneNumber_discount").value);
+    DiscountFormData.append("name", document.getElementById("fullName_discount").value);
+    DiscountFormData.append("discount", discountRate);
+    DiscountFormData.append("password", document.getElementById("DiscountVerifCode").value);
+    DiscountFormData.append("status", "active");
+    DiscountFormData.append("time_used", "");
+    DiscountFormData.append("date_used", "");
+    DiscountFormData.append("Expiration_Date", expiryDate.toString());
+    DiscountFormData.append("store_name", selectedStoreName);
+    DiscountFormData.append("dis_card_label", selectedCardLabel);
+
+    fetch("https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/exec", {
+        method: "POST",
+        body: DiscountFormData
+    })
+    .then(response => {
+        console.log('Response status:', response.status);
+        if (!response.ok) {
+            throw new Error('خطای ارسال، بعدا تلاش کنید. Status: ' + response.status);
+        }
+        return response.text();
+    })
+    .then(data => {
+        console.log('Success response:', data);
+        generateCaptcha1();
+        DiscountRequestStatusDiv.textContent = '';
+        if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
+            DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
+        }
+        document.getElementById("DiscountSuccessMessage").style.display = "block";
+        document.getElementById("DiscountForm").reset();
+    })
+    .catch(error => {
+        console.error("Fetch error:", error);
+        DiscountRequestStatusDiv.textContent = "❌ خطا در ارسال فرم";
+        DiscountRequestStatusDiv.style.color = 'red';
+        if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
+            DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
+        }
+    });
+}
+
+function resetDiscountForm() {
+    document.getElementById("DiscountSuccessMessage").style.display = "none";
+    document.getElementById("DiscountForm").reset();
+    generateCaptcha1();
+}
+
+// Start when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDiscountForm);
+} else {
+    initDiscountForm();
+}
+
+
+/********  new lines for discount logos ********/
+/********  new lines for discount logos ********/
+/********  new lines for discount logos ********/
+
+
+// فیلتر کردن خدمات بر اساس دسته‌بندی
+document.querySelectorAll('.filter-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        // حذف کلاس active از همه دکمه‌ها
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        
+        // اضافه کردن کلاس active به دکمه کلیک شده
+        button.classList.add('active');
+        
+        const filter = button.getAttribute('data-filter');
+        const serviceItems = document.querySelectorAll('.service-item1');
+        
+        serviceItems.forEach(item => {
+            const categories = item.getAttribute('data-category').split(' ');
+            
+            // اگر دسته‌بندی مورد نظر در لیست دسته‌بندی‌های آیتم وجود دارد، نمایش بده
+            if (categories.includes(filter)) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    });
+});
 
     
 </body>
