@@ -209,7 +209,7 @@
             font-size: 1rem;
             direction: ltr;
             text-align: left;
-            font-family: 'Vazirmatn', sans-serif; /* فونت برای input هم */
+            font-family: 'Vazirmatn', sans-serif;
         }
 
         .formcontainer input:focus {
@@ -234,6 +234,18 @@
         .formcontainer button:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+        }
+
+        .readonly-field {
+            background: #f3f4f6;
+            color: #4b5563;
+            cursor: not-allowed;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 1rem;
+            direction: rtl;
+            text-align: right;
         }
 
         #DiscountRequestStatus {
@@ -312,6 +324,15 @@
                     <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
                     <div class="formcontainer">
                         <form id="DiscountForm">
+                            <!-- فیلدهای جدید فقط خواندنی -->
+                            <label>نام فروشگاه:
+                                <div id="selectedStoreName" class="readonly-field">—</div>
+                            </label>
+                            <label>عنوان کارت تخفیف:
+                                <div id="selectedCardLabel" class="readonly-field">—</div>
+                            </label>
+
+                            <!-- فیلدهای قبلی -->
                             <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" required></label>
                             <label>شماره تماس (مانند مثال): 
                                 <input type="text" id="phoneNumber_discount" inputmode="numeric" pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
@@ -414,6 +435,16 @@
             addrEl.style.display = isVisible ? 'none' : 'block';
         }
 
+        // اسکرول به فرم و نمایش اطلاعات کارت انتخاب‌شده
+        function scrollToForm(storeName, cardLabel) {
+            document.getElementById('selectedStoreName').textContent = storeName || '—';
+            document.getElementById('selectedCardLabel').textContent = cardLabel || '—';
+            
+            const form = document.getElementById('reservation-form');
+            form.style.display = 'block';
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         // بارگذاری داده‌ها
         async function loadVouchers() {
             const container = document.getElementById('vouchers-container');
@@ -448,6 +479,16 @@
                     const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
                     const hasAddress = card.address && card.address.trim() !== '';
 
+                    // تهیه دکمه رزرو با اطلاعات اضافی
+                    const reserveBtn = isActive 
+                        ? `<a href="#" class="deposit-link" 
+                              data-store="${card.store_name || ''}" 
+                              data-label="${card.dis_card_label || ''}"
+                              onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}'); return false;">
+                              رزرو کارت تخفیف
+                           </a>`
+                        : '<div class="deposit-link disabled">غیرفعال</div>';
+
                     const html = `
                         <div class="voucher-card ${!isActive ? 'dimmed' : ''}">
                             <div class="voucher-title">${card.title || 'کارت تخفیف'}</div>
@@ -479,10 +520,7 @@
                                    ${(typeof card.expire_date === 'string' ? card.expire_date : 'مشخص نشده')}
                                 </span>
                             </div>
-                            ${isActive 
-                                ? `<a href="#" class="deposit-link" onclick="scrollToForm(); return false;">رزرو کارت تخفیف</a>`
-                                : `<div class="deposit-link disabled">غیرفعال</div>`
-                            }
+                            ${reserveBtn}
                             <div class="voucher-help-text">
                                 توضیح: فقط با پرداخت <strong>${formatToToman(card.total_pay)}</strong>، 
                                 <strong>${formatToToman(card.credit)}</strong> خرید کن!
@@ -515,20 +553,13 @@
                     container.innerHTML += html;
                 });
 
-                if (hasActive) {
-                    document.getElementById('reservation-form').style.display = 'block';
-                }
-
+                // نمایش فرم در صورت وجود کارت فعال (اختیاری — می‌توان حذف کرد چون فرم هنگام کلیک نمایش داده می‌شود)
+                // if (hasActive) {
+                //     document.getElementById('reservation-form').style.display = 'block';
+                // }
             } catch (error) {
                 console.error('خطا:', error);
                 container.innerHTML = '<p style="text-align:center; color:red;">خطا در بارگذاری کارت‌ها. لطفاً دوباره تلاش کنید.</p>';
-            }
-        }
-
-        function scrollToForm() {
-            const form = document.getElementById('reservation-form');
-            if (form) {
-                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }
 
@@ -541,3 +572,4 @@
     <script src="./fastfood_script.js"></script>
 </body>
 </html>
+
