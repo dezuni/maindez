@@ -105,16 +105,28 @@ function handleFormSubmit() {
         }
         return response.text();
     })
-    .then(data => {
-        console.log('Success response:', data);
-        generateCaptcha1();
-        DiscountRequestStatusDiv.textContent = '';
-        if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
-            DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
-        }
-        document.getElementById("DiscountSuccessMessage").style.display = "block";
-        document.getElementById("DiscountForm").reset();
-    })
+   .then(data => {
+    console.log('Success response:', data);
+    generateCaptcha1();
+    DiscountRequestStatusDiv.textContent = '';
+    if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
+        DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
+    }
+
+    // ⬇️ این قسمت جدید است:
+    const advPay = document.getElementById('selectedAdvPayInput').value;
+    const formattedAdvPay = new Intl.NumberFormat('fa-IR').format(advPay) + ' هزار تومان';
+
+    const successMsgEl = document.getElementById("DiscountSuccessMessage");
+    successMsgEl.innerHTML = `
+        جهت نهایی کردن تخفیف مبلغ پیش پرداخت <strong>${formattedAdvPay}</strong> را به شماره کارت .... به نام .... واریز نموده 
+        و فیش را برای شماره .... یا ادمین دزیونی در ایتا یا تلگرام ارسال نمایید<br>
+        @dezuni_admin
+    `;
+    successMsgEl.style.display = "block";
+
+    document.getElementById("DiscountForm").reset();
+})
     .catch(error => {
         console.error("Fetch error:", error);
         DiscountRequestStatusDiv.textContent = "❌ خطا در ارسال فرم";
