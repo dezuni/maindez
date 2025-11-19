@@ -494,7 +494,9 @@
                         ? `<a href="#" class="deposit-link" 
                               data-store="${card.store_name || ''}" 
                               data-label="${card.dis_card_label || ''}"
-                                onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}', '${card.dis_amo || '0'}'); return false;"
+            
+             onclick="scrollToForm(${JSON.stringify(card.store_name || '')}, ${JSON.stringify(card.dis_card_label || '')}, ${JSON.stringify(card.adv_pay || '0')}, ${JSON.stringify(card.dis_amo || '0')}); return false;"
+
                               رزرو کارت تخفیف
                            </a>`
                         : '<div class="deposit-link disabled">غیرفعال</div>';
