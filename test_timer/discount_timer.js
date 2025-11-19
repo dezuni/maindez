@@ -53,16 +53,18 @@
                     throw new Error('هیچ داده‌ای از Sheets دریافت نشد');
                 }
                 
-                console.log('داده‌های پردازش شده:', data);
-                showStatus(`داده‌ها با موفقیت از Sheets دریافت شد (${data.length} تایمر)`, 'success');
+               // console.log('داده‌های پردازش شده:', data);
+               // showStatus(`داده‌ها با موفقیت از Sheets دریافت شد (${data.length} تایمر)`, 'success');
                 return data;
                 
             } catch (error) {
                 console.error('خطا در دریافت داده از Sheets:', error);
-                showStatus(`خطا در دریافت داده: ${error.message}`, 'error');
+                throw new Error('خطا از سرور، تایمرها بارگذاری نشد: ' + data.error);
+                    
+              //  showStatus(`خطا در دریافت داده: ${error.message}`, 'error');
                 
                 // استفاده از داده‌های نمونه در صورت خطا
-                return [
+               /* return [
                     {
                         dis_card_label: 'amo_normal',
                         dis_card_id: 'fastfood',
@@ -75,7 +77,8 @@
                         dscnt_reg_expiry_date: '2025-11-21',
                         dscnt_reg_expiry_time: '03:30'
                     }
-                ];
+                ]; */
+                    
             }
         }
         
