@@ -5,11 +5,12 @@
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx53SDyKOSlESCXpuvfjUFbWEJuBmIBi_qfUBfF-ZVMH86rmUdFsOiu5OORaaWwQkhi/exec';
         
         // تابع برای نمایش وضعیت
+/*
         function showStatus(message, type = 'info') {
             const statusContainer = document.getElementById('status-container');
             const className = type === 'success' ? 'success-message' : type === 'error' ? 'error-message' : 'loading';
             statusContainer.innerHTML = `<div class="${className}">${message}</div>`;
-        }
+        } */
 
         // تابع برای تبدیل اعداد انگلیسی به فارسی
         function toPersianNumber(number) {
