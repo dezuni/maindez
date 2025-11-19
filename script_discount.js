@@ -112,16 +112,6 @@ function handleFormSubmit() {
         if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
             DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
         }
-
-        // بروزرسانی محتوای پیام موفقیت با مبلغ adv_pay
-        const advPayText = typeof selectedCardAdvPay !== 'undefined' && selectedCardAdvPay !== null
-            ? formatToToman(selectedCardAdvPay)
-            : '...';
-
-        document.getElementById("DiscountSuccessMessage").innerHTML = 
-            `جهت نهایی کردن تخفیف مبلغ <strong>${advPayText}</strong> تومان را به شماره کارت .... به نام .... واریز نموده و فیش را برای شماره .... یا ادمین دزیونی در ایتا یا تلگرام ارسال نمایید<br>
-            @dezuni_admin`;
-
         document.getElementById("DiscountSuccessMessage").style.display = "block";
         document.getElementById("DiscountForm").reset();
     })
@@ -137,7 +127,6 @@ function handleFormSubmit() {
 
 function resetDiscountForm() {
     document.getElementById("DiscountSuccessMessage").style.display = "none";
-    document.getElementById("DiscountSuccessMessage").innerHTML = ''; // اضافه شد
     document.getElementById("DiscountForm").reset();
     generateCaptcha1();
 }
