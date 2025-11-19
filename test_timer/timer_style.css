@@ -14,7 +14,7 @@
             padding: 40px 20px;
         }
         
-        .container {
+     /*   .container {
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -25,7 +25,7 @@
             margin-bottom: 40px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             color: #e6f7ff;
-        }
+        } */
         
         .timers-grid {
             display: grid;
@@ -142,7 +142,7 @@
             }
         }
 
-        .success-message {
+       /* .success-message {
             text-align: center;
             color: #4ade80;
             background: rgba(74, 222, 128, 0.1);
@@ -160,5 +160,5 @@
             border-radius: 10px;
             margin: 20px 0;
             border: 1px solid rgba(255, 107, 107, 0.3);
-        }
+        }*/
     
