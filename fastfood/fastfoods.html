@@ -422,6 +422,9 @@
             return new Intl.NumberFormat('fa-IR').format(thousand) + ' هزار تومان';
         }
 
+        // متغیر جهانی برای ذخیره مقدار adv_pay کارت انتخاب‌شده
+        let selectedCardAdvPay = null;
+
         // نمایش/پنهان کردن راهنما زیر کارت
         function toggleHelp(cardId) {
             const helpEl = document.getElementById(`help-text-${cardId}`);
@@ -437,19 +440,22 @@
         }
 
         // اسکرول به فرم و نمایش اطلاعات کارت انتخاب‌شده
-        function scrollToForm(storeName, cardLabel) {
-            // نمایش در فیلدهای فقط خواندنی (اختیاری برای کاربر)
+        function scrollToForm(storeName, cardLabel, advPay) {
+            // ذخیره مقدار پیش‌پرداخت
+            selectedCardAdvPay = advPay;
+
+            // نمایش در فیلدهای فقط خواندنی
             document.getElementById('selectedStoreName').textContent = storeName || '—';
             document.getElementById('selectedCardLabel').textContent = cardLabel || '—';
-    
-                // ⬇️ ذخیره در فیلدهای پنهان برای ارسال به سرور
-                document.getElementById('selectedStoreNameInput').value = storeName || '';
-                document.getElementById('selectedCardLabelInput').value = cardLabel || '';
-    
-                const form = document.getElementById('reservation-form');
-                    form.style.display = 'block';
-                    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+
+            // ذخیره در فیلدهای پنهان
+            document.getElementById('selectedStoreNameInput').value = storeName || '';
+            document.getElementById('selectedCardLabelInput').value = cardLabel || '';
+
+            const form = document.getElementById('reservation-form');
+            form.style.display = 'block';
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
         // بارگذاری داده‌ها
         async function loadVouchers() {
@@ -488,9 +494,7 @@
                     // تهیه دکمه رزرو با اطلاعات اضافی
                     const reserveBtn = isActive 
                         ? `<a href="#" class="deposit-link" 
-                              data-store="${card.store_name || ''}" 
-                              data-label="${card.dis_card_label || ''}"
-                              onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}'); return false;">
+                              onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', ${card.adv_pay}); return false;">
                               رزرو کارت تخفیف
                            </a>`
                         : '<div class="deposit-link disabled">غیرفعال</div>';
@@ -578,4 +582,3 @@
     <script src="./fastfood_script.js"></script>
 </body>
 </html>
-
