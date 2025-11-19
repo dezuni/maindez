@@ -331,8 +331,8 @@
                             <label>نام فروشگاه:
                                 <div id="selectedStoreName" class="readonly-field">—</div>
                             </label>
-                            <label>سود واقعی شما از این خرید:
-                                <div id="selectedDisAmount" class="readonly-field">—</div>
+                            <label>عنوان کارت تخفیف:
+                                <div id="selectedCardLabel" class="readonly-field">—</div>
                             </label>
 
                             <!-- فیلدهای قبلی -->
@@ -436,20 +436,22 @@
         }
 
         // اسکرول به فرم و نمایش اطلاعات کارت انتخاب‌شده
-        function scrollToForm(storeName, cardLabel, advPay, disAmo) {
+        function scrollToForm(storeName, cardLabel, advPay) {
             // نمایش در فیلدهای فقط خواندنی (اختیاری برای کاربر)
             document.getElementById('selectedStoreName').textContent = storeName || '—';
-            document.getElementById('selectedDisAmount').textContent = formatToToman(disAmo) || '—';
+            document.getElementById('selectedCardLabel').textContent = cardLabel || '—';
+    
+                // ⬇️ ذخیره در فیلدهای پنهان برای ارسال به سرور
+                document.getElementById('selectedStoreNameInput').value = storeName || '';
+                document.getElementById('selectedCardLabelInput').value = cardLabel || '';
 
-            // ⬇️ ذخیره در فیلدهای پنهان برای ارسال به سرور
-            document.getElementById('selectedStoreNameInput').value = storeName || '';
-            document.getElementById('selectedCardLabelInput').value = cardLabel || '';
-            document.getElementById('selectedAdvPayInput').value = advPay || '0';
+                document.getElementById('selectedAdvPayInput').value = advPay || '0'; 
 
-            const form = document.getElementById('reservation-form');
-            form.style.display = 'block';
-            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+    
+                const form = document.getElementById('reservation-form');
+                    form.style.display = 'block';
+                    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
 
         // بارگذاری داده‌ها
         async function loadVouchers() {
@@ -490,7 +492,7 @@
                         ? `<a href="#" class="deposit-link" 
                               data-store="${card.store_name || ''}" 
                               data-label="${card.dis_card_label || ''}"
-                              onclick="scrollToForm(${JSON.stringify(card.store_name || '')}, ${JSON.stringify(card.dis_card_label || '')}, ${JSON.stringify(card.adv_pay || '0')}, ${JSON.stringify(card.dis_amo || '0')}); return false;">
+                              onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}'); return false;">
                               رزرو کارت تخفیف
                            </a>`
                         : '<div class="deposit-link disabled">غیرفعال</div>';
@@ -576,6 +578,8 @@
     <script src="/script_discount.js"></script>
     <!-- اسکریپت منوی موبایل -->
     <script src="./fastfood_script.js"></script>
-    });
+   
+});
 </body>
 </html>
+
