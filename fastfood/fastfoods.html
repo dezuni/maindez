@@ -331,8 +331,8 @@
                             <label>نام فروشگاه:
                                 <div id="selectedStoreName" class="readonly-field">—</div>
                             </label>
-                            <label>عنوان کارت تخفیف:
-                                <div id="selectedCardLabel" class="readonly-field">—</div>
+                            <label>سود شما از این خرید:
+                                <div id="selectedCardDisAmo" class="readonly-field">—</div>
                             </label>
 
                             <!-- فیلدهای قبلی -->
@@ -436,10 +436,11 @@
         }
 
         // اسکرول به فرم و نمایش اطلاعات کارت انتخاب‌شده
-        function scrollToForm(storeName, cardLabel, advPay) {
+        function scrollToForm(storeName, cardLabel, advPay,DisAmo) {
             // نمایش در فیلدهای فقط خواندنی (اختیاری برای کاربر)
             document.getElementById('selectedStoreName').textContent = storeName || '—';
             document.getElementById('selectedCardLabel').textContent = cardLabel || '—';
+            document.getElementById('selectedCardDisAmo').textContent = DisAmo || '—';
     
                 // ⬇️ ذخیره در فیلدهای پنهان برای ارسال به سرور
                 document.getElementById('selectedStoreNameInput').value = storeName || '';
@@ -492,7 +493,7 @@
                         ? `<a href="#" class="deposit-link" 
                               data-store="${card.store_name || ''}" 
                               data-label="${card.dis_card_label || ''}"
-                              onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}'); return false;">
+                              onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}, '${card.dis_amo || '0'}'); return false;">
                               رزرو کارت تخفیف
                            </a>`
                         : '<div class="deposit-link disabled">غیرفعال</div>';
