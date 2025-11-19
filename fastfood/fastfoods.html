@@ -327,6 +327,7 @@
                             <!-- فیلدهای جدید فقط خواندنی -->
                             <input type="hidden" id="selectedStoreNameInput" name="store_name">
                             <input type="hidden" id="selectedCardLabelInput" name="dis_card_label">
+                            <input type="hidden" id="selectedAdvPayInput" name="adv_pay">
                             <label>نام فروشگاه:
                                 <div id="selectedStoreName" class="readonly-field">—</div>
                             </label>
@@ -364,7 +365,7 @@
                         </form>
                         <div id="DiscountRequestStatus"></div> 
                         <div id="DiscountSuccessMessage">
-    جهت نهایی کردن تخفیف مبلغ پیش پرداخت را به شماره کارت .... به نام .... واریز نموده و فیش را برای شماره .... یا ادمین دزیونی در ایتا یا تلگرام ارسال نمایید<br>
+    جهت نهایی کردن تخفیف مبلغ پیش پرداخت تومان را به شماره کارت .... به نام .... واریز نموده و فیش را برای شماره .... یا ادمین دزیونی در ایتا یا تلگرام ارسال نمایید<br>
     @dezuni_admin
 </div>
                         </div>
@@ -437,7 +438,7 @@
         }
 
         // اسکرول به فرم و نمایش اطلاعات کارت انتخاب‌شده
-        function scrollToForm(storeName, cardLabel) {
+        function scrollToForm(storeName, cardLabel,, advPay) {
             // نمایش در فیلدهای فقط خواندنی (اختیاری برای کاربر)
             document.getElementById('selectedStoreName').textContent = storeName || '—';
             document.getElementById('selectedCardLabel').textContent = cardLabel || '—';
@@ -445,6 +446,9 @@
                 // ⬇️ ذخیره در فیلدهای پنهان برای ارسال به سرور
                 document.getElementById('selectedStoreNameInput').value = storeName || '';
                 document.getElementById('selectedCardLabelInput').value = cardLabel || '';
+
+                document.getElementById('selectedAdvPayInput').value = advPay || '0'; 
+
     
                 const form = document.getElementById('reservation-form');
                     form.style.display = 'block';
@@ -490,7 +494,7 @@
                         ? `<a href="#" class="deposit-link" 
                               data-store="${card.store_name || ''}" 
                               data-label="${card.dis_card_label || ''}"
-                              onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}'); return false;">
+                              onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}'); return false;">
                               رزرو کارت تخفیف
                            </a>`
                         : '<div class="deposit-link disabled">غیرفعال</div>';
@@ -570,12 +574,14 @@
         }
 
         document.addEventListener('DOMContentLoaded', loadVouchers);
-    </script>
+    
 
     <!-- اسکریپت تخفیف (اگر نیاز به منطق فرم داری) -->
     <script src="/script_discount.js"></script>
     <!-- اسکریپت منوی موبایل -->
     <script src="./fastfood_script.js"></script>
+   
+});
 </body>
 </html>
 
