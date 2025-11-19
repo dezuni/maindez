@@ -21,8 +21,8 @@
         // تابع برای دریافت داده‌ها از Google Sheets
         async function fetchDiscountData() {
             try {
-                console.log('دریافت داده از Google Sheets...');
-                showStatus('در حال دریافت داده از Google Sheets...', 'info');
+                //console.log('دریافت داده از Google Sheets...');
+                //showStatus('در حال دریافت داده از Google Sheets...', 'info');
                 
                 const response = await fetch(`${GOOGLE_SCRIPT_URL}?dis_card_id=${currentDiscountType}`);
                 
