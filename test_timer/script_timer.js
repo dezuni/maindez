@@ -3,8 +3,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // ⚙️ تغییر این مقدار برای هر صفحه: 'fastfood', 'clothing', 'medical', 'gym', ...
     const CURRENT_CATEGORY = 'fastfood';
 
-    // تابع برای تبدیل اعداد انگلیسی به فارسی
+    // تابع برای تبدیل اعداد انگلیسی به فارسی - نسخه ایمن
     function toPersianNumber(number) {
+        if (isNaN(number) || number === null || number === undefined) {
+            return '۰۰';
+        }
+        
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
         return number.toString().replace(/\d/g, digit => persianDigits[parseInt(digit)]);
     }
@@ -55,6 +59,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
+        // بررسی معتبر بودن مقادیر
+        if (isNaN(days) || isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+            console.error(`مقادیر نامعتبر برای تایمر ${cardId}:`, {days, hours, minutes, seconds});
+            daysElement.textContent = '۰۰';
+            hoursElement.textContent = '۰۰';
+            minutesElement.textContent = '۰۰';
+            secondsElement.textContent = '۰۰';
+            return;
+        }
+
         // به‌روزرسانی مقادیر
         daysElement.textContent = toPersianNumber(days);
         hoursElement.textContent = toPersianNumber(hours);
@@ -71,16 +85,72 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // تابع برای شروع تایمر
     function startTimer(cardId, expiryDate, expiryTime) {
-        // ایجاد تاریخ اتمام ثبت نام
-        const [year, month, day] = expiryDate.split('-').map(Number);
-        const [hours, minutes] = expiryTime.split(':').map(Number);
-        const expiryDateTime = new Date(year, month - 1, day, hours, minutes, 0);
+        console.log(`شروع تایمر برای ${cardId} با تاریخ:`, expiryDate, expiryTime);
+        
+        // تجزیه تاریخ و زمان با بررسی خطا
+        let expiryDateTime;
+        
+        try {
+            // روش 1: استفاده از فرمت استاندارد ISO
+            const dateString = `${expiryDate}T${expiryTime}:00`;
+            expiryDateTime = new Date(dateString);
+            
+            console.log(`تاریخ ایجاد شده (روش 1):`, expiryDateTime);
+            
+            // اگر تاریخ معتبر نیست، روش 2 را امتحان کن
+            if (isNaN(expiryDateTime.getTime())) {
+                console.log('روش 1 ناموفق، امتحان روش 2...');
+                
+                // روش 2: تجزیه دستی
+                const dateParts = expiryDate.split('-');
+                const timeParts = expiryTime.split(':');
+                
+                if (dateParts.length === 3 && timeParts.length >= 2) {
+                    const year = parseInt(dateParts[0]);
+                    const month = parseInt(dateParts[1]) - 1; // ماه در JavaScript از 0 شروع می‌شود
+                    const day = parseInt(dateParts[2]);
+                    const hours = parseInt(timeParts[0]);
+                    const minutes = parseInt(timeParts[1]);
+                    
+                    console.log(`تجزیه دستی:`, {year, month, day, hours, minutes});
+                    
+                    if (!isNaN(year) && !isNaN(month) && !isNaN(day) && !isNaN(hours) && !isNaN(minutes)) {
+                        expiryDateTime = new Date(year, month, day, hours, minutes, 0);
+                        console.log(`تاریخ ایجاد شده (روش 2):`, expiryDateTime);
+                    } else {
+                        throw new Error('اعداد تاریخ نامعتبر هستند');
+                    }
+                } else {
+                    throw new Error('فرمت تاریخ یا زمان نامعتبر است');
+                }
+            }
+            
+            // بررسی نهایی معتبر بودن تاریخ
+            if (isNaN(expiryDateTime.getTime())) {
+                throw new Error('تاریخ نامعتبر است');
+            }
+            
+        } catch (error) {
+            console.error(`خطا در ایجاد تاریخ برای ${cardId}:`, error);
+            
+            // نمایش پیام خطا در تایمر
+            const timerContainer = document.getElementById(`timer-container-${cardId}`);
+            if (timerContainer) {
+                timerContainer.classList.add('timer-expired');
+                timerContainer.innerHTML = `
+                    <div class="timer-title">مهلت باقی مانده برای رزرو کارت تخفیف</div>
+                    <div class="timer-expired-message">خطا در تاریخ ثبت نام</div>
+                `;
+            }
+            return;
+        }
 
-        console.log(`تایمر برای ${cardId}:`, {
+        console.log(`تایمر برای ${cardId} با موفقیت ایجاد شد:`, {
             expiryDate: expiryDate,
             expiryTime: expiryTime,
             expiryDateTime: expiryDateTime,
-            now: new Date()
+            now: new Date(),
+            timeRemaining: expiryDateTime - new Date()
         });
 
         // اولین به‌روزرسانی
@@ -100,22 +170,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // تابع برای ایجاد HTML تایمر
     function createTimerHTML(cardId, expiryDate, expiryTime) {
-        // ایجاد تاریخ اتمام ثبت نام
-        const [year, month, day] = expiryDate.split('-').map(Number);
-        const [hours, minutes] = expiryTime.split(':').map(Number);
-        const expiryDateTime = new Date(year, month - 1, day, hours, minutes, 0);
+        let expiryDateTime;
+        
+        try {
+            // ایجاد تاریخ اتمام ثبت نام
+            const dateString = `${expiryDate}T${expiryTime}:00`;
+            expiryDateTime = new Date(dateString);
+            
+            if (isNaN(expiryDateTime.getTime())) {
+                const [year, month, day] = expiryDate.split('-').map(Number);
+                const [hours, minutes] = expiryTime.split(':').map(Number);
+                expiryDateTime = new Date(year, month - 1, day, hours, minutes, 0);
+            }
+        } catch (error) {
+            console.error(`خطا در ایجاد تاریخ برای HTML تایمر ${cardId}:`, error);
+            expiryDateTime = new Date(); // استفاده از تاریخ فعلی به عنوان fallback
+        }
+
         const now = new Date();
 
-        console.log(`ایجاد تایمر HTML برای ${cardId}:`, {
-            expiryDate: expiryDate,
-            expiryTime: expiryTime,
-            expiryDateTime: expiryDateTime,
-            now: now,
-            timeRemaining: expiryDateTime - now
-        });
-
-        if (expiryDateTime <= now) {
-            // مهلت ثبت نام تمام شده
+        if (isNaN(expiryDateTime.getTime()) || expiryDateTime <= now) {
+            // مهلت ثبت نام تمام شده یا تاریخ نامعتبر
             return `
                 <div class="timer-container timer-expired" id="timer-container-${cardId}">
                     <div class="timer-title">مهلت باقی مانده برای رزرو کارت تخفیف</div>
@@ -130,19 +205,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="timer-title">مهلت باقی مانده برای رزرو کارت تخفیف</div>
                 <div class="timer-display">
                     <div class="time-unit">
-                        <span class="time-value" id="days-${cardId}">00</span>
+                        <span class="time-value" id="days-${cardId}">۰۰</span>
                         <span class="time-label">روز</span>
                     </div>
                     <div class="time-unit">
-                        <span class="time-value" id="hours-${cardId}">00</span>
+                        <span class="time-value" id="hours-${cardId}">۰۰</span>
                         <span class="time-label">ساعت</span>
                     </div>
                     <div class="time-unit">
-                        <span class="time-value" id="minutes-${cardId}">00</span>
+                        <span class="time-value" id="minutes-${cardId}">۰۰</span>
                         <span class="time-label">دقیقه</span>
                     </div>
                     <div class="time-unit">
-                        <span class="time-value" id="seconds-${cardId}">00</span>
+                        <span class="time-value" id="seconds-${cardId}">۰۰</span>
                         <span class="time-label">ثانیه</span>
                     </div>
                 </div>
@@ -177,6 +252,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             console.log('کارت‌های فیلتر شده:', filteredCards);
+
+            // بررسی داده‌های خام از سرور
+            console.log('=== بررسی داده‌های خام از سرور ===');
+            filteredCards.forEach(card => {
+                console.log(`کارت: ${card.title}`, {
+                    expiryDate: card.dscnt_reg_expiry_date,
+                    expiryTime: card.dscnt_reg_expiry_time,
+                    typeOfDate: typeof card.dscnt_reg_expiry_date,
+                    typeOfTime: typeof card.dscnt_reg_expiry_time
+                });
+            });
 
             // ایجاد HTML همه کارت‌ها
             filteredCards.forEach(card => {
@@ -337,7 +423,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // بارگذاری اولیه
     loadVouchersWithTimer();
 });
-
 
 /************************************************************************/
 /************************************************************************/
