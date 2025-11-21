@@ -13,6 +13,35 @@ document.addEventListener('DOMContentLoaded', function() {
         return number.toString().replace(/\d/g, digit => persianDigits[parseInt(digit)]);
     }
 
+    // تابع برای تبدیل زمان 12 ساعته به 24 ساعته
+    function convertTo24Hour(timeStr) {
+        console.log(`تبدیل زمان: "${timeStr}"`);
+        
+        if (!timeStr) return '23:59';
+        
+        // اگر زمان به صورت 24 ساعته است (مثلاً 23:59)
+        if (timeStr.includes(':')) {
+            const timeParts = timeStr.split(':');
+            if (timeParts.length >= 2) {
+                let hours = parseInt(timeParts[0]);
+                let minutes = parseInt(timeParts[1]);
+                
+                // اگر PM است و ساعت کمتر از 12 است، 12 ساعت اضافه کن
+                if (timeStr.toUpperCase().includes('PM') && hours < 12) {
+                    hours += 12;
+                }
+                // اگر AM است و ساعت 12 است، به 0 تبدیل کن
+                else if (timeStr.toUpperCase().includes('AM') && hours === 12) {
+                    hours = 0;
+                }
+                
+                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+            }
+        }
+        
+        return '23:59'; // مقدار پیش‌فرض
+    }
+
     // شیء برای ذخیره اطلاعات تایمرها
     const timers = {};
 
@@ -20,13 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateTimer(cardId, expiryDateTime) {
         const now = new Date();
         const timeRemaining = expiryDateTime - now;
-
-        console.log(`به‌روزرسانی تایمر ${cardId}:`, {
-            now: now,
-            expiry: expiryDateTime,
-            remaining: timeRemaining,
-            remainingDays: Math.floor(timeRemaining / (1000 * 60 * 60 * 24))
-        });
 
         // پیدا کردن المنت‌های تایمر
         const daysElement = document.getElementById(`days-${cardId}`);
@@ -67,16 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-        // بررسی معتبر بودن مقادیر
-        if (isNaN(days) || isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
-            console.error(`مقادیر نامعتبر برای تایمر ${cardId}:`, {days, hours, minutes, seconds});
-            daysElement.textContent = '۰۰';
-            hoursElement.textContent = '۰۰';
-            minutesElement.textContent = '۰۰';
-            secondsElement.textContent = '۰۰';
-            return;
-        }
-
         // به‌روزرسانی مقادیر
         daysElement.textContent = toPersianNumber(days);
         hoursElement.textContent = toPersianNumber(hours);
@@ -95,15 +107,19 @@ document.addEventListener('DOMContentLoaded', function() {
     function startTimer(cardId, expiryDate, expiryTime) {
         console.log(`شروع تایمر برای ${cardId} با تاریخ:`, expiryDate, expiryTime);
         
+        // تبدیل زمان به فرمت 24 ساعته
+        const time24 = convertTo24Hour(expiryTime);
+        console.log(`زمان تبدیل شده به 24 ساعته:`, time24);
+        
         // تجزیه تاریخ و زمان با بررسی خطا
         let expiryDateTime;
         
         try {
-            // روش 1: استفاده از فرمت استاندارد ISO (برای تاریخ میلادی)
-            const dateString = `${expiryDate}T${expiryTime}:00`;
+            // روش 1: استفاده از فرمت استاندارد ISO
+            const dateString = `${expiryDate}T${time24}:00`;
             expiryDateTime = new Date(dateString);
             
-            console.log(`تاریخ ایجاد شده (روش 1 ISO):`, expiryDateTime, expiryDateTime.toString());
+            console.log(`تاریخ ایجاد شده (روش 1 ISO):`, expiryDateTime.toString());
             
             // اگر تاریخ معتبر نیست، روش 2 را امتحان کن
             if (isNaN(expiryDateTime.getTime())) {
@@ -111,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // روش 2: تجزیه دستی تاریخ میلادی (YYYY-MM-DD)
                 const dateParts = expiryDate.split('-');
-                const timeParts = expiryTime.split(':');
+                const timeParts = time24.split(':');
                 
                 if (dateParts.length === 3 && timeParts.length >= 2) {
                     const year = parseInt(dateParts[0]);
@@ -124,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     if (!isNaN(year) && !isNaN(month) && !isNaN(day) && !isNaN(hours) && !isNaN(minutes)) {
                         expiryDateTime = new Date(year, month, day, hours, minutes, 0);
-                        console.log(`تاریخ ایجاد شده (روش 2 دستی):`, expiryDateTime, expiryDateTime.toString());
+                        console.log(`تاریخ ایجاد شده (روش 2 دستی):`, expiryDateTime.toString());
                     } else {
                         throw new Error('اعداد تاریخ نامعتبر هستند');
                     }
@@ -153,15 +169,16 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        console.log(`تایمر برای ${cardId} با موفقیت ایجاد شد:`, {
-            expiryDate: expiryDate,
-            expiryTime: expiryTime,
-            expiryDateTime: expiryDateTime,
-            expiryDateTimeString: expiryDateTime.toString(),
-            now: new Date(),
-            nowString: new Date().toString(),
-            timeRemaining: expiryDateTime - new Date(),
-            timeRemainingDays: Math.floor((expiryDateTime - new Date()) / (1000 * 60 * 60 * 24))
+        const now = new Date();
+        const timeRemaining = expiryDateTime - now;
+        const daysRemaining = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+
+        console.log(`تایمر برای ${cardId}:`, {
+            تاریخ_ورودی: `${expiryDate} ${expiryTime}`,
+            زمان_تبدیل_شده: time24,
+            تاریخ_نهایی: expiryDateTime.toString(),
+            الان: now.toString(),
+            روز_باقی_مانده: daysRemaining
         });
 
         // اولین به‌روزرسانی
@@ -185,13 +202,16 @@ document.addEventListener('DOMContentLoaded', function() {
         let isValidDate = false;
         
         try {
+            // تبدیل زمان به 24 ساعته
+            const time24 = convertTo24Hour(expiryTime);
+            
             // ایجاد تاریخ اتمام ثبت نام
-            const dateString = `${expiryDate}T${expiryTime}:00`;
+            const dateString = `${expiryDate}T${time24}:00`;
             expiryDateTime = new Date(dateString);
             
             if (isNaN(expiryDateTime.getTime())) {
                 const dateParts = expiryDate.split('-');
-                const timeParts = expiryTime.split(':');
+                const timeParts = time24.split(':');
                 
                 if (dateParts.length === 3 && timeParts.length >= 2) {
                     const year = parseInt(dateParts[0]);
@@ -288,19 +308,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             console.log('کارت‌های فیلتر شده:', filteredCards);
 
-            // بررسی داده‌های خام از سرور
-            console.log('=== بررسی داده‌های خام از سرور ===');
-            filteredCards.forEach(card => {
-                console.log(`کارت: ${card.title}`, {
-                    expiryDate: card.dscnt_reg_expiry_date,
-                    expiryTime: card.dscnt_reg_expiry_time,
-                    typeOfDate: typeof card.dscnt_reg_expiry_date,
-                    typeOfTime: typeof card.dscnt_reg_expiry_time,
-                    rawDate: card.dscnt_reg_expiry_date,
-                    rawTime: card.dscnt_reg_expiry_time
-                });
-            });
-
             // ایجاد HTML همه کارت‌ها
             filteredCards.forEach(card => {
                 const isActive = card.status === 'active';
@@ -319,7 +326,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log(`کارت ${cardId} فاقد تاریخ ثبت نام`);
                 }
 
-                // تهیه دکمه رزرو با اطلاعات اضافی
+                // بقیه کد ایجاد کارت...
+                // [کد قبلی ایجاد کارت بدون تغییر]
                 const reserveBtn = isActive 
                     ? `<a href="#" class="deposit-link" 
                           data-store="${card.store_name || ''}" 
