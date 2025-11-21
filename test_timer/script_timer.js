@@ -1,4 +1,4 @@
-//-
+//**
 // تایمر برای کارت‌های تخفیف
 document.addEventListener('DOMContentLoaded', function() {
     // ⚙️ تغییر این مقدار برای هر صفحه: 'fastfood', 'clothing', 'medical', 'gym', ...
@@ -55,11 +55,17 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // محاسبه روز، ساعت، دقیقه و ثانیه باقی‌مانده
-        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        // محاسبه روز بر اساس تاریخ (بدون در نظر گرفتن ساعت)
+        const expiryDateOnly = new Date(expiryDateTime.getFullYear(), expiryDateTime.getMonth(), expiryDateTime.getDate());
+        const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const days = Math.max(0, Math.floor((expiryDateOnly - nowDateOnly) / (1000 * 60 * 60 * 24)));
+
+        // محاسبه ساعت، دقیقه و ثانیه باقی‌مانده
         const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        console.log(`⏳ تایمر ${cardId}: ${days} روز, ${hours} ساعت, ${minutes} دقیقه, ${seconds} ثانیه`);
 
         // به‌روزرسانی مقادیر
         daysElement.textContent = toPersianNumber(days);
@@ -85,7 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         try {
             // استفاده از تاریخ و زمان ثابت 23:59
-            const dateParts = expiryDate.split('T')[0].split('-'); // فقط قسمت تاریخ را بگیر
+            const dateString = expiryDate.split('T')[0]; // فقط قسمت تاریخ را بگیر
+            const dateParts = dateString.split('-');
             const year = parseInt(dateParts[0]);
             const month = parseInt(dateParts[1]) - 1; // ماه در JavaScript از 0 شروع می‌شود
             const day = parseInt(dateParts[2]);
@@ -126,13 +133,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const now = new Date();
         const timeRemaining = expiryDateTime - now;
-        const daysRemaining = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        
+        // محاسبه روز بر اساس تاریخ (بدون در نظر گرفتن ساعت)
+        const expiryDateOnly = new Date(expiryDateTime.getFullYear(), expiryDateTime.getMonth(), expiryDateTime.getDate());
+        const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const daysRemaining = Math.max(0, Math.floor((expiryDateOnly - nowDateOnly) / (1000 * 60 * 60 * 24)));
+        
         const hoursRemaining = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
         console.log(`📊 خلاصه تایمر ${cardId}:`);
         console.log(`   📅 تاریخ نهایی: ${expiryDateTime.toString()}`);
         console.log(`   ⏰ الان: ${now.toString()}`);
-        console.log(`   ⏳ روزهای باقی‌مانده: ${daysRemaining} روز`);
+        console.log(`   📆 روزهای باقی‌مانده: ${daysRemaining} روز`);
         console.log(`   🕒 ساعات باقی‌مانده: ${hoursRemaining} ساعت`);
 
         // اولین به‌روزرسانی
@@ -157,7 +169,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         try {
             // استفاده از تاریخ و زمان ثابت 23:59
-            const dateParts = expiryDate.split('T')[0].split('-');
+            const dateString = expiryDate.split('T')[0];
+            const dateParts = dateString.split('-');
             const year = parseInt(dateParts[0]);
             const month = parseInt(dateParts[1]) - 1;
             const day = parseInt(dateParts[2]);
@@ -183,7 +196,12 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
         }
 
-        if (expiryDateTime <= now) {
+        // محاسبه روز بر اساس تاریخ (بدون در نظر گرفتن ساعت)
+        const expiryDateOnly = new Date(expiryDateTime.getFullYear(), expiryDateTime.getMonth(), expiryDateTime.getDate());
+        const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const daysRemaining = Math.floor((expiryDateOnly - nowDateOnly) / (1000 * 60 * 60 * 24));
+
+        if (daysRemaining < 0) {
             // مهلت ثبت نام تمام شده
             return `
                 <div class="timer-container timer-expired" id="timer-container-${cardId}">
@@ -264,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log(`⚠️ کارت ${cardId} فاقد تاریخ ثبت نام`);
                 }
 
-                // بقیه کد ایجاد کارت...
+                // تهیه دکمه رزرو با اطلاعات اضافی
                 const reserveBtn = isActive 
                     ? `<a href="#" class="deposit-link" 
                           data-store="${card.store_name || ''}" 
