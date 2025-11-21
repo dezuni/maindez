@@ -1,4 +1,4 @@
-//**
+// ----
 // تایمر برای کارت‌های تخفیف
 document.addEventListener('DOMContentLoaded', function() {
     // ⚙️ تغییر این مقدار برای هر صفحه: 'fastfood', 'clothing', 'medical', 'gym', ...
@@ -16,9 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // تابع برای تبدیل زمان 12 ساعته به 24 ساعته
     function convertTo24Hour(timeStr) {
-        console.log(`تبدیل زمان: "${timeStr}"`);
+        console.log(`🔧 تبدیل زمان: "${timeStr}"`);
         
         if (!timeStr) return '23:59';
+        
+        // حذف فاصله‌های اضافی
+        timeStr = timeStr.trim().toUpperCase();
         
         // اگر زمان به صورت 24 ساعته است (مثلاً 23:59)
         if (timeStr.includes(':')) {
@@ -28,15 +31,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 let minutes = parseInt(timeParts[1]);
                 
                 // اگر PM است و ساعت کمتر از 12 است، 12 ساعت اضافه کن
-                if (timeStr.toUpperCase().includes('PM') && hours < 12) {
+                if (timeStr.includes('PM') && hours < 12) {
                     hours += 12;
                 }
                 // اگر AM است و ساعت 12 است، به 0 تبدیل کن
-                else if (timeStr.toUpperCase().includes('AM') && hours === 12) {
+                else if (timeStr.includes('AM') && hours === 12) {
                     hours = 0;
                 }
                 
-                return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+                const result = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+                console.log(`🔧 زمان تبدیل شده: "${timeStr}" → "${result}"`);
+                return result;
             }
         }
         
@@ -69,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // اگر زمان به پایان رسیده باشد
         if (timeRemaining <= 0) {
-            console.log(`تایمر ${cardId} به پایان رسید`);
+            console.log(`⏰ تایمر ${cardId} به پایان رسید`);
             timerContainer.classList.add('timer-expired');
             timerContainer.innerHTML = `
                 <div class="timer-title">مهلت باقی مانده برای رزرو کارت تخفیف</div>
@@ -106,11 +111,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // تابع برای شروع تایمر
     function startTimer(cardId, expiryDate, expiryTime) {
-        console.log(`شروع تایمر برای ${cardId} با تاریخ:`, expiryDate, expiryTime);
+        console.log(`🚀 شروع تایمر برای ${cardId}`);
+        console.log(`📅 تاریخ ورودی: ${expiryDate}`);
+        console.log(`⏰ زمان ورودی: ${expiryTime}`);
         
         // تبدیل زمان به فرمت 24 ساعته
         const time24 = convertTo24Hour(expiryTime);
-        console.log(`زمان تبدیل شده به 24 ساعته:`, time24);
         
         // تجزیه تاریخ و زمان با بررسی خطا
         let expiryDateTime;
@@ -120,11 +126,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const dateString = `${expiryDate}T${time24}:00`;
             expiryDateTime = new Date(dateString);
             
-            console.log(`تاریخ ایجاد شده (روش 1 ISO):`, expiryDateTime.toString());
+            console.log(`📆 روش 1 (ISO): ${dateString} → ${expiryDateTime.toString()}`);
             
             // اگر تاریخ معتبر نیست، روش 2 را امتحان کن
             if (isNaN(expiryDateTime.getTime())) {
-                console.log('روش 1 ISO ناموفق، امتحان روش 2...');
+                console.log('❌ روش 1 ناموفق، امتحان روش 2...');
                 
                 // روش 2: تجزیه دستی تاریخ میلادی (YYYY-MM-DD)
                 const dateParts = expiryDate.split('-');
@@ -137,11 +143,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     const hours = parseInt(timeParts[0]);
                     const minutes = parseInt(timeParts[1]);
                     
-                    console.log(`تجزیه دستی میلادی:`, {year, month, day, hours, minutes});
+                    console.log(`🔧 تجزیه دستی:`, {year, month, day, hours, minutes});
                     
                     if (!isNaN(year) && !isNaN(month) && !isNaN(day) && !isNaN(hours) && !isNaN(minutes)) {
                         expiryDateTime = new Date(year, month, day, hours, minutes, 0);
-                        console.log(`تاریخ ایجاد شده (روش 2 دستی):`, expiryDateTime.toString());
+                        console.log(`📆 روش 2 (دستی): ${expiryDateTime.toString()}`);
                     } else {
                         throw new Error('اعداد تاریخ نامعتبر هستند');
                     }
@@ -156,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
         } catch (error) {
-            console.error(`خطا در ایجاد تاریخ برای ${cardId}:`, error);
+            console.error(`❌ خطا در ایجاد تاریخ برای ${cardId}:`, error);
             
             // نمایش پیام خطا در تایمر
             const timerContainer = document.getElementById(`timer-container-${cardId}`);
@@ -173,14 +179,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const now = new Date();
         const timeRemaining = expiryDateTime - now;
         const daysRemaining = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hoursRemaining = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
-        console.log(`تایمر برای ${cardId}:`, {
-            تاریخ_ورودی: `${expiryDate} ${expiryTime}`,
-            زمان_تبدیل_شده: time24,
-            تاریخ_نهایی: expiryDateTime.toString(),
-            الان: now.toString(),
-            روز_باقی_مانده: daysRemaining
-        });
+        console.log(`📊 خلاصه تایمر ${cardId}:`);
+        console.log(`   📅 تاریخ نهایی: ${expiryDateTime.toString()}`);
+        console.log(`   ⏰ الان: ${now.toString()}`);
+        console.log(`   ⏳ زمان باقی‌مانده: ${timeRemaining} میلی‌ثانیه`);
+        console.log(`   📆 روزهای باقی‌مانده: ${daysRemaining} روز`);
+        console.log(`   🕒 ساعات باقی‌مانده: ${hoursRemaining} ساعت`);
+        console.log(`   🔍 تفاوت: ${expiryDateTime.getDate() - now.getDate()} روز در ماه`);
 
         // اولین به‌روزرسانی
         updateTimer(cardId, expiryDateTime);
@@ -229,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             isValidDate = !isNaN(expiryDateTime.getTime());
         } catch (error) {
-            console.error(`خطا در ایجاد تاریخ برای HTML تایمر ${cardId}:`, error);
+            console.error(`❌ خطا در ایجاد تاریخ برای HTML تایمر ${cardId}:`, error);
             isValidDate = false;
         }
 
@@ -307,7 +314,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            console.log('کارت‌های فیلتر شده:', filteredCards);
+            console.log('📋 کارت‌های فیلتر شده:', filteredCards.length);
 
             // ایجاد HTML همه کارت‌ها
             filteredCards.forEach(card => {
@@ -318,17 +325,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 // ایجاد تایمر برای مهلت ثبت نام (dscnt_reg_expiry_date و dscnt_reg_expiry_time)
                 let timerHTML = '';
                 if (card.dscnt_reg_expiry_date && card.dscnt_reg_expiry_time) {
-                    console.log(`کارت ${cardId} دارای تاریخ ثبت نام:`, {
+                    console.log(`🎯 کارت ${cardId} دارای تاریخ ثبت نام:`, {
                         expiryDate: card.dscnt_reg_expiry_date,
                         expiryTime: card.dscnt_reg_expiry_time
                     });
                     timerHTML = createTimerHTML(cardId, card.dscnt_reg_expiry_date, card.dscnt_reg_expiry_time);
                 } else {
-                    console.log(`کارت ${cardId} فاقد تاریخ ثبت نام`);
+                    console.log(`⚠️ کارت ${cardId} فاقد تاریخ ثبت نام`);
                 }
 
                 // بقیه کد ایجاد کارت...
-                // [کد قبلی ایجاد کارت بدون تغییر]
                 const reserveBtn = isActive 
                     ? `<a href="#" class="deposit-link" 
                           data-store="${card.store_name || ''}" 
@@ -405,17 +411,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // بعد از اضافه شدن همه کارت‌ها به DOM، تایمرها را شروع کن
             setTimeout(() => {
+                console.log('🎬 شروع همه تایمرها...');
                 filteredCards.forEach(card => {
                     const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
                     if (card.dscnt_reg_expiry_date && card.dscnt_reg_expiry_time) {
-                        console.log(`شروع تایمر برای ${cardId}`);
+                        console.log(`🔛 شروع تایمر برای ${cardId}`);
                         startTimer(cardId, card.dscnt_reg_expiry_date, card.dscnt_reg_expiry_time);
                     }
                 });
             }, 100);
 
         } catch (error) {
-            console.error('خطا:', error);
+            console.error('❌ خطا:', error);
             container.innerHTML = '<p style="text-align:center; color:red;">خطا در بارگذاری کارت‌ها. لطفاً دوباره تلاش کنید.</p>';
         }
     }
