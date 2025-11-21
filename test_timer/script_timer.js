@@ -1,3 +1,4 @@
+//**
 // تایمر برای کارت‌های تخفیف
 document.addEventListener('DOMContentLoaded', function() {
     // ⚙️ تغییر این مقدار برای هر صفحه: 'fastfood', 'clothing', 'medical', 'gym', ...
