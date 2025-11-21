@@ -1,4 +1,4 @@
-// ----
+//-
 // تایمر برای کارت‌های تخفیف
 document.addEventListener('DOMContentLoaded', function() {
     // ⚙️ تغییر این مقدار برای هر صفحه: 'fastfood', 'clothing', 'medical', 'gym', ...
@@ -12,40 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
         return number.toString().replace(/\d/g, digit => persianDigits[parseInt(digit)]);
-    }
-
-    // تابع برای تبدیل زمان 12 ساعته به 24 ساعته
-    function convertTo24Hour(timeStr) {
-        console.log(`🔧 تبدیل زمان: "${timeStr}"`);
-        
-        if (!timeStr) return '23:59';
-        
-        // حذف فاصله‌های اضافی
-        timeStr = timeStr.trim().toUpperCase();
-        
-        // اگر زمان به صورت 24 ساعته است (مثلاً 23:59)
-        if (timeStr.includes(':')) {
-            const timeParts = timeStr.split(':');
-            if (timeParts.length >= 2) {
-                let hours = parseInt(timeParts[0]);
-                let minutes = parseInt(timeParts[1]);
-                
-                // اگر PM است و ساعت کمتر از 12 است، 12 ساعت اضافه کن
-                if (timeStr.includes('PM') && hours < 12) {
-                    hours += 12;
-                }
-                // اگر AM است و ساعت 12 است، به 0 تبدیل کن
-                else if (timeStr.includes('AM') && hours === 12) {
-                    hours = 0;
-                }
-                
-                const result = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-                console.log(`🔧 زمان تبدیل شده: "${timeStr}" → "${result}"`);
-                return result;
-            }
-        }
-        
-        return '23:59'; // مقدار پیش‌فرض
     }
 
     // شیء برای ذخیره اطلاعات تایمرها
@@ -110,50 +76,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // تابع برای شروع تایمر
-    function startTimer(cardId, expiryDate, expiryTime) {
+    function startTimer(cardId, expiryDate) {
         console.log(`🚀 شروع تایمر برای ${cardId}`);
         console.log(`📅 تاریخ ورودی: ${expiryDate}`);
-        console.log(`⏰ زمان ورودی: ${expiryTime}`);
-        
-        // تبدیل زمان به فرمت 24 ساعته
-        const time24 = convertTo24Hour(expiryTime);
         
         // تجزیه تاریخ و زمان با بررسی خطا
         let expiryDateTime;
         
         try {
-            // روش 1: استفاده از فرمت استاندارد ISO
-            const dateString = `${expiryDate}T${time24}:00`;
-            expiryDateTime = new Date(dateString);
+            // استفاده از تاریخ و زمان ثابت 23:59
+            const dateParts = expiryDate.split('T')[0].split('-'); // فقط قسمت تاریخ را بگیر
+            const year = parseInt(dateParts[0]);
+            const month = parseInt(dateParts[1]) - 1; // ماه در JavaScript از 0 شروع می‌شود
+            const day = parseInt(dateParts[2]);
             
-            console.log(`📆 روش 1 (ISO): ${dateString} → ${expiryDateTime.toString()}`);
+            // زمان ثابت: 23:59:59
+            const hours = 23;
+            const minutes = 59;
+            const seconds = 59;
             
-            // اگر تاریخ معتبر نیست، روش 2 را امتحان کن
-            if (isNaN(expiryDateTime.getTime())) {
-                console.log('❌ روش 1 ناموفق، امتحان روش 2...');
-                
-                // روش 2: تجزیه دستی تاریخ میلادی (YYYY-MM-DD)
-                const dateParts = expiryDate.split('-');
-                const timeParts = time24.split(':');
-                
-                if (dateParts.length === 3 && timeParts.length >= 2) {
-                    const year = parseInt(dateParts[0]);
-                    const month = parseInt(dateParts[1]) - 1; // ماه در JavaScript از 0 شروع می‌شود
-                    const day = parseInt(dateParts[2]);
-                    const hours = parseInt(timeParts[0]);
-                    const minutes = parseInt(timeParts[1]);
-                    
-                    console.log(`🔧 تجزیه دستی:`, {year, month, day, hours, minutes});
-                    
-                    if (!isNaN(year) && !isNaN(month) && !isNaN(day) && !isNaN(hours) && !isNaN(minutes)) {
-                        expiryDateTime = new Date(year, month, day, hours, minutes, 0);
-                        console.log(`📆 روش 2 (دستی): ${expiryDateTime.toString()}`);
-                    } else {
-                        throw new Error('اعداد تاریخ نامعتبر هستند');
-                    }
-                } else {
-                    throw new Error('فرمت تاریخ یا زمان نامعتبر است');
-                }
+            console.log(`🔧 تجزیه تاریخ:`, {year, month, day, hours, minutes, seconds});
+            
+            if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+                expiryDateTime = new Date(year, month, day, hours, minutes, seconds);
+                console.log(`📆 تاریخ نهایی: ${expiryDateTime.toString()}`);
+            } else {
+                throw new Error('اعداد تاریخ نامعتبر هستند');
             }
             
             // بررسی نهایی معتبر بودن تاریخ
@@ -184,10 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(`📊 خلاصه تایمر ${cardId}:`);
         console.log(`   📅 تاریخ نهایی: ${expiryDateTime.toString()}`);
         console.log(`   ⏰ الان: ${now.toString()}`);
-        console.log(`   ⏳ زمان باقی‌مانده: ${timeRemaining} میلی‌ثانیه`);
-        console.log(`   📆 روزهای باقی‌مانده: ${daysRemaining} روز`);
+        console.log(`   ⏳ روزهای باقی‌مانده: ${daysRemaining} روز`);
         console.log(`   🕒 ساعات باقی‌مانده: ${hoursRemaining} ساعت`);
-        console.log(`   🔍 تفاوت: ${expiryDateTime.getDate() - now.getDate()} روز در ماه`);
 
         // اولین به‌روزرسانی
         updateTimer(cardId, expiryDateTime);
@@ -205,36 +151,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // تابع برای ایجاد HTML تایمر
-    function createTimerHTML(cardId, expiryDate, expiryTime) {
+    function createTimerHTML(cardId, expiryDate) {
         let expiryDateTime;
         let isValidDate = false;
         
         try {
-            // تبدیل زمان به 24 ساعته
-            const time24 = convertTo24Hour(expiryTime);
+            // استفاده از تاریخ و زمان ثابت 23:59
+            const dateParts = expiryDate.split('T')[0].split('-');
+            const year = parseInt(dateParts[0]);
+            const month = parseInt(dateParts[1]) - 1;
+            const day = parseInt(dateParts[2]);
             
-            // ایجاد تاریخ اتمام ثبت نام
-            const dateString = `${expiryDate}T${time24}:00`;
-            expiryDateTime = new Date(dateString);
-            
-            if (isNaN(expiryDateTime.getTime())) {
-                const dateParts = expiryDate.split('-');
-                const timeParts = time24.split(':');
-                
-                if (dateParts.length === 3 && timeParts.length >= 2) {
-                    const year = parseInt(dateParts[0]);
-                    const month = parseInt(dateParts[1]) - 1;
-                    const day = parseInt(dateParts[2]);
-                    const hours = parseInt(timeParts[0]);
-                    const minutes = parseInt(timeParts[1]);
-                    
-                    if (!isNaN(year) && !isNaN(month) && !isNaN(day) && !isNaN(hours) && !isNaN(minutes)) {
-                        expiryDateTime = new Date(year, month, day, hours, minutes, 0);
-                    }
-                }
+            if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+                expiryDateTime = new Date(year, month, day, 23, 59, 59);
+                isValidDate = !isNaN(expiryDateTime.getTime());
             }
-            
-            isValidDate = !isNaN(expiryDateTime.getTime());
         } catch (error) {
             console.error(`❌ خطا در ایجاد تاریخ برای HTML تایمر ${cardId}:`, error);
             isValidDate = false;
@@ -322,14 +253,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
                 const hasAddress = card.address && card.address.trim() !== '';
 
-                // ایجاد تایمر برای مهلت ثبت نام (dscnt_reg_expiry_date و dscnt_reg_expiry_time)
+                // ایجاد تایمر برای مهلت ثبت نام (فقط از dscnt_reg_expiry_date استفاده کن)
                 let timerHTML = '';
-                if (card.dscnt_reg_expiry_date && card.dscnt_reg_expiry_time) {
+                if (card.dscnt_reg_expiry_date) {
                     console.log(`🎯 کارت ${cardId} دارای تاریخ ثبت نام:`, {
-                        expiryDate: card.dscnt_reg_expiry_date,
-                        expiryTime: card.dscnt_reg_expiry_time
+                        expiryDate: card.dscnt_reg_expiry_date
                     });
-                    timerHTML = createTimerHTML(cardId, card.dscnt_reg_expiry_date, card.dscnt_reg_expiry_time);
+                    timerHTML = createTimerHTML(cardId, card.dscnt_reg_expiry_date);
                 } else {
                     console.log(`⚠️ کارت ${cardId} فاقد تاریخ ثبت نام`);
                 }
@@ -414,9 +344,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('🎬 شروع همه تایمرها...');
                 filteredCards.forEach(card => {
                     const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
-                    if (card.dscnt_reg_expiry_date && card.dscnt_reg_expiry_time) {
+                    if (card.dscnt_reg_expiry_date) {
                         console.log(`🔛 شروع تایمر برای ${cardId}`);
-                        startTimer(cardId, card.dscnt_reg_expiry_date, card.dscnt_reg_expiry_time);
+                        startTimer(cardId, card.dscnt_reg_expiry_date);
                     }
                 });
             }, 100);
