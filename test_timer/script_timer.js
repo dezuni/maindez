@@ -9,11 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
         return number.toString().replace(/\d/g, digit => persianDigits[parseInt(digit)]);
     }
 
+    // شیء برای ذخیره intervalهای تایمر
+    const timerIntervals = {};
+
     // تابع برای ایجاد تایمر
     function createTimer(expiryDate, expiryTime, cardId) {
         const timerContainer = document.createElement('div');
         timerContainer.className = 'timer-container';
-        timerContainer.id = `timer-${cardId}`;
+        timerContainer.id = `timer-container-${cardId}`;
 
         // ایجاد تاریخ انقضا به درستی
         const [year, month, day] = expiryDate.split('-').map(Number);
@@ -32,30 +35,28 @@ document.addEventListener('DOMContentLoaded', function() {
             return timerContainer;
         }
 
-        // تایمر فعال
-        const timerHTML = `
+        // تایمر فعال - ابتدا با مقادیر اولیه نمایش داده می‌شود
+        timerContainer.innerHTML = `
             <div class="timer-title">مهلت باقی مانده برای رزرو کارت تخفیف</div>
             <div class="timer-display">
                 <div class="time-unit">
-                    <span class="time-value" id="days-${cardId}">00</span>
+                    <span class="time-value" id="days-${cardId}">--</span>
                     <span class="time-label">روز</span>
                 </div>
                 <div class="time-unit">
-                    <span class="time-value" id="hours-${cardId}">00</span>
+                    <span class="time-value" id="hours-${cardId}">--</span>
                     <span class="time-label">ساعت</span>
                 </div>
                 <div class="time-unit">
-                    <span class="time-value" id="minutes-${cardId}">00</span>
+                    <span class="time-value" id="minutes-${cardId}">--</span>
                     <span class="time-label">دقیقه</span>
                 </div>
                 <div class="time-unit">
-                    <span class="time-value" id="seconds-${cardId}">00</span>
+                    <span class="time-value" id="seconds-${cardId}">--</span>
                     <span class="time-label">ثانیه</span>
                 </div>
             </div>
         `;
-
-        timerContainer.innerHTML = timerHTML;
 
         // تابع به‌روزرسانی تایمر
         function updateTimer() {
@@ -69,6 +70,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="timer-title">مهلت باقی مانده برای رزرو کارت تخفیف</div>
                     <div class="timer-expired-message">مهلت ثبت نام به پایان رسیده است</div>
                 `;
+                
+                // پاک کردن interval
+                if (timerIntervals[cardId]) {
+                    clearInterval(timerIntervals[cardId]);
+                    delete timerIntervals[cardId];
+                }
                 return;
             }
 
@@ -78,24 +85,31 @@ document.addEventListener('DOMContentLoaded', function() {
             const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-            // نمایش مقادیر
-            document.getElementById(`days-${cardId}`).textContent = toPersianNumber(days);
-            document.getElementById(`hours-${cardId}`).textContent = toPersianNumber(hours);
-            document.getElementById(`minutes-${cardId}`).textContent = toPersianNumber(minutes);
-            document.getElementById(`seconds-${cardId}`).textContent = toPersianNumber(seconds);
+            // پیدا کردن المنت‌ها از داخل container فعلی
+            const daysElement = timerContainer.querySelector(`#days-${cardId}`);
+            const hoursElement = timerContainer.querySelector(`#hours-${cardId}`);
+            const minutesElement = timerContainer.querySelector(`#minutes-${cardId}`);
+            const secondsElement = timerContainer.querySelector(`#seconds-${cardId}`);
+
+            // به‌روزرسانی مقادیر اگر المنت‌ها وجود دارند
+            if (daysElement) daysElement.textContent = toPersianNumber(days);
+            if (hoursElement) hoursElement.textContent = toPersianNumber(hours);
+            if (minutesElement) minutesElement.textContent = toPersianNumber(minutes);
+            if (secondsElement) secondsElement.textContent = toPersianNumber(seconds);
 
             // اگر زمان کمتر از ۲۴ ساعت باقی مانده
             if (days === 0 && hours < 24) {
                 timerContainer.classList.add('timer-urgent');
+            } else {
+                timerContainer.classList.remove('timer-urgent');
             }
         }
 
-        // شروع تایمر
-        updateTimer();
-        const timerInterval = setInterval(updateTimer, 1000);
-
-        // ذخیره interval برای پاکسازی
-        timerContainer.dataset.intervalId = timerInterval;
+        // شروع تایمر بعد از اضافه شدن به DOM
+        setTimeout(() => {
+            updateTimer(); // اجرای اولیه
+            timerIntervals[cardId] = setInterval(updateTimer, 1000);
+        }, 100);
 
         return timerContainer;
     }
@@ -126,19 +140,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            let hasActive = false;
             filteredCards.forEach(card => {
                 const isActive = card.status === 'active';
-                if (isActive) hasActive = true;
-
                 const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
                 const hasAddress = card.address && card.address.trim() !== '';
 
                 // ایجاد تایمر اگر تاریخ و زمان موجود باشد
                 let timerHTML = '';
                 if (card.dscnt_reg_expiry_date && card.dscnt_reg_expiry_time) {
-                    const timerElement = createTimer(card.dscnt_reg_expiry_date, card.dscnt_reg_expiry_time, cardId);
-                    timerHTML = timerElement.outerHTML;
+                    try {
+                        const timerElement = createTimer(card.dscnt_reg_expiry_date, card.dscnt_reg_expiry_time, cardId);
+                        timerHTML = timerElement.outerHTML;
+                    } catch (error) {
+                        console.error('خطا در ایجاد تایمر برای کارت:', cardId, error);
+                        timerHTML = `
+                            <div class="timer-container timer-expired">
+                                <div class="timer-title">مهلت باقی مانده برای رزرو کارت تخفیف</div>
+                                <div class="timer-expired-message">خطا در محاسبه زمان</div>
+                            </div>
+                        `;
+                    }
                 }
 
                 // تهیه دکمه رزرو با اطلاعات اضافی
@@ -229,19 +250,23 @@ document.addEventListener('DOMContentLoaded', function() {
         return new Intl.NumberFormat('fa-IR').format(thousand) + ' هزار تومان';
     }
 
-    function toggleHelp(cardId) {
+    window.toggleHelp = function(cardId) {
         const helpEl = document.getElementById(`help-text-${cardId}`);
-        const isVisible = helpEl.style.display === 'block';
-        helpEl.style.display = isVisible ? 'none' : 'block';
+        if (helpEl) {
+            const isVisible = helpEl.style.display === 'block';
+            helpEl.style.display = isVisible ? 'none' : 'block';
+        }
     }
 
-    function toggleAddress(cardId) {
+    window.toggleAddress = function(cardId) {
         const addrEl = document.getElementById(`address-text-${cardId}`);
-        const isVisible = addrEl.style.display === 'block';
-        addrEl.style.display = isVisible ? 'none' : 'block';
+        if (addrEl) {
+            const isVisible = addrEl.style.display === 'block';
+            addrEl.style.display = isVisible ? 'none' : 'block';
+        }
     }
 
-    function scrollToForm(storeName, cardLabel, advPay) {
+    window.scrollToForm = function(storeName, cardLabel, advPay) {
         document.getElementById('selectedStoreName').textContent = storeName || '—';
         document.getElementById('selectedCardLabel').textContent = cardLabel || '—';
         document.getElementById('selectedStoreNameInput').value = storeName || '';
@@ -249,9 +274,18 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('selectedAdvPayInput').value = advPay || '0';
 
         const form = document.getElementById('reservation-form');
-        form.style.display = 'block';
-        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (form) {
+            form.style.display = 'block';
+            form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     }
+
+    // پاکسازی intervalها هنگام خروج از صفحه
+    window.addEventListener('beforeunload', function() {
+        Object.values(timerIntervals).forEach(interval => {
+            clearInterval(interval);
+        });
+    });
 
     // بارگذاری اولیه
     loadVouchersWithTimer();
