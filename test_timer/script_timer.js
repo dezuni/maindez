@@ -609,8 +609,8 @@ document.addEventListener('DOMContentLoaded', function() {
             clearInterval(interval);
         });
     });
-    */
-
+    
     // بارگذاری اولیه
     loadVouchersWithTimer();
 });
+*/
