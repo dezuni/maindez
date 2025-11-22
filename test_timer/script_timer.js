@@ -244,6 +244,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const response = await fetch(API_URL);
+            console.log('Response:', response);
+console.log('Response status:', response.status);
+console.log('Response ok:', response.ok);
+console.log('Response headers:', response.headers);
             if (!response.ok) throw new Error('خطا در دریافت داده');
             const cards = await response.json();
 
