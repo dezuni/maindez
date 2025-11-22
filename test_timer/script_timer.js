@@ -250,7 +250,8 @@ console.log('Response ok:', response.ok);
 console.log('Response headers:', response.headers);
             if (!response.ok) throw new Error('خطا در دریافت داده');
             const cards = await response.json();
-
+console.log('Parsed data:', cards);
+            
             container.innerHTML = '';
 
             if (!Array.isArray(cards) || cards.length === 0) {
