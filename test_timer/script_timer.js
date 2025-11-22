@@ -96,11 +96,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const year = parseInt(dateParts[0]);
             const month = parseInt(dateParts[1]) - 1; // ماه در JavaScript از 0 شروع می‌شود
             const day = parseInt(dateParts[2]);
+
+            const timeString = expiryDate.split('T')[1]; // فقط قسمت زمان را بگیر
+            const timeParts = timeString.split(':');
+            const hours = parseInt(timeParts[0]);
+            const minutes = parseInt(timeParts[1]) ; 
+            const seconds = parseInt(timeParts[2]);
             
             // زمان ثابت: 23:59:59
-            const hours = 23;
-            const minutes = 59;
-            const seconds = 59;
+            //const hours = 23;
+            //const minutes = 59;
+            //const seconds = 59;
             
             console.log(`🔧 تجزیه تاریخ:`, {year, month, day, hours, minutes, seconds});
             
