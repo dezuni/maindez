@@ -93,7 +93,8 @@ function handleFormSubmit() {
     DiscountFormData.append("Expiration_Date", expiryDate.toString());
     DiscountFormData.append("store_name", document.getElementById("selectedStoreNameInput").value);
     DiscountFormData.append("dis_card_label", document.getElementById("selectedCardLabelInput").value);
-
+    DiscountFormData.append("credit", document.getElementById("selectedCreditInput").value);
+    
     fetch("https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/exec", {
         method: "POST",
         body: DiscountFormData
