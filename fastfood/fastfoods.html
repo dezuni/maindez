@@ -329,6 +329,8 @@
                             <input type="hidden" id="selectedCardLabelInput" name="dis_card_label">
                             <input type="hidden" id="selectedAdvPayInput" name="adv_pay">
                             <input type="hidden" id="selectedCreditInput" name="credit">
+                            <input type="hidden" id="selectedShoppayInput" name="in_shop_pay">
+                            <input type="hidden" id="selectedexpireInput" name="expire_date">
                             <label>نام فروشگاه:
                                 <div id="selectedStoreName" class="readonly-field">—</div>
                             </label>
@@ -447,6 +449,8 @@
                 document.getElementById('selectedCardLabelInput').value = cardLabel || '';
                 document.getElementById('selectedAdvPayInput').value = advPay || '0'; 
                 document.getElementById('selectedCreditInput').value = credit || '0'; 
+                document.getElementById('selectedShoppayInput').value = in_shop_pay || '0'; 
+                document.getElementById('selectedexpireInput').value = expire_date || '0'; 
 
     
                 const form = document.getElementById('reservation-form');
@@ -493,7 +497,7 @@
                         ? `<a href="#" class="deposit-link" 
                               data-store="${card.store_name || ''}" 
                               data-label="${card.dis_card_label || ''}"
-                              onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}', '${card.credit || '0'}'); return false;">
+                              onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}', '${card.credit || '0'}', '${card.in_shop_pay || '0'}', '${card.expire_date || '0'}'); return false;">
                               رزرو کارت تخفیف
                            </a>`
                         : '<div class="deposit-link disabled">غیرفعال</div>';
