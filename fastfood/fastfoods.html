@@ -328,6 +328,7 @@
                             <input type="hidden" id="selectedStoreNameInput" name="store_name">
                             <input type="hidden" id="selectedCardLabelInput" name="dis_card_label">
                             <input type="hidden" id="selectedAdvPayInput" name="adv_pay">
+                            <input type="hidden" id="selectedCreditInput" name="credit">
                             <label>نام فروشگاه:
                                 <div id="selectedStoreName" class="readonly-field">—</div>
                             </label>
@@ -436,7 +437,7 @@
         }
 
         // اسکرول به فرم و نمایش اطلاعات کارت انتخاب‌شده
-        function scrollToForm(storeName, cardLabel, advPay) {
+        function scrollToForm(storeName, cardLabel, advPay,credit) {
             // نمایش در فیلدهای فقط خواندنی (اختیاری برای کاربر)
             document.getElementById('selectedStoreName').textContent = storeName || '—';
             //document.getElementById('selectedCardLabel').textContent = cardLabel || '—';
@@ -444,8 +445,8 @@
                 // ⬇️ ذخیره در فیلدهای پنهان برای ارسال به سرور
                 document.getElementById('selectedStoreNameInput').value = storeName || '';
                 document.getElementById('selectedCardLabelInput').value = cardLabel || '';
-
                 document.getElementById('selectedAdvPayInput').value = advPay || '0'; 
+                document.getElementById('selectedCreditInput').value = credit || '0'; 
 
     
                 const form = document.getElementById('reservation-form');
