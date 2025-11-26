@@ -152,7 +152,7 @@
 
         .address-text {
             direction: rtl;
-            text-align: right;
+            text-align: right;هزار
             margin-top: 12px;
             padding: 12px;
             background: #fffbeb;
@@ -421,7 +421,7 @@
         function formatToToman(value) {
             const num = parseInt(value) || 0;
             const thousand = Math.floor(num);
-            return new Intl.NumberFormat('fa-IR').format(thousand) + ' هزار تومان';
+            return new Intl.NumberFormat('fa-IR').format(thousand) + ' تومان';
         }
 
         // نمایش/پنهان کردن راهنما زیر کارت
