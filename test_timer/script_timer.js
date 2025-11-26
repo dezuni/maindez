@@ -70,9 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // تابع برای شروع تایمر
-    function startTimer(cardId, expiryDateString) {
+    function startTimer(cardId, RegistrationexpiryDateString) {
         // ایجاد تاریخ از رشته ISO (فرمت: 2025-11-24T22:59:00)
-        const expiryDateTime = new Date(expiryDateString);
+        const expiryDateTime = new Date(RegistrationexpiryDateString);
 
         // بررسی اگر تاریخ معتبر نیست
         if (isNaN(expiryDateTime.getTime())) {
@@ -103,8 +103,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // تابع برای ایجاد HTML تایمر
-    function createTimerHTML(cardId, expiryDateString) {
-        const expiryDateTime = new Date(expiryDateString);
+    function createTimerHTML(cardId, RegistrationexpiryDateString) {
+        const expiryDateTime = new Date(RegistrationexpiryDateString);
         const now = new Date();
 
         if (isNaN(expiryDateTime.getTime())) {
