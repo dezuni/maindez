@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function formatToToman(value) {
         const num = parseInt(value) || 0;
         const thousand = Math.floor(num);
-        return new Intl.NumberFormat('fa-IR').format(thousand) + 'تومان';
+        return new Intl.NumberFormat('fa-IR').format(thousand) + ' تومان';
     }
 
     window.toggleHelp = function(cardId) {
