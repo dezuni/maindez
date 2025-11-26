@@ -118,12 +118,12 @@ function handleFormSubmit() {
 
     // ⬇️ این قسمت جدید است:
     const advPay = document.getElementById('selectedAdvPayInput').value;
-    const formattedAdvPay = new Intl.NumberFormat('fa-IR').format(advPay) + ' هزار تومان';
+    const formattedAdvPay = new Intl.NumberFormat('fa-IR').format(advPay) + ' تومان';
 
     const successMsgEl = document.getElementById("DiscountSuccessMessage");
     successMsgEl.innerHTML = `
-        جهت نهایی کردن تخفیف مبلغ پیش پرداخت <strong>${formattedAdvPay}</strong> را به شماره کارت .... به نام .... واریز نموده 
-        و فیش را برای شماره .... یا ادمین دزیونی در ایتا یا تلگرام ارسال نمایید<br>
+        جهت نهایی کردن تخفیف مبلغ پیش پرداخت <strong>${formattedAdvPay}</strong> را به شماره کارت 6037-9981-8519-8362 به نام محمد عادلی واریز نموده 
+        و فیش را برای شماره 09028839140 یا ادمین دزیونی در ایتا یا تلگرام ارسال نمایید<br>
         @dezuni_admin
     `;
     successMsgEl.style.display = "block";
