@@ -3,7 +3,6 @@ let discountRate = 10;
 
 // Get the current date
 const currentDate = new Date();
-
 // Add a spinner for visual feedback
 const spinnerformDSCNT = document.createElement('div');
 spinnerformDSCNT.className = 'spinner';
