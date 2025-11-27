@@ -1,18 +1,6 @@
 // how much discount?
 let discountRate = 10;
 
-// discount registration deadline
-let YYYY = 2026; // year
-let MM = 11;      // month
-let DD = 18;      // day
-let RegistrationDeadline = new Date(YYYY, MM-1, DD, 24, 00, 00);
-
-// discount expiration date
-YYYY = 2025; // year
-MM = 11;      // month
-DD = 21;      // day
-const expiryDate = new Date(YYYY, MM-1, DD, 24, 00, 00);
-
 // Get the current date
 const currentDate = new Date();
 
@@ -67,13 +55,7 @@ function handleFormSubmit() {
         document.getElementById("captchaAnswer_discount").value = "";
         return;
     }
-    
-    if (currentDate > RegistrationDeadline) {
-        DiscountRequestStatusDiv.textContent = "❌ مهلت ثبت نام به پایان رسیده است.";
-        DiscountRequestStatusDiv.style.color = 'red';
-        return;
-    }
-    
+           
     DiscountRequestStatusDiv.textContent = 'در حال ارسال درخواست ...';
     DiscountRequestStatusDiv.style.color = 'blue';
     DiscountRequestStatusDiv.appendChild(spinnerformDSCNT);
@@ -90,7 +72,7 @@ function handleFormSubmit() {
     DiscountFormData.append("status", "active");
     DiscountFormData.append("time_used", "");
     DiscountFormData.append("date_used", "");
-    DiscountFormData.append("Expiration_Date", expiryDate.toString());
+    DiscountFormData.append("Expiration_Date_english", getElementById("selectedExpirationEnglishInput").value);
     DiscountFormData.append("store_name", document.getElementById("selectedStoreNameInput").value);
     DiscountFormData.append("dis_card_label", document.getElementById("selectedCardLabelInput").value);
     DiscountFormData.append("credit", document.getElementById("selectedCreditInput").value);
@@ -118,14 +100,13 @@ function handleFormSubmit() {
     if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
         DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
     }
-
-    // ⬇️ این قسمت جدید است:
+ 
     const advPay = document.getElementById('selectedAdvPayInput').value;
     const formattedAdvPay = new Intl.NumberFormat('fa-IR').format(advPay) + ' تومان';
 
     const successMsgEl = document.getElementById("DiscountSuccessMessage");
     successMsgEl.innerHTML = `
-        جهت نهایی کردن تخفیف مبلغ پیش پرداخت <strong>${formattedAdvPay}</strong> را به شماره کارت 6037-9981-8519-8362 به نام محمد عادلی واریز نموده 
+        جهت نهایی کردن تخفیف مبلغ پیش پرداخت <strong>${formattedAdvPay}</strong> را به شماره کارت 6037998185198362 به نام محمد عادلی واریز نموده 
         و فیش را برای شماره 09028839140 یا ادمین دزیونی در ایتا یا تلگرام ارسال نمایید<br>
         @dezuni_admin
     `;
