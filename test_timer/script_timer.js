@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         // مهلت ثبت نام تمام شده
                     isActive=false;
                 }
-                console.log('وضعیت تایمر:', isActive);
+                console.log('وضعیت تایمر:', now);
                 
                 // تهیه دکمه رزرو با اطلاعات اضافی
                 const reserveBtn = isActive 
