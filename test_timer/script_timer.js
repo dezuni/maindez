@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // اگر مهلت ثبت نام تمام شده، کارت را غیر فعال کن
                 const now = new Date();
-                reg_expiryDate = new Date (card.dscnt_reg_expiry_date);
+                reg_expiryDate = new Date(card.dscnt_reg_expiry_date);
                 if (reg_expiryDate < now) {
                         // مهلت ثبت نام تمام شده
                     isActive=false;
