@@ -328,7 +328,7 @@
                         <form id="DiscountForm">
                             <!-- فیلدهای جدید فقط خواندنی -->
                             <input type="hidden" id="selectedStoreNameInput" name="store_name">
-                            
+                            <input type="hidden" id="selectedCardLabel" name="dis_card_label">
                             <input type="hidden" id="selectedCreditInput" name="credit">
                             <input type="hidden" id="selectedAdvPayInput" name="adv_pay">
                             <input type="hidden" id="selectedShoppayInput" name="in_shop_pay">
@@ -338,11 +338,7 @@
                             <label>نام فروشگاه:
                                 <div id="selectedStoreName" class="readonly-field">—</div>
                             </label>
-                            <label>عنوان کارت تخفیف:
-                                <div id="selectedCardLabel" class="readonly-field">—</div>
-                            </label>
-
-                            <!-- فیلدهای قبلی -->
+                            
                             <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" required></label>
                             <label>شماره تماس (مانند مثال): 
                                 <input type="text" id="phoneNumber_discount" inputmode="numeric" pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
