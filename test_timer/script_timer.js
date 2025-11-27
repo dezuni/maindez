@@ -191,6 +191,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     timerHTML = createTimerHTML(cardId, card.dscnt_reg_expiry_date);
                 }
 
+                // اگر مهلت ثبت نام تمام شده، کارت را غیر فعال کن
+                const now = new Date();
+                if (card.dscnt_reg_expiry_date < now) {
+                        // مهلت ثبت نام تمام شده
+                    isActive=false;
+                }
                 // تهیه دکمه رزرو با اطلاعات اضافی
                 const reserveBtn = isActive 
                     ? `<a href="#" class="deposit-link" 
