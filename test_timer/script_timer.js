@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const isActive = card.status === 'active';
                 const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
                 const hasAddress = card.address && card.address.trim() !== '';
-                console.log('وضعیت تایمر:', isActive);
+                console.log('وضعیت تایمر:', card.dscnt_reg_expiry_date);
                 
                 // ایجاد تایمر برای مهلت ثبت نام
                 let timerHTML = '';
