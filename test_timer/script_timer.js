@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     ? `<a href="#" class="deposit-link" 
                           data-store="${card.store_name || ''}" 
                           data-label="${card.dis_card_label || ''}"
-                          onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}', '${card.credit || '0'}', '${card.in_shop_pay || '0'}', '${card.expire_date || '0'}'); return false;">
+                          onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}', '${card.credit || '0'}', '${card.in_shop_pay || '0'}', '${card.expire_date || '0'}','${card.Expiration_Date_english || '0'}'); return false;">
                           رزرو کارت تخفیف
                        </a>`
                     : '<div class="deposit-link disabled">غیرفعال</div>';
