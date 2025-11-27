@@ -66,7 +66,7 @@ function handleFormSubmit() {
     let DiscountFormData = new FormData();
     DiscountFormData.append("phone", document.getElementById("phoneNumber_discount").value);
     DiscountFormData.append("name", document.getElementById("fullName_discount").value);
-    DiscountFormData.append("discount", discountRate);
+    //DiscountFormData.append("discount", discountRate);
     DiscountFormData.append("password", document.getElementById("DiscountVerifCode").value);
     DiscountFormData.append("status", "active");
     DiscountFormData.append("time_used", "");
