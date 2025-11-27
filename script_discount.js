@@ -80,6 +80,7 @@ function handleFormSubmit() {
     console.log("shoppay:", document.getElementById("selectedShoppayInput").value);
     DiscountFormData.append("expire_date", document.getElementById("selectedexpireInput").value);
     console.log("expire:", document.getElementById("selectedexpireInput").value);
+    console.log("expire_english:", document.getElementById("selectedExpirationEnglishInput").value);
     
     fetch("https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/exec", {
         method: "POST",
