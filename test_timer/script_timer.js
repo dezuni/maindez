@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('selectedCreditInput').value = credit || '0'; 
         document.getElementById('selectedShoppayInput').value = in_shop_pay || '0'; 
         document.getElementById('selectedexpireInput').value = expire_date || '0'; 
-        document.getElementById('selectedExpirationEnglishInput').value = expire_date || '0'; 
+        document.getElementById('selectedExpirationEnglishInput').value =Expiration_Date_english || '0'; 
 
         const form = document.getElementById('reservation-form');
         if (form) {
