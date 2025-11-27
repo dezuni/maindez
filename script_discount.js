@@ -71,7 +71,7 @@ function handleFormSubmit() {
     DiscountFormData.append("status", "active");
     DiscountFormData.append("time_used", "");
     DiscountFormData.append("date_used", "");
-    DiscountFormData.append("Expiration_Date_english", getElementById("selectedExpirationEnglishInput").value);
+    DiscountFormData.append("Expiration_Date_english", document.getElementById("selectedExpirationEnglishInput").value);
     DiscountFormData.append("store_name", document.getElementById("selectedStoreNameInput").value);
     DiscountFormData.append("dis_card_label", document.getElementById("selectedCardLabelInput").value);
     DiscountFormData.append("credit", document.getElementById("selectedCreditInput").value);
