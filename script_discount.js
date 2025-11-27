@@ -67,7 +67,7 @@ function handleFormSubmit() {
     DiscountFormData.append("phone", document.getElementById("phoneNumber_discount").value);
     DiscountFormData.append("name", document.getElementById("fullName_discount").value);
     DiscountFormData.append("discount", discountRate);
-   // DiscountFormData.append("password", document.getElementById("DiscountVerifCode").value);
+    DiscountFormData.append("password", document.getElementById("DiscountVerifCode").value);
     DiscountFormData.append("status", "active");
     DiscountFormData.append("time_used", "");
     DiscountFormData.append("date_used", "");
@@ -75,12 +75,12 @@ function handleFormSubmit() {
     DiscountFormData.append("store_name", document.getElementById("selectedStoreNameInput").value);
     DiscountFormData.append("dis_card_label", document.getElementById("selectedCardLabelInput").value);
     DiscountFormData.append("credit", document.getElementById("selectedCreditInput").value);
-    console.log("credit selected:", document.getElementById("selectedCreditInput").value);
+    //console.log("credit selected:", document.getElementById("selectedCreditInput").value);
     DiscountFormData.append("in_shop_pay", document.getElementById("selectedShoppayInput").value);
-    console.log("shoppay:", document.getElementById("selectedShoppayInput").value);
+    //console.log("shoppay:", document.getElementById("selectedShoppayInput").value);
     DiscountFormData.append("expire_date", document.getElementById("selectedexpireInput").value);
-    console.log("expire:", document.getElementById("selectedexpireInput").value);
-    console.log("expire_english:", document.getElementById("selectedExpirationEnglishInput").value);
+    //console.log("expire:", document.getElementById("selectedexpireInput").value);
+    //console.log("expire_english:", document.getElementById("selectedExpirationEnglishInput").value);
     
     fetch("https://script.google.com/macros/s/AKfycbxsFfdn1ytXmez9Qa4I89xRir_Zppg7cQQpltPhHZtN51dIkT-OrioHu8iI1v5Vhehb/exec", {
         method: "POST",
