@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    window.scrollToForm = function(storeName, cardLabel, advPay,credit, in_shop_pay, expire_date ) {
+    window.scrollToForm = function(storeName, cardLabel, advPay,credit, in_shop_pay, expire_date, Expiration_Date_english ) {
         document.getElementById('selectedStoreName').textContent = storeName || '—';
         document.getElementById('selectedCardLabelInput').textContent = cardLabel || '—';
         document.getElementById('selectedStoreNameInput').value = storeName || '';
@@ -313,6 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('selectedCreditInput').value = credit || '0'; 
         document.getElementById('selectedShoppayInput').value = in_shop_pay || '0'; 
         document.getElementById('selectedexpireInput').value = expire_date || '0'; 
+        document.getElementById('selectedExpirationEnglishInput').value = expire_date || '0'; 
 
         const form = document.getElementById('reservation-form');
         if (form) {
