@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.scrollToForm = function(storeName, cardLabel, advPay,credit, in_shop_pay, expire_date ) {
         document.getElementById('selectedStoreName').textContent = storeName || '—';
-        document.getElementById('selectedCardLabel').textContent = cardLabel || '—';
+        document.getElementById('selectedCardLabelInput').textContent = cardLabel || '—';
         document.getElementById('selectedStoreNameInput').value = storeName || '';
         document.getElementById('selectedCardLabelInput').value = cardLabel || '';
         document.getElementById('selectedAdvPayInput').value = advPay || '0';
