@@ -321,58 +321,79 @@
                     </div>
                 </div>
 
-                <!-- فرم رزرو -->
-                <div id="reservation-form">
-                    <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
-                    <div class="formcontainer">
-                        <form id="DiscountForm">
-                            <!-- فیلدهای جدید فقط خواندنی -->
-                            <input type="hidden" id="selectedStoreNameInput" name="store_name">
-                            <input type="hidden" id="selectedCardLabelInput" name="dis_card_label">
-                            <input type="hidden" id="selectedCreditInput" name="credit">
-                            <input type="hidden" id="selectedAdvPayInput" name="adv_pay">
-                            <input type="hidden" id="selectedShoppayInput" name="in_shop_pay">
-                            <input type="hidden" id="selectedexpireInput" name="expire_date">
-                            <input type="hidden" id="selectedExpirationEnglishInput" name="Expiration_Date_english">
-                            
-                            <label>نام فروشگاه:
-                                <div id="selectedStoreName" class="readonly-field">—</div>
-                            </label>
-                            
-                            <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" required></label>
-                            <label>شماره تماس (مانند مثال): 
-                                <input type="text" id="phoneNumber_discount" inputmode="numeric" pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
-                            </label>
-                            <label>سه رقم آخر شماره دانشجويي/پرسنلي: 
-                                <input type="text" id="DiscountVerifCode" inputmode="numeric" placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
-                            </label>
-                            
-                            <div id="captchaContainer_discount">
-                                <div id="captchaQuestion_discount" style="
-                                    padding: 10px;
-                                    margin: 10px 0;
-                                    background: #f0f0f0;
-                                    border: 1px solid #ccc;
-                                    border-radius: 5px;
-                                    font-size: 16px;
-                                    font-weight: bold;
-                                    text-align: center;
-                                    color: #000;
-                                "></div>
-                                <label for="captchaAnswer_discount">پاسخ را وارد کنيد:</label>
-                                <input type="number" id="captchaAnswer_discount" placeholder="" required>
-                            </div>
-                            
-                            <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
-                            <button type="submit">تاييد ثبت نام</button>
-                        </form>
-                        <div id="DiscountRequestStatus"></div> 
-                        <div id="DiscountSuccessMessage" style="display:none;"></div>                   
-                        
-                        </div>
-                    </div>
-                </div>
+              <!-- فرم رزرو -->
+<div id="reservation-form">
+    <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
+    <div class="formcontainer">
+        <form id="DiscountForm">
+            <!-- فیلدهای مخفی (بدون تغییر) -->
+            <input type="hidden" id="selectedStoreNameInput" name="store_name">
+            <input type="hidden" id="selectedCardLabelInput" name="dis_card_label">
+            <input type="hidden" id="selectedCreditInput" name="credit">
+            <input type="hidden" id="selectedAdvPayInput" name="adv_pay">
+            <input type="hidden" id="selectedShoppayInput" name="in_shop_pay">
+            <input type="hidden" id="selectedexpireInput" name="expire_date">
+            <input type="hidden" id="selectedExpirationEnglishInput" name="Expiration_Date_english">
+
+            <label>نام فروشگاه:
+                <div id="selectedStoreName" class="readonly-field">—</div>
+            </label>
+
+            <label>نام و نام خانوادگی: 
+                <input type="text" id="fullName_discount" name="full_name" required>
+            </label>
+
+            <label>شماره تماس (مانند مثال): 
+                <input type="text" id="phoneNumber_discount" name="phone" inputmode="numeric" 
+                       pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
+            </label>
+
+            <label>سه رقم آخر شماره دانشجویی/پرسنلی: 
+                <input type="text" id="DiscountVerifCode" name="student_code" inputmode="numeric" 
+                       placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
+            </label>
+
+            <div id="captchaContainer_discount">
+                <div id="captchaQuestion_discount" style="
+                    padding: 10px;
+                    margin: 10px 0;
+                    background: #f0f0f0;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    text-align: center;
+                    color: #000;
+                "></div>
+                <label for="captchaAnswer_discount">پاسخ را وارد کنید:</label>
+                <input type="number" id="captchaAnswer_discount" name="captcha" placeholder="" required>
             </div>
+
+            <div id="captchaError_discount" style="color: red; display: none;">❌ پاسخ اشتباه است.</div>
+
+            <!-- === بخش جدید: موافقت با قوانین === -->
+            <div class="terms-section" style="margin: 20px 0; padding-top: 15px; border-top: 1px solid #eee; font-size: 14px;">
+                <label style="display: flex; align-items: flex-start; gap: 8px; cursor: pointer;">
+                    <input type="checkbox" id="agreeTerms" name="agree_terms" required style="margin-top: 3px; flex-shrink: 0;">
+                    <span>
+                        من با 
+                        <a href="/discount-rules" target="_blank" rel="noopener" 
+                           style="color: #0066cc; text-decoration: underline;">
+                            قوانین تخفیف کارتهای دزیونی
+                        </a>
+                        موافقم.
+                    </span>
+                </label>
+            </div>
+
+            <!-- دکمهٔ سابمیت -->
+            <button type="submit" id="submitBtn" disabled>تایید ثبت نام</button>
+        </form>
+
+        <div id="DiscountRequestStatus"></div>
+        <div id="DiscountSuccessMessage" style="display: none;"></div>
+    </div>
+</div>
 
             <!-- بخش تماس -->
             <div class="service-item hidden" data-category="contact">
@@ -411,6 +432,29 @@
     </footer>
 
     <!-- اسکریپت‌ها -->
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('DiscountForm');
+    const agreeCheckbox = document.getElementById('agreeTerms');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // بررسی اولیه وضعیت چک‌باکس
+    submitBtn.disabled = !agreeCheckbox.checked;
+
+    // به‌روزرسانی وضعیت دکمه هنگام تغییر چک‌باکس
+    agreeCheckbox.addEventListener('change', function () {
+        submitBtn.disabled = !this.checked;
+    });
+
+    // جلوگیری از سابمیت در صورت عدم موافقت (برای اطمینان بیشتر)
+    form.addEventListener('submit', function (e) {
+        if (!agreeCheckbox.checked) {
+            e.preventDefault();
+            alert('لطفاً با قوانین تخفیف کارتهای دزیونی موافقت کنید.');
+        }
+    });
+});
+</script>
     <script src="./script_timer.js"></script>
     <script src="/script_discount.js"></script>
     <script src="./fastfood_script.js"></script>
