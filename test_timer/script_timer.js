@@ -184,7 +184,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const isActive = card.status === 'active';
                 const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
                 const hasAddress = card.address && card.address.trim() !== '';
-
+                console.log('وضعیت تایمر:', isActive);
+                
                 // ایجاد تایمر برای مهلت ثبت نام
                 let timerHTML = '';
                 if (card.dscnt_reg_expiry_date) {
@@ -197,6 +198,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         // مهلت ثبت نام تمام شده
                     isActive=false;
                 }
+                console.log('وضعیت تایمر:', isActive);
+                
                 // تهیه دکمه رزرو با اطلاعات اضافی
                 const reserveBtn = isActive 
                     ? `<a href="#" class="deposit-link" 
