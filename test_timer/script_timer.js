@@ -198,6 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (reg_expiryDate < now) {
                         // مهلت ثبت نام تمام شده
                     isActive=false;
+                    console.log('داخل شرط:');
                 }
                 console.log('وضعیت تایمر:', reg_expiryDate);
                 
