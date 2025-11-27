@@ -1,5 +1,5 @@
 // how much discount?
-let discountRate = 10;
+//let discountRate = 10;
 
 // Get the current date
 const currentDate = new Date();
