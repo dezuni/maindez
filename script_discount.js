@@ -113,7 +113,7 @@ function handleFormSubmit() {
         @dezuni_admin
     `;*/
     successMsgEl.innerHTML = `
-    <strong>${name}</strong> عزیز، برای دریافت کارت تخفیف:
+    <strong>${customerName}</strong> عزیز، برای دریافت کارت تخفیف:
 
     💳 *پرداخت:* مبلغ <strong>${formattedAdvPay}</strong> 
     به کارت: `6037998185198362` (آقای عادلی)
