@@ -107,24 +107,19 @@ function handleFormSubmit() {
     const customerName = document.getElementById("fullName_discount").value; 
 
     const successMsgEl = document.getElementById("DiscountSuccessMessage");
-    /*successMsgEl.innerHTML = `
-        جهت نهایی کردن تخفیف مبلغ پیش پرداخت <strong>${formattedAdvPay}</strong> را به شماره کارت 6037998185198362 به نام محمد عادلی واریز نموده 
-        و فیش را برای شماره 09028839140 یا ادمین دزیونی در ایتا یا تلگرام ارسال نمایید<br>
-        @dezuni_admin
-    `;*/
     successMsgEl.innerHTML = `
     <strong>${customerName}</strong> عزیز، برای دریافت کارت تخفیف:
-
-    💳 *پرداخت:* مبلغ <strong>${formattedAdvPay}</strong> 
+    
+    • <strong>پرداخت:</strong> مبلغ <strong>${formattedAdvPay}</strong> 
     به کارت: 6037998185198362 (آقای عادلی)
-    
-    📤 *ارسال فیش:* از طریق ایتا/تلگرام به:
-    → @admin 
-    → یا شماره: 09028839140
-    
-    ✅ *دریافت رسید:* بلافاصله پس از تأیید واریز، کارت تخفیف برای شما ارسال می‌شود.
-    `;
         
+    • <strong>ارسال فیش:</strong> از طریق ایتا/تلگرام به:
+    → @dezuni_admin 
+    → یا شماره: 09028839140
+        
+    • <strong>دریافت رسید:</strong> بلافاصله پس از تأیید واریز، کارت تخفیف برای شما ارسال می‌شود.
+    `;
+       
     successMsgEl.style.display = "block";
 
     document.getElementById("DiscountForm").reset();
