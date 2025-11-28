@@ -200,7 +200,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     isActive=false;
                     console.log('داخل شرط:');
                 }
-                console.log('وضعیت تایمر:', reg_expiryDate);
+                console.log('now:', now);
+                console.log('reg_expiryDate:', reg_expiryDate);
                 
                 // تهیه دکمه رزرو با اطلاعات اضافی
                 const reserveBtn = isActive 
