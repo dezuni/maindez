@@ -110,14 +110,10 @@ function handleFormSubmit() {
     successMsgEl.innerHTML = `
     <strong>${customerName}</strong> عزیز، برای دریافت کارت تخفیف:<br><br>
     
-    • <strong>پرداخت:</strong> مبلغ <strong>${formattedAdvPay}</strong> 
-    به کارت: 6037998185198362 (آقای عادلی)<br><br>
+    • مبلغ <strong>${formattedAdvPay}</strong> را به شماره کارت 6037998185198362 (آقای عادلی) <strong>پرداخت نمایید.</strong><br><br>
+    • فیش واریز وجه را از طریق ایتا/تلگرام به @dezuni_admin یا شماره تلفن 09028839140 <strong>ارسال کنید.</strong><br><br>
         
-    • <strong>ارسال فیش:</strong> از طریق ایتا/تلگرام به:
-    → @dezuni_admin 
-    → یا شماره: 09028839140<br><br>
-        
-    • <strong>دریافت رسید:</strong> بلافاصله پس از تأیید واریز، کارت تخفیف برای شما ارسال می‌شود.
+    • بلافاصله پس از تأیید واریز، <strong>کارت تخفیف برای شما ارسال می‌شود.</strong>
     `;
        
     successMsgEl.style.display = "block";
