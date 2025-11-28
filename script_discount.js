@@ -108,14 +108,14 @@ function handleFormSubmit() {
 
     const successMsgEl = document.getElementById("DiscountSuccessMessage");
     successMsgEl.innerHTML = `
-    <strong>${customerName}</strong> عزیز، برای دریافت کارت تخفیف:
+    <strong>${customerName}</strong> عزیز، برای دریافت کارت تخفیف:<br><br>
     
     • <strong>پرداخت:</strong> مبلغ <strong>${formattedAdvPay}</strong> 
-    به کارت: 6037998185198362 (آقای عادلی)
+    به کارت: 6037998185198362 (آقای عادلی)<br><br>
         
     • <strong>ارسال فیش:</strong> از طریق ایتا/تلگرام به:
     → @dezuni_admin 
-    → یا شماره: 09028839140
+    → یا شماره: 09028839140<br><br>
         
     • <strong>دریافت رسید:</strong> بلافاصله پس از تأیید واریز، کارت تخفیف برای شما ارسال می‌شود.
     `;
