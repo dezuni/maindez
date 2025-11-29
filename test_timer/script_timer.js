@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     ? `<a href="#" class="deposit-link" 
                           data-store="${card.store_name || ''}" 
                           data-label="${card.dis_card_label || ''}"
-                          onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}', '${card.credit || '0'}', '${card.in_shop_pay || '0'}', '${card.expire_date || '0'}','${card.Expiration_Date_english || '0'}'); return false;">
+                          onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}', '${card.credit || '0'}', '${card.in_shop_pay || '0'}', '${card.expire_date || '0'}','${card.Expiration_Date_english || '0'}', '${card.bankCardNo || '0'}', '${card.bankCardOwner || ''}'); return false;">
                           رزرو کارت تخفیف
                        </a>`
                     : '<div class="deposit-link disabled">غیرفعال</div>';
@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    window.scrollToForm = function(storeName, cardLabel, advPay,credit, in_shop_pay, expire_date, Expiration_Date_english ) {
+    window.scrollToForm = function(storeName, cardLabel, advPay,credit, in_shop_pay, expire_date, Expiration_Date_english, CartBankiNo,CartBankiOwner ) {
         document.getElementById('selectedStoreName').textContent = storeName || '—';
         document.getElementById('selectedCardLabelInput').textContent = cardLabel || '—';
         document.getElementById('selectedStoreNameInput').value = storeName || '';
@@ -354,7 +354,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('selectedCreditInput').value = credit || '0'; 
         document.getElementById('selectedShoppayInput').value = in_shop_pay || '0'; 
         document.getElementById('selectedexpireInput').value = expire_date || '0'; 
-        document.getElementById('selectedExpirationEnglishInput').value =Expiration_Date_english || '0'; 
+        document.getElementById('selectedExpirationEnglishInput').value = Expiration_Date_english || '0'; 
+        document.getElementById('selectedCartBankiNoInput').value = CartBankiNo || '0'; 
+        document.getElementById('selectedCartBankiOwnerInput').value = CartBankiOwner || '-'; 
 
         const form = document.getElementById('reservation-form');
         if (form) {
