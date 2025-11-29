@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E00MPED2X0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-E00MPED2X0');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پیش پرداخت کارت تخفیف</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- ✅ لینک رسمی و پایدار فونت Vazirmatn از CDN -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+
+    <!-- سایر استایل‌ها -->
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/style_jozvehyab.css">
+    <link rel="stylesheet" href="/style_map.css">
+    <link rel="stylesheet" href="/style_request.css">
+    <link rel="stylesheet" href="/style_discount.css">
+    <link rel="stylesheet" href="/style_timer.css">
+
+    <style>
+        /* ✅ اعمال فونت Vazirmatn در کل صفحه */
+        body, h1, h2, h3, h4, h5, h6, p, div, span, label, input, textarea, button, a, li {
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif !important;
+            font-feature-settings: "cv01", "cv02", "cv03", "cv04", "cv05", "cv06", "cv07", "cv08", "cv09", "cv10";
+        }
+
+        /* بقیه سبک‌های شما (همان‌طور که قبل بود) */
+        #vouchers-section {
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .vouchers-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .voucher-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 20px;
+            width: 100%;
+            max-width: 450px;
+            transition: transform 0.2s;
+            position: relative;
+        }
+
+        .voucher-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+
+        .voucher-card.dimmed {
+            opacity: 0.55;
+            pointer-events: none;
+        }
+
+        .voucher-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .voucher-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .voucher-label {
+            color: #6b7280;
+        }
+
+        .voucher-value.credit { color: #059669; font-weight: bold; }
+        .voucher-value.discount { color: #dc2626; font-weight: bold; }
+        .voucher-value.total { color: #3b82f6; font-weight: bold; }
+        .voucher-value.inshop { color: #8b5cf6; font-weight: bold; }
+        .voucher-value.advance { color: #d97706; font-weight: bold; }
+
+        .divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 10px 0;
+        }
+
+        .deposit-link {
+            display: block;
+            background: linear-gradient(135deg, #fb8500, #ff9e10);
+            color: white !important;
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.05rem;
+            transition: all 0.2s;
+        }
+
+        .deposit-link:hover:not(.disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(251, 133, 0, 0.3);
+        }
+
+        .deposit-link.disabled {
+            background: #ccc !important;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .help-link {
+            display: block;
+            text-align: center;
+            color: #3b82f6;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .help-link:hover {
+            text-decoration: underline;
+        }
+
+        .voucher-help-text {
+            direction: rtl;
+            text-align: right;
+            margin-top: 12px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #2c3e50;
+            border: 1px solid #e2e8f0;
+        }
+
+        .address-text {
+            direction: rtl;
+            text-align: right;
+            margin-top: 12px;
+            padding: 12px;
+            background: #fffbeb;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #854d0e;
+            border: 1px solid #fed7aa;
+            display: none;
+        }
+
+        #loading-vouchers {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        /* فرم رزرو — با عرض محدود */
+        #reservation-form {
+            background: white;
+            padding: 24px;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            margin: 20px auto 40px auto;
+            max-width: 450px;
+            width: 100%;
+            display: none;
+        }
+
+        #reservation-form h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #1e3a8a;
+            font-weight: bold;
+        }
+
+        .formcontainer form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .formcontainer label {
+            display: flex;
+            flex-direction: column;
+            font-weight: 500;
+            color: #4b5563;
+        }
+
+        .formcontainer input {
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            direction: ltr;
+            text-align: left;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        .formcontainer input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .formcontainer button {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        .formcontainer button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+        }
+
+        .readonly-field {
+            background: #f3f4f6;
+            color: #4b5563;
+            cursor: not-allowed;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 1rem;
+            direction: rtl;
+            text-align: right;
+        }
+
+        #DiscountRequestStatus {
+            margin-top: 12px;
+            text-align: center;
+            color: #d32f2f;
+        }
+
+        #DiscountSuccessMessage {
+            margin-top: 16px;
+            padding: 16px;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            color: #065f46;
+            text-align: center;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .vouchers-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .voucher-card {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container-header">
+            <div class="header-content">
+                <button class="mobile-menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <img src="/logo.png" alt="لوگوي دانشگاه" style="max-width: 40%; height: auto;">
+                </div>
+                <div class="header-text">                    
+                    <h2>سامانه خدمات دانشجویی</h2>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu-overlay"></div>
+    
+    <div class="container-main">
+        <nav class="services-menu">
+            <ul class="services-nav">
+                <li><a href="/"><i class="fas fa-home"></i> صفحه اصلی</a></li>
+                <li><a href="/#jozveh"><i class="fas fa-book"></i> جزوه ياب</a></li>
+                <li><a href="/#welfare"><i class="fas fa-users"></i> خدمات غيرحضوري</a></li>
+                <li><a href="/#map"><i class="fas fa-directions"></i> مکان يابي در دانشگاه</a></li>
+                <li><a href="/#DISCOUNT"><i class="fas fa-tags"></i> تخفيف ها</a></li>
+                <li><a href="/#aboutus"><i class="fas fa-info-circle"></i> درباره ما</a></li>
+                <li><a href="/#contact"><i class="fas fa-headset"></i> تماس با ادمين</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <!-- جایگزینی بخش فرم با کارت‌های پویا -->
+            <div class="service-item" data-category="DISCOUNT">
+                <h2><i class="fas fa-tags"></i> کارت‌های تخفیف کادو و هدیه</h2>
+                
+                <div id="vouchers-section">
+                    <div class="vouchers-container" id="vouchers-container">
+                        <div id="loading-vouchers">در حال بارگذاری کارت‌های تخفیف...</div>
+                    </div>
+                </div>
+
+                <!-- فرم رزرو -->
+                <div id="reservation-form">
+                    <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
+                    <div class="formcontainer">
+                        <form id="DiscountForm">
+                            <!-- فیلدهای جدید فقط خواندنی -->
+                            <input type="hidden" id="selectedStoreNameInput" name="store_name">
+                            <input type="hidden" id="selectedCardLabelInput" name="dis_card_label">
+                            <input type="hidden" id="selectedCreditInput" name="credit">
+                            <input type="hidden" id="selectedAdvPayInput" name="adv_pay">
+                            <input type="hidden" id="selectedShoppayInput" name="in_shop_pay">
+                            <input type="hidden" id="selectedexpireInput" name="expire_date">
+                            <input type="hidden" id="selectedExpirationEnglishInput" name="Expiration_Date_english">
+                            <input type="hidden" id="selectedCartBankiNoInput" name="Cart_Banki_No">
+                            <input type="hidden" id="selectedCartBankiOwnerInput" name="Cart_Banki_Owner">
+                            
+                            <label>نام فروشگاه:
+                                <div id="selectedStoreName" class="readonly-field">—</div>
+                            </label>
+                            
+                            <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" required></label>
+                            <label>شماره تماس (مانند مثال): 
+                                <input type="text" id="phoneNumber_discount" inputmode="numeric" pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
+                            </label>
+                            <label>سه رقم آخر شماره دانشجويي/پرسنلي: 
+                                <input type="text" id="DiscountVerifCode" inputmode="numeric" placeholder="مثلاً: 123" pattern="\d{3}" maxlength="3" required>
+                            </label>
+                            
+                            <div id="captchaContainer_discount">
+                                <div id="captchaQuestion_discount" style="
+                                    padding: 10px;
+                                    margin: 10px 0;
+                                    background: #f0f0f0;
+                                    border: 1px solid #ccc;
+                                    border-radius: 5px;
+                                    font-size: 16px;
+                                    font-weight: bold;
+                                    text-align: center;
+                                    color: #000;
+                                "></div>
+                                <label for="captchaAnswer_discount">پاسخ را وارد کنيد:</label>
+                                <input type="number" id="captchaAnswer_discount" placeholder="" required>
+                            </div>
+                            
+                            <div id="captchaError_discount" style="color:red; display:none;">❌ پاسخ اشتباه است.</div>
+                            <button type="submit">تاييد ثبت نام</button>
+                        </form>
+                        <div id="DiscountRequestStatus"></div> 
+                        <div id="DiscountSuccessMessage" style="display:none;"></div>                   
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش تماس -->
+            <div class="service-item hidden" data-category="contact">
+                <h2><i class="fas fa-headset"></i> تماس با ادمين</h2>
+                <div class="contact-grid">
+                    <div class="contact-method">
+                        <i class="fab fa-telegram"></i>
+                        <h3>پشتيباني تلگرام</h3>
+                        <p>@dezuni_admin</p>
+                        <a href="https://t.me/dezuni_admin" target="_blank" class="btn">ارتباط در تلگرام</a>
+                    </div>
+                    <div class="contact-method">
+                        <i class="fab fa-telegram"></i>
+                        <h3>کانال اطلاع رساني دزيوني</h3>
+                        <p>@dezuni_ch</p>
+                        <a href="https://t.me/dezuni_ch" target="_blank" class="btn">ارتباط در تلگرام</a>
+                    </div>
+                    <div class="contact-method">
+                        <i class="fas fa-envelope"></i>
+                        <h3>ايميل پشتيباني</h3>
+                        <p>unidez.ir@gmail.com</p>
+                        <a href="mailto:support@university.ac.ir" class="btn">ارسال ايميل</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="current-year"></span> کليه حقوق اين سامانه متعلق به دزيوني است.</p>
+            <div class="telegram-contact">
+                <a href="https://t.me/dezuni_admin" target="_blank"><i class="fab fa-telegram"></i> پشتيباني تلگرام: @dezuni_admin</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- اسکریپت‌ها -->
+    <script> const CURRENT_CATEGORY = 'shoes'; </script>
+    <script src="/script_timer.js"></script>
+    <script src="/script_discount.js"></script>
+    <script src="./giftshops_script.js"></script>
+</body>
+</html>
