@@ -1,9 +1,12 @@
-        // شناسه نوع تخفیف برای این صفحه
+/*
+// شناسه نوع تخفیف برای این صفحه
         const currentDiscountType = 'fastfood';
         
         // آدرس واقعی Google Apps Script - این را جایگزین کنید
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx53SDyKOSlESCXpuvfjUFbWEJuBmIBi_qfUBfF-ZVMH86rmUdFsOiu5OORaaWwQkhi/exec';
-        
+
+
+*/
         // تابع برای نمایش وضعیت
 /*
         function showStatus(message, type = 'info') {
@@ -12,6 +15,7 @@
             statusContainer.innerHTML = `<div class="${className}">${message}</div>`;
         } */
 
+/*
         // تابع برای تبدیل اعداد انگلیسی به فارسی
         function toPersianNumber(number) {
             const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
@@ -227,3 +231,4 @@
             console.log('صفحه کاملاً لود شد، شروع بارگذاری تایمرها...');
             loadTimers();
         });
+*/
