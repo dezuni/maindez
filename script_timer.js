@@ -1,7 +1,7 @@
 // *تایمر برای کارت‌های تخفیف
 document.addEventListener('DOMContentLoaded', function() {
     // ⚙️ تغییر این مقدار برای هر صفحه: 'fastfood', 'clothing', 'medical', 'gym', ...
-    const CURRENT_CATEGORY = 'fastfood';
+    //const CURRENT_CATEGORY = 'fastfood';
 
     // تابع برای تبدیل اعداد انگلیسی به فارسی
     function toPersianNumber(number) {
