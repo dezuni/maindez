@@ -1,8 +1,9 @@
-<!DOCTYPE html>
+
+<!--DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E00MPED2X0"></script>
+    <!--script async src="https://www.googletagmanager.com/gtag/js?id=G-E00MPED2X0"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -15,11 +16,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- ✅ لینک رسمی و پایدار فونت Vazirmatn از CDN -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!--link rel="preconnect" href="https://cdn.jsdelivr.net">
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
 
     <!-- سایر استایل‌ها -->
-    <link rel="stylesheet" href="/style.css">
+    <!--link rel="stylesheet" href="/style.css">
     <link rel="stylesheet" href="/style_jozvehyab.css">
     <link rel="stylesheet" href="/style_map.css">
     <link rel="stylesheet" href="/style_request.css">
@@ -27,13 +28,14 @@
 
     <style>
         /* ✅ اعمال فونت Vazirmatn در کل صفحه */
+        /*
         body, h1, h2, h3, h4, h5, h6, p, div, span, label, input, textarea, button, a, li {
             font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif !important;
             font-feature-settings: "cv01", "cv02", "cv03", "cv04", "cv05", "cv06", "cv07", "cv08", "cv09", "cv10";
         }
 
         /* بقیه سبک‌های شما (همان‌طور که قبل بود) */
-        #vouchers-section {
+     /*   #vouchers-section {
             padding: 20px;
             background: #f9f9f9;
             border-radius: 12px;
@@ -171,7 +173,7 @@
         }
 
         /* فرم رزرو — با عرض محدود */
-        #reservation-form {
+      /*  #reservation-form {
             background: white;
             padding: 24px;
             border-radius: 14px;
@@ -265,7 +267,7 @@
             display: none;
         }
 
-        @media (max-width: 768px) {
+      /*  @media (max-width: 768px) {
             .vouchers-container {
                 flex-direction: column;
                 align-items: center;
@@ -275,8 +277,8 @@
             }
         }
     </style>
-</head>
-<body>
+</head> */
+<!--body>
     <header>
         <div class="container-header">
             <div class="header-content">
@@ -310,7 +312,7 @@
 
         <main>
             <!-- جایگزینی بخش فرم با کارت‌های پویا -->
-            <div class="service-item" data-category="DISCOUNT">
+            <!--div class="service-item" data-category="DISCOUNT">
                 <h2><i class="fas fa-tags"></i> کارت‌های تخفیف فست‌فود و رستوران ها</h2>
                 
                 <div id="vouchers-section">
@@ -320,12 +322,12 @@
                 </div>
 
                 <!-- فرم رزرو -->
-                <div id="reservation-form">
+                <!--div id="reservation-form">
                     <h3>فرم ثبت‌نام و پیش‌پرداخت تخفیف</h3>
                     <div class="formcontainer">
                         <form id="DiscountForm">
                             <!-- فیلدهای جدید فقط خواندنی -->
-                            <input type="hidden" id="selectedStoreNameInput" name="store_name">
+                            <!--input type="hidden" id="selectedStoreNameInput" name="store_name">
                             <input type="hidden" id="selectedCardLabelInput" name="dis_card_label">
                             <input type="hidden" id="selectedAdvPayInput" name="adv_pay">
                             <input type="hidden" id="selectedCreditInput" name="credit">
@@ -339,7 +341,7 @@
                             </label> -->
 
                             <!-- فیلدهای قبلی -->
-                            <label>نام و نام خانوادگي: <input type="text" id="fullName_discount" required></label>
+                            <!--label>نام و نام خانوادگي: <input type="text" id="fullName_discount" required></label>
                             <label>شماره تماس (مانند مثال): 
                                 <input type="text" id="phoneNumber_discount" inputmode="numeric" pattern="^09\d{9}$" placeholder="مثلاً: 09123456789" required>
                             </label>
@@ -375,7 +377,7 @@
             </div>
 
             <!-- بخش تماس -->
-            <div class="service-item hidden" data-category="contact">
+            <!--div class="service-item hidden" data-category="contact">
                 <h2><i class="fas fa-headset"></i> تماس با ادمين</h2>
                 <div class="contact-grid">
                     <div class="contact-method">
@@ -580,9 +582,9 @@
     </script>
 
     <!-- اسکریپت تخفیف (اگر نیاز به منطق فرم داری) -->
-    <script src="/script_discount.js"></script>
+    <!--script src="/script_discount.js"></script>
     <!-- اسکریپت منوی موبایل -->
-    <script src="./fastfood_script.js"></script>
+    <!--script src="./fastfood_script.js"></script>
    
 });
 </body>
