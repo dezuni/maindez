@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // اولین به‌روزرسانی
-                const now = new Date();
-                console.log('now:', now);
+                const now1 = new Date();
+                console.log('now:', now1);
                 console.log('startTimer_expiryDate:', expiryDateTime);
         updateTimer(cardId, expiryDateTime);
 
