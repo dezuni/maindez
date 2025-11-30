@@ -117,6 +117,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // اولین به‌روزرسانی
+                const now = new Date();
+                console.log('now:', now);
+                console.log('startTimer_expiryDate:', expiryDateTime);
         updateTimer(cardId, expiryDateTime);
 
         // شروع interval برای به‌روزرسانی هر ثانیه
@@ -227,10 +230,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (reg_expiryDate < now) {
                     // مهلت ثبت نام تمام شده
                     isActive = false;
-                    console.log('داخل شرط:');
+                    //console.log('داخل شرط:');
                 }
-                console.log('now:', now);
-                console.log('reg_expiryDate:', reg_expiryDate);
+
                 
                 // تهیه دکمه رزرو با اطلاعات اضافی
                 const reserveBtn = isActive 
