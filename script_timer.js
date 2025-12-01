@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // غیرفعال کردن کارت
             disableCard(cardId);
+            console.log(`زمان باقی مانده منفی است`);
             
             // پاک کردن interval
             if (timers[cardId]) {
@@ -107,12 +108,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             // غیرفعال کردن کارت در صورت تاریخ نامعتبر
             disableCard(cardId);
+            console.log(`زمان معتبر نیست`);
             return;
         }
 
         // بررسی اگر از ابتدا زمان گذشته
         const now = new Date();
         if (expiryDateTime <= now) {
+            console.log(`زمان انقضا گذشته`);
             disableCard(cardId);
         }
 
