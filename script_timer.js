@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     window.scrollToForm = function(storeName, cardLabel, advPay,credit, in_shop_pay, expire_date, Expiration_Date_english, CartBankiNo ,CartBankiOwner ,title ) {
-        document.getElementById('selectedStoreName').textContent = storeName || '—';
+        document.getElementById('selectedTitle').textContent = title || '—';
         document.getElementById('selectedCardLabelInput').textContent = cardLabel || '—';
         document.getElementById('selectedStoreNameInput').value = storeName || '';
         document.getElementById('selectedCardLabelInput').value = cardLabel || '';
