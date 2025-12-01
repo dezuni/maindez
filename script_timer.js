@@ -315,7 +315,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // بعد از اضافه شدن همه کارت‌ها به DOM، تایمرها را شروع کن
             setTimeout(() => {
                 filteredCards.forEach(card => {
-                    const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
+                    // const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
+                    const cardId = card.dis_card_id + '-' + (card.dis_card_label).replace(/\s+/g, '_').replace(/[^\w]/g, '');
                     if (card.dscnt_reg_expiry_date) {
                         startTimer(cardId, card.dscnt_reg_expiry_date);
                     }
