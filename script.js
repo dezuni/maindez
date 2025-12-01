@@ -167,14 +167,14 @@ function resetAllServices() {
   document.getElementById("successMessage").style.display = "none";
   document.getElementById("captchaError").style.display = "none";
     
-  
+  /*
   document.getElementById('fullName_discount').value = '';
   document.getElementById('phoneNumber_discount').value = '';  
   document.getElementById('DiscountVerifCode').value = '';
   document.getElementById('captchaAnswer_discount').value = '';  
   document.getElementById('captchaAnswer_discount').value = '';
   document.getElementById('DiscountSuccessMessage').value = '';
-  document.getElementById('DiscountRequestStatus').value = '';
+  document.getElementById('DiscountRequestStatus').value = '';  */
 }
 
 function filterServices(clickedLink, allServices) {
