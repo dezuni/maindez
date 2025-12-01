@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // غیرفعال کردن کارت
             disableCard(cardId);
-            console.log(`زمان باقی مانده منفی است`);
             
             // پاک کردن interval
             if (timers[cardId]) {
@@ -108,21 +107,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             // غیرفعال کردن کارت در صورت تاریخ نامعتبر
             disableCard(cardId);
-            console.log(`زمان معتبر نیست`);
             return;
         }
 
         // بررسی اگر از ابتدا زمان گذشته
         const now = new Date();
         if (expiryDateTime <= now) {
-            console.log(`زمان انقضا گذشته`);
             disableCard(cardId);
         }
 
         // اولین به‌روزرسانی
-                const now1 = new Date();
-                console.log('now:', now1);
-                console.log('startTimer_expiryDate:', expiryDateTime);
         updateTimer(cardId, expiryDateTime);
 
         // شروع interval برای به‌روزرسانی هر ثانیه
@@ -217,9 +211,10 @@ document.addEventListener('DOMContentLoaded', function() {
             // ایجاد HTML همه کارت‌ها
             filteredCards.forEach(card => {
                 let isActive = card.status === 'active';
-                const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
+                // const cardId = card.dis_card_id + '-' + (card.title || 'card').replace(/\s+/g, '_').replace(/[^\w]/g, '');
+                const cardId = card.dis_card_id + '-' + (card.dis_card_label).replace(/\s+/g, '_').replace(/[^\w]/g, '');
                 const hasAddress = card.address && card.address.trim() !== '';
-                console.log('وضعیت تایمر:', card.dscnt_reg_expiry_date);
+                // console.log('وضعیت تایمر:', card.dscnt_reg_expiry_date);
                 
                 // ایجاد تایمر برای مهلت ثبت نام
                 let timerHTML = '';
@@ -232,8 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const reg_expiryDate = new Date(card.dscnt_reg_expiry_date);
                 if (reg_expiryDate < now) {
                     // مهلت ثبت نام تمام شده
-                    isActive = false;
-                    //console.log('داخل شرط:');
+                    isActive = false;                    
                 }
 
                 
