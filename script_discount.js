@@ -85,7 +85,7 @@ function handleFormSubmit() {
     console.log("title:", document.getElementById("selectedTitleInput").value);
     //console.log("expire_english:", document.getElementById("selectedExpirationEnglishInput").value);
     
-    fetch("https://script.google.com/macros/s/AKfycbzRmID6wS4WcUQqxK6Z8ZRFIex4Cs2EgiIB-w83oJgZlCUhiFAJUQMgFpUwKT4WkPP3/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbw7wS7LDyYNlMozfa4zHtSBnq-9EQMWJWnlt1GECQvHg2E1jWMcYpTKlHX7vGL5kKoK/exec", {
         method: "POST",
         body: DiscountFormData
     })
