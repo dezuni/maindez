@@ -82,7 +82,7 @@ function handleFormSubmit() {
     DiscountFormData.append("DiscountCode", "");
     DiscountFormData.append("MessageSent", "0");
     DiscountFormData.append("title", document.getElementById("selectedTitleInput").value);
-    //console.log("expire:", document.getElementById("selectedexpireInput").value);
+    console.log("title:", document.getElementById("selectedTitleInput").value);
     //console.log("expire_english:", document.getElementById("selectedExpirationEnglishInput").value);
     
     fetch("https://script.google.com/macros/s/AKfycbyNf3lnfDJkt8Rp0YQ_dCXK2gPWkl9EcKeQ1qXW0s5VBKkAd8kbrMRSDX8MXm2rVo6S/exec", {
