@@ -79,6 +79,9 @@ function handleFormSubmit() {
     DiscountFormData.append("in_shop_pay", document.getElementById("selectedShoppayInput").value);
     //console.log("shoppay:", document.getElementById("selectedShoppayInput").value);
     DiscountFormData.append("expire_date", document.getElementById("selectedexpireInput").value);
+    DiscountFormData.append("DiscountCode", "");
+    DiscountFormData.append("MessageSent", "0");
+    DiscountFormData.append("title", document.getElementById("selectedTitleInput").value);
     //console.log("expire:", document.getElementById("selectedexpireInput").value);
     //console.log("expire_english:", document.getElementById("selectedExpirationEnglishInput").value);
     
