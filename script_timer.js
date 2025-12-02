@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         ${reserveBtn}
                         <div class="voucher-help-text">
-                            توضیح: فقط با پرداخت <strong>${formatToToman(card.total_pay)}</strong>، 
+                            توضیح: با پرداخت فقط <strong>${formatToToman(card.total_pay)}</strong>، 
                             <strong>${formatToToman(card.credit)}</strong> خرید کن!
                         </div>
                         <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 12px;">
@@ -290,13 +290,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             ` : ''}
                         </div>
                         <div id="help-text-${cardId}" class="voucher-help-text" style="display:none; margin-top:12px;">
-                            <strong>چگونه کارت تخفیف کار می‌کند؟</strong><br>
-                            - ابتدا <strong>${formatToToman(card.adv_pay)}</strong> را پرداخت کنید تا کارت رزرو شود.<br>
-                            - سپس با مراجعه به فروشگاه، برای خرید <strong>${formatToToman(card.credit)}</strong> اعتبار، 
-                              فقط <strong>${formatToToman(card.in_shop_pay)}</strong> را پرداخت کنید.<br>
-                            - در مجموع، شما <strong>${formatToToman(card.total_pay)}</strong> پرداخت کرده‌اید 
-                              و <strong>${formatToToman(card.dis_amo)}</strong> تومان سود کرده‌اید!
-                        </div>
+                            <strong>کارت چگونه تخفیف کار می‌کند؟</strong><br>
+                            - ابتدا مبلغ پیش پرداخت <strong>${formatToToman(card.adv_pay)}</strong> تومان را به حساب دزیونی واریز کنید تا کارت رزرو شود.<br>
+                            - هنگام مراجعه به فروشگاه فقط <strong>${formatToToman(card.in_shop_pay)}</strong> دیگر پرداخت می کنید.<br>
+                            - در مجموع، شما با پرداخت فقط <strong>${formatToToman(card.total_pay)}</strong> تومان، می توانید <strong>${formatToToman(card.credit)}</strong> تومان خرید کنید!
+                        </div> 
                         ${hasAddress ? `
                             <div id="address-text-${cardId}" class="address-text" style="display:none; margin-top:12px;">
                                 ${card.address}
