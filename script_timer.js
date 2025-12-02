@@ -244,7 +244,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const html = `
                     <div class="voucher-card ${!isActive ? 'dimmed' : ''}">
                         ${timerHTML}
-                        <div class="voucher-title">${card.title || 'کارت تخفیف'}</div>
+                        
+                        <div class="voucher-title"> ${card.title ? `کارت تخفیف ${card.title}` : 'کارت تخفیف'} </div>
                         <div class="voucher-item">
                             <span class="voucher-label">مبلغ اعتبار:</span>
                             <span class="voucher-value credit">${formatToToman(card.credit)}</span>
