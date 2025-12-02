@@ -291,9 +291,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div id="help-text-${cardId}" class="voucher-help-text" style="display:none; margin-top:12px;">
                             <strong>کارت چگونه تخفیف کار می‌کند؟</strong><br>
-                            - ابتدا مبلغ پیش پرداخت <strong>${formatToToman(card.adv_pay)}</strong> تومان را به حساب دزیونی واریز کنید تا کارت رزرو شود.<br>
-                            - هنگام مراجعه به فروشگاه فقط <strong>${formatToToman(card.in_shop_pay)}</strong> دیگر پرداخت می کنید.<br>
-                            - در مجموع، شما با پرداخت فقط <strong>${formatToToman(card.total_pay)}</strong> تومان، می توانید <strong>${formatToToman(card.credit)}</strong> تومان خرید کنید!
+                            - ابتدا مبلغ پیش پرداخت <strong>${formatToToman(card.adv_pay)}</strong> را به حساب دزیونی واریز کنید تا کارت رزرو شود.<br>
+                            - هنگام مراجعه به فروشگاه، فقط <strong>${formatToToman(card.in_shop_pay)}</strong> دیگر پرداخت می کنید.<br>
+                            - در مجموع شما با پرداخت فقط <strong>${formatToToman(card.total_pay)}</strong>، مبلغ <strong>${formatToToman(card.credit)}</strong> خرید می کنید!
                         </div> 
                         ${hasAddress ? `
                             <div id="address-text-${cardId}" class="address-text" style="display:none; margin-top:12px;">
