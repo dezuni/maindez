@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     ? `<a href="#" class="deposit-link" 
                           data-store="${card.store_name || ''}" 
                           data-label="${card.dis_card_label || ''}"
-                          onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}', '${card.credit || '0'}', '${card.in_shop_pay || '0'}', '${card.expire_date || '0'}','${card.Expiration_Date_english || '0'}', '${card.bankCardNo || '0'}', '${card.bankCardOwner || ''}', '${card.title || ''}'); return false;">
+                          onclick="scrollToForm('${card.store_name || ''}', '${card.dis_card_label || ''}', '${card.adv_pay || '0'}', '${card.credit || '0'}', '${card.in_shop_pay || '0'}', '${card.expire_date || '0'}','${card.Expiration_Date_english || '0'}', '${card.bankCardNo || '0'}', '${card.bankCardOwner || ''}', '${card.title || ''}', '${card.dezuni_profit_percent || ''}', '${card.dezuni_profit || ''}', '${card.store_profit || ''}'); return false;">
                           رزرو کارت تخفیف
                        </a>`
                     : '<div class="deposit-link disabled">غیرفعال</div>';
@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    window.scrollToForm = function(storeName, cardLabel, advPay,credit, in_shop_pay, expire_date, Expiration_Date_english, CartBankiNo ,CartBankiOwner ,title ) {
+    window.scrollToForm = function(storeName, cardLabel, advPay,credit, in_shop_pay, expire_date, Expiration_Date_english, CartBankiNo ,CartBankiOwner ,title, prof_percent, ourProf, StoreProf ) {
         document.getElementById('selectedTitle').textContent = title || '—';
         document.getElementById('selectedCardLabelInput').textContent = cardLabel || '—';
         document.getElementById('selectedStoreNameInput').value = storeName || '';
@@ -357,6 +357,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('selectedCartBankiNoInput').value = CartBankiNo || '0'; 
         document.getElementById('selectedCartBankiOwnerInput').value = CartBankiOwner || '-'; 
         document.getElementById('selectedTitleInput').value = title || '-'; 
+        document.getElementById('selectedProfitPercentInput').value = prof_percent || '0'; 
+        document.getElementById('selectedOurProfitInput').value = ourProf || '0'; 
+        document.getElementById('selectedStoreProfitInput').value = StoreProf || '0'; 
 
         const form = document.getElementById('reservation-form');
         if (form) {
