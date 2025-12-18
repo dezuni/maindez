@@ -66,7 +66,6 @@ function handleFormSubmit() {
     let DiscountFormData = new FormData();
     DiscountFormData.append("phone", document.getElementById("phoneNumber_discount").value);
     DiscountFormData.append("name", document.getElementById("fullName_discount").value);
-    //DiscountFormData.append("discount", discountRate);
     DiscountFormData.append("password", document.getElementById("DiscountVerifCode").value);
     DiscountFormData.append("status", "active");
     DiscountFormData.append("time_used", "");
@@ -83,7 +82,9 @@ function handleFormSubmit() {
     DiscountFormData.append("MessageSent", "0");
     DiscountFormData.append("title", document.getElementById("selectedTitleInput").value);
     console.log("title:", document.getElementById("selectedTitleInput").value);
-    //console.log("expire_english:", document.getElementById("selectedExpirationEnglishInput").value);
+    DiscountFormData.append("dezuni_profit_percent", document.getElementById("selectedProfitPercentInput").value);
+    DiscountFormData.append("dezuni_profit", document.getElementById("selectedOurProfitInput").value);
+    DiscountFormData.append("store_profit", document.getElementById("selectedStoreProfitInput").value);
     
     fetch("https://script.google.com/macros/s/AKfycbznkVVQ62mHYegR8T9in_rQwqWATtuoT4lbzhH51ztkYudlX7SHHWeUsXT9JGhYVZwO/exec", {
         method: "POST",
