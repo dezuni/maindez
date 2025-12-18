@@ -82,6 +82,7 @@ function handleFormSubmit() {
     DiscountFormData.append("MessageSent", "0");
     DiscountFormData.append("title", document.getElementById("selectedTitleInput").value);
     console.log("title:", document.getElementById("selectedTitleInput").value);
+    DiscountFormData.append("adv_pay", document.getElementById("selectedAdvPayInput").value);
     DiscountFormData.append("dezuni_profit_percent", document.getElementById("selectedProfitPercentInput").value);
     DiscountFormData.append("dezuni_profit", document.getElementById("selectedOurProfitInput").value);
     DiscountFormData.append("store_profit", document.getElementById("selectedStoreProfitInput").value);
