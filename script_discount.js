@@ -87,7 +87,7 @@ function handleFormSubmit() {
     DiscountFormData.append("dezuni_profit", document.getElementById("selectedOurProfitInput").value);
     DiscountFormData.append("store_profit", document.getElementById("selectedStoreProfitInput").value);
     
-    fetch("https://script.google.com/macros/s/AKfycbznkVVQ62mHYegR8T9in_rQwqWATtuoT4lbzhH51ztkYudlX7SHHWeUsXT9JGhYVZwO/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbwyJyYM5bKYCssdSNwiaGlkM8_l6YsMRk5hxNoRhqCInY0I38Wz3cCqRWJ6NCJrbk8/exec", {
         method: "POST",
         body: DiscountFormData
     })
