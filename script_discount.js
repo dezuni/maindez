@@ -80,12 +80,12 @@ function handleFormSubmit() {
     DiscountFormData.append("expire_date", document.getElementById("selectedexpireInput").value);
     DiscountFormData.append("DiscountCode", "");
     DiscountFormData.append("MessageSent", "0");
-    DiscountFormData.append("title", document.getElementById("selectedTitleInput").value);
-    console.log("title:", document.getElementById("selectedTitleInput").value);
+    DiscountFormData.append("title", document.getElementById("selectedTitleInput").value);    
     DiscountFormData.append("adv_pay", document.getElementById("selectedAdvPayInput").value);
     DiscountFormData.append("dezuni_profit_percent", document.getElementById("selectedProfitPercentInput").value);
     DiscountFormData.append("dezuni_profit", document.getElementById("selectedOurProfitInput").value);
     DiscountFormData.append("store_profit", document.getElementById("selectedStoreProfitInput").value);
+    console.log("adv_pay:", document.getElementById("selectedAdvPayInput").value);
     
     fetch("https://script.google.com/macros/s/AKfycbwyJyYM5bKYCssdSNwiaGlkM8_l6YsMRk5hxNoRhqCInY0I38Wz3cCqRWJ6NCJrbk8/exec", {
         method: "POST",
