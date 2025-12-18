@@ -85,7 +85,7 @@ function handleFormSubmit() {
     DiscountFormData.append("dezuni_profit_percent", document.getElementById("selectedProfitPercentInput").value);
     DiscountFormData.append("dezuni_profit", document.getElementById("selectedOurProfitInput").value);
     DiscountFormData.append("store_profit", document.getElementById("selectedStoreProfitInput").value);
-    console.log("adv_pay:", document.getElementById("selectedAdvPayInput").value);
+    //console.log("adv_pay:", document.getElementById("selectedAdvPayInput").value);
     
     fetch("https://script.google.com/macros/s/AKfycbwyJyYM5bKYCssdSNwiaGlkM8_l6YsMRk5hxNoRhqCInY0I38Wz3cCqRWJ6NCJrbk8/exec", {
         method: "POST",
