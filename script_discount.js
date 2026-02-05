@@ -23,7 +23,6 @@ function generateCaptcha1() {
     }
 }
 
-
 // Initialize when page loads
 function initDiscountForm() {
     console.log('Initializing discount form...');
@@ -41,6 +40,7 @@ function initDiscountForm() {
         console.error('Discount form not found!');
     }
 }
+
 function handleFormSubmit() {
     const userCaptcha1 = parseInt(document.getElementById("captchaAnswer_discount").value);
     const DiscountRequestStatusDiv = document.getElementById('DiscountRequestStatus');
@@ -84,7 +84,7 @@ function handleFormSubmit() {
     DiscountFormData.append("store_profit", document.getElementById("selectedStoreProfitInput").value);
     
     // ⚠️ لینک بک‌اند را با لینک جدید جایگزین کنید
-    fetch("https://script.google.com/macros/s/AKfycbwyJyYM5bKYCssdSNwiaGlkM8_l6YsMRk5hxNoRhqCInY0I38Wz3cCqRWJ6NCJrbk8/exec", {
+    fetch("https://script.google.com/macros/s/YOUR_NEW_DEPLOYMENT_ID/exec", {
         method: "POST",
         body: DiscountFormData
     })
@@ -124,7 +124,6 @@ function handleFormSubmit() {
     });
 }
 
-
 function resetDiscountForm() {
     document.getElementById("DiscountSuccessMessage").style.display = "none";
     document.getElementById("DiscountForm").reset();
@@ -138,10 +137,6 @@ if (document.readyState === 'loading') {
     initDiscountForm();
 }
 
-
-/********  new lines for discount logos ********/
-/********  new lines for discount logos ********/
-/********  new lines for discount logos ********/
 
 
 // فیلتر کردن خدمات بر اساس دسته‌بندی
