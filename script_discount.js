@@ -41,7 +41,6 @@ function initDiscountForm() {
         console.error('Discount form not found!');
     }
 }
-
 function handleFormSubmit() {
     const userCaptcha1 = parseInt(document.getElementById("captchaAnswer_discount").value);
     const DiscountRequestStatusDiv = document.getElementById('DiscountRequestStatus');
@@ -74,9 +73,7 @@ function handleFormSubmit() {
     DiscountFormData.append("store_name", document.getElementById("selectedStoreNameInput").value);
     DiscountFormData.append("dis_card_label", document.getElementById("selectedCardLabelInput").value);
     DiscountFormData.append("credit", document.getElementById("selectedCreditInput").value);
-    //console.log("credit selected:", document.getElementById("selectedCreditInput").value);
     DiscountFormData.append("in_shop_pay", document.getElementById("selectedShoppayInput").value);
-    //console.log("shoppay:", document.getElementById("selectedShoppayInput").value);
     DiscountFormData.append("expire_date", document.getElementById("selectedexpireInput").value);
     DiscountFormData.append("DiscountCode", "");
     DiscountFormData.append("MessageSent", "0");
@@ -85,9 +82,9 @@ function handleFormSubmit() {
     DiscountFormData.append("dezuni_profit_percent", document.getElementById("selectedProfitPercentInput").value);
     DiscountFormData.append("dezuni_profit", document.getElementById("selectedOurProfitInput").value);
     DiscountFormData.append("store_profit", document.getElementById("selectedStoreProfitInput").value);
-    //console.log("adv_pay:", document.getElementById("selectedAdvPayInput").value);
     
-    fetch("https://script.google.com/macros/s/AKfycbwyJyYM5bKYCssdSNwiaGlkM8_l6YsMRk5hxNoRhqCInY0I38Wz3cCqRWJ6NCJrbk8/exec", {
+    // ⚠️ لینک بک‌اند را با لینک جدید جایگزین کنید
+    fetch("https://script.google.com/macros/s/YOUR_NEW_DEPLOYMENT_ID/exec", {
         method: "POST",
         body: DiscountFormData
     })
@@ -96,47 +93,37 @@ function handleFormSubmit() {
         if (!response.ok) {
             throw new Error('خطای ارسال، بعدا تلاش کنید. Status: ' + response.status);
         }
-        return response.text();
+        return response.json();
     })
-   .then(data => {
-    console.log('Success response:', data);
-    generateCaptcha1();
-    DiscountRequestStatusDiv.textContent = '';
-    if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
-        DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
-    }
- 
-    const advPay = document.getElementById('selectedAdvPayInput').value;
-    const formattedAdvPay = new Intl.NumberFormat('fa-IR').format(advPay) + ' تومان';
-    const customerName = document.getElementById("fullName_discount").value;     
-    ShomarehCartBanki = document.getElementById('selectedCartBankiNoInput').value;
-    SahebCartBanki = document.getElementById('selectedCartBankiOwnerInput').value;
-    const successMsgEl = document.getElementById("DiscountSuccessMessage");
-    //• مبلغ <strong>${formattedAdvPay}</strong> را به شماره کارت 6037998185198362 (آقای عادلی) <strong>پرداخت نمایید.</strong><br><br>
-    successMsgEl.innerHTML = `
-    <div dir="rtl" style="text-align: right;">
-    جناب آقای/سرکار خانم <strong>${customerName}</strong> گرامی، برای دریافت کارت تخفیف:<br><br>
-    
-    • مبلغ <strong>${formattedAdvPay}</strong> را به شماره کارت ${ShomarehCartBanki} (${SahebCartBanki}) <strong>پرداخت نمایید.</strong><br><br>
-    • فیش واریز وجه را از طریق ایتا/تلگرام به @dezuni_admin یا شماره تلفن 09028839140 <strong>ارسال کنید.</strong><br><br>
+    .then(data => {
+        console.log('Success response:', data);
+        generateCaptcha1();
+        DiscountRequestStatusDiv.textContent = '';
+        if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
+            DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
+        }
         
-    • بلافاصله پس از تأیید واریز، <strong>کد تخفیف برای شما ارسال می‌شود.</strong>
-    </div>
-    `;
-       
-    successMsgEl.style.display = "block";
-
-    document.getElementById("DiscountForm").reset();
-})
+        // ✅ هدایت به درگاه زرین‌پال
+        if (data.status === "payment_initiated" && data.authority) {
+            // حالت تست (sandbox) - برای حالت واقعی تغییر دهید
+            const paymentUrl = `https://sandbox.zarinpal.com/pg/StartPay/${data.authority}`;
+            window.location.href = paymentUrl;
+        } else if (data.status === "error") {
+            throw new Error(data.message || 'خطا در ایجاد درخواست پرداخت');
+        } else {
+            throw new Error('پاسخ نامعتبر از سرور');
+        }
+    })
     .catch(error => {
         console.error("Fetch error:", error);
-        DiscountRequestStatusDiv.textContent = "❌ خطا در ارسال فرم";
+        DiscountRequestStatusDiv.textContent = "❌ " + error.message;
         DiscountRequestStatusDiv.style.color = 'red';
         if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
             DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
         }
     });
 }
+
 
 function resetDiscountForm() {
     document.getElementById("DiscountSuccessMessage").style.display = "none";
