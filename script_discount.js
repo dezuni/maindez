@@ -2,7 +2,7 @@ const spinnerformDSCNT = document.createElement('div');
 spinnerformDSCNT.className = 'spinner';
 
 let correctAnswer1 = 0;
-const GOOGLE_SCRIPT_URL = 'YOUR_NEW_DEPLOYMENT_ID_HERE'; // ⚠️ اینجا را عوض کنید!
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJyYM5bKYCssdSNwiaGlkM8_l6YsMRk5hxNoRhqCInY0I38Wz3cCqRWJ6NCJrbk8/exec';
 
 function generateCaptcha1() {
     const num3 = Math.floor(Math.random() * 10) + 1;
