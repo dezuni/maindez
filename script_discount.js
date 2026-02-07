@@ -90,8 +90,8 @@ function handleFormSubmit() {
     paymentData.append("currency", "IRR");
     paymentData.append("description", `پیش‌پرداخت کارت تخفیف ${formData.title}`);
     paymentData.append("callback_url", "https://www.dezuni.ir/payment-success.html");
-    paymentData.append("mobile", formData.phone);
-    paymentData.append("order_id", "discount_" + Date.now());
+    //paymentData.append("mobile", formData.phone);
+    //paymentData.append("order_id", "discount_" + Date.now());
 
     // ارسال بدون هدر (حل مشکل CORS!)
     fetch(GOOGLE_SCRIPT_URL, {
