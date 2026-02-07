@@ -1,3 +1,5 @@
+// Get the current date
+const currentDate = new Date();
 const spinnerformDSCNT = document.createElement('div');
 spinnerformDSCNT.className = 'spinner';
 
@@ -8,21 +10,32 @@ function generateCaptcha1() {
     const num3 = Math.floor(Math.random() * 10) + 1;
     const num4 = Math.floor(Math.random() * 10) + 1;
     correctAnswer1 = num3 + num4;
+    
     const captchaElement = document.getElementById("captchaQuestion_discount");
     if (captchaElement) {
         captchaElement.textContent = `حاصل جمع ${num3} + ${num4} چند می‌شود؟`;
+        console.log('Captcha generated:', correctAnswer1);
+    } else {
+        console.error('ERROR: captchaQuestion_discount element NOT FOUND!');
     }
 }
 
 function initDiscountForm() {
+    console.log('Initializing discount form...');
+    
     const form = document.getElementById("DiscountForm");
-    if (form) {
-        generateCaptcha1();
-        form.addEventListener("submit", function(event) {
-            event.preventDefault();
-            handleFormSubmit();
-        });
+    if (!form) {
+        console.error('ERROR: DiscountForm NOT FOUND!');
+        return;
     }
+    
+    console.log('Discount form found ✓');
+    generateCaptcha1();
+    
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        handleFormSubmit();
+    });
 }
 
 function handleFormSubmit() {
@@ -69,23 +82,21 @@ function handleFormSubmit() {
     const amountToman = parseInt(formData.adv_pay);
     const amountRial = amountToman * 10;
 
-    // ارسال به Google Apps Script
+    // ایجاد FormData (نکته کلیدی: بدون هدر!)
+    const paymentData = new FormData();
+    paymentData.append("action", "payment_request");
+    paymentData.append("merchant_id", "04daeba9-a655-44c1-87aa-0bdcb1330b37");
+    paymentData.append("amount", amountRial);
+    paymentData.append("currency", "IRR");
+    paymentData.append("description", `پیش‌پرداخت کارت تخفیف ${formData.title}`);
+    paymentData.append("callback_url", "https://www.dezuni.ir/payment-success.html");
+    paymentData.append("mobile", formData.phone);
+    paymentData.append("order_id", "discount_" + Date.now());
+
+    // ارسال بدون هدر (حل مشکل CORS!)
     fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            action: "payment_request",
-            merchant_id: "04daeba9-a655-44c1-87aa-0bdcb1330b37",
-            amount: amountRial,
-            currency: "IRR",
-            description: `پیش‌پرداخت کارت تخفیف ${formData.title}`,
-            callback_url: "https://www.dezuni.ir/payment-success.html",
-           // meta {
-              //  mobile: formData.phone,
-              //  email: "",
-              //  order_id: "discount_" + Date.now()
-            //}
-        })
+        body: paymentData
     })
     .then(response => response.json())
     .then(data => {
@@ -121,6 +132,7 @@ function resetDiscountForm() {
     generateCaptcha1();
 }
 
+// اطمینان از بارگذاری کامل DOM
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initDiscountForm);
 } else {
