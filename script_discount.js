@@ -80,10 +80,10 @@ function handleFormSubmit() {
             currency: "IRR",
             description: `پیش‌پرداخت کارت تخفیف ${formData.title}`,
             callback_url: "https://www.dezuni.ir/payment-success.html",
-            meta {
-                mobile: formData.phone,
-                email: "",
-                order_id: "discount_" + Date.now()
+           // meta {
+              //  mobile: formData.phone,
+              //  email: "",
+              //  order_id: "discount_" + Date.now()
             }
         })
     })
