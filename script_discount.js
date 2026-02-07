@@ -84,7 +84,7 @@ function handleFormSubmit() {
               //  mobile: formData.phone,
               //  email: "",
               //  order_id: "discount_" + Date.now()
-            }
+            //}
         })
     })
     .then(response => response.json())
