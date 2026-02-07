@@ -1,17 +1,13 @@
-// Get the current date
-const currentDate = new Date();
 const spinnerformDSCNT = document.createElement('div');
 spinnerformDSCNT.className = 'spinner';
 
 let correctAnswer1 = 0;
-const MERCHANT_ID = '04daeba9-a655-44c1-87aa-0bdcb1330b37';
-const CALLBACK_URL = 'https://www.dezuni.ir/payment-success.html';
+const GOOGLE_SCRIPT_URL = 'YOUR_NEW_DEPLOYMENT_ID_HERE'; // ⚠️ اینجا را عوض کنید!
 
 function generateCaptcha1() {
     const num3 = Math.floor(Math.random() * 10) + 1;
     const num4 = Math.floor(Math.random() * 10) + 1;
     correctAnswer1 = num3 + num4;
-    
     const captchaElement = document.getElementById("captchaQuestion_discount");
     if (captchaElement) {
         captchaElement.textContent = `حاصل جمع ${num3} + ${num4} چند می‌شود؟`;
@@ -19,13 +15,9 @@ function generateCaptcha1() {
 }
 
 function initDiscountForm() {
-    console.log('Initializing discount form...');
-    
     const form = document.getElementById("DiscountForm");
     if (form) {
-        console.log('Discount form found');
         generateCaptcha1();
-        
         form.addEventListener("submit", function(event) {
             event.preventDefault();
             handleFormSubmit();
@@ -53,7 +45,7 @@ function handleFormSubmit() {
     document.getElementById("captchaError_discount").style.display = "none";
     document.getElementById("DiscountSuccessMessage").style.display = "none";
 
-    // ذخیره اطلاعات فرم در localStorage برای استفاده در صفحه بازگشت
+    // ذخیره اطلاعات فرم
     const formData = {
         phone: document.getElementById("phoneNumber_discount").value,
         name: document.getElementById("fullName_discount").value,
@@ -68,60 +60,48 @@ function handleFormSubmit() {
         adv_pay: document.getElementById("selectedAdvPayInput").value,
         dezuni_profit_percent: document.getElementById("selectedProfitPercentInput").value,
         dezuni_profit: document.getElementById("selectedOurProfitInput").value,
-        store_profit: document.getElementById("selectedStoreProfitInput").value,
-        Cart_Banki_No: document.getElementById("selectedCartBankiNoInput").value,
-        Cart_Banki_Owner: document.getElementById("selectedCartBankiOwnerInput").value
+        store_profit: document.getElementById("selectedStoreProfitInput").value
     };
     
     localStorage.setItem('discountFormData', JSON.stringify(formData));
 
-    // تبدیل تومان به ریال (زرین‌پال به ریال کار می‌کند)
+    // تبدیل تومان به ریال
     const amountToman = parseInt(formData.adv_pay);
     const amountRial = amountToman * 10;
 
-    // ارسال درخواست به زرین‌پال
-    fetch("https://payment.zarinpal.com/pg/v4/payment/request.json", {
+    // ارسال به Google Apps Script
+    fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-            merchant_id: MERCHANT_ID,
+            action: "payment_request",
+            merchant_id: "04daeba9-a655-44c1-87aa-0bdcb1330b37",
             amount: amountRial,
             currency: "IRR",
             description: `پیش‌پرداخت کارت تخفیف ${formData.title}`,
-            callback_url: CALLBACK_URL,
-            metadata: {
+            callback_url: "https://www.dezuni.ir/payment-success.html",
+            meta {
                 mobile: formData.phone,
                 email: "",
                 order_id: "discount_" + Date.now()
             }
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('خطا در اتصال به درگاه پرداخت');
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log('ZarinPal response:', data);
-        
         if (data.data && data.data.code === 100) {
-            // موفقیت‌آمیز - هدایت به صفحه پرداخت
             const authority = data.data.authority;
             localStorage.setItem('paymentAuthority', authority);
-            
             DiscountRequestStatusDiv.textContent = '';
             if (DiscountRequestStatusDiv.contains(spinnerformDSCNT)) {
                 DiscountRequestStatusDiv.removeChild(spinnerformDSCNT);
             }
-            
-            // هدایت به درگاه پرداخت
             window.location.href = `https://payment.zarinpal.com/pg/StartPay/${authority}`;
         } else {
-            throw new Error(data.data.message || 'خطا در درخواست پرداخت');
+            const errorMsg = data.errors && data.errors.length > 0 
+                ? data.errors[0].message 
+                : 'خطا در درخواست پرداخت';
+            throw new Error(errorMsg);
         }
     })
     .catch(error => {
@@ -146,21 +126,3 @@ if (document.readyState === 'loading') {
 } else {
     initDiscountForm();
 }
-
-// فیلتر کردن خدمات
-document.querySelectorAll('.filter-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        button.classList.add('active');
-        
-        const filter = button.getAttribute('data-filter');
-        const serviceItems = document.querySelectorAll('.service-item1');
-        
-        serviceItems.forEach(item => {
-            const categories = item.getAttribute('data-category').split(' ');
-            item.style.display = categories.includes(filter) ? 'flex' : 'none';
-        });
-    });
-});
