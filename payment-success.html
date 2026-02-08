@@ -41,18 +41,6 @@
             position: relative;
         }
         
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/></svg>');
-            background-size: cover;
-            opacity: 0.1;
-        }
-        
         .success-icon {
             font-size: 80px;
             margin-bottom: 15px;
@@ -146,18 +134,6 @@
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
         
-        .btn-secondary {
-            background: linear-gradient(135deg, #64748b, #475569);
-        }
-        
-        .footer {
-            background: #f8fafc;
-            padding: 20px;
-            text-align: center;
-            border-top: 1px solid #e2e8f0;
-            color: #64748b;
-        }
-        
         .spinner {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #10b981;
@@ -230,11 +206,13 @@
                     </div>
                 </div>
                 
-                <div class="highlight" id="discountCodeDisplay"></div>
+                <div class="highlight" id="discountCodeDisplay">
+                    <p style="color: #f59e0b; font-weight: bold;">در حال دریافت کد تخفیف شما...</p>
+                    <p style="font-size: 0.9rem; color: #6b7280;">لطفاً منتظر بمانید تا کد تخفیف شما تولید شود</p>
+                </div>
                 
                 <div style="margin: 30px 0;">
                     <a href="/" class="btn"><i class="fas fa-home"></i> بازگشت به صفحه اصلی</a>
-                    <a href="#" onclick="location.reload()" class="btn btn-secondary"><i class="fas fa-redo"></i> تلاش مجدد</a>
                 </div>
             </div>
         </div>
@@ -253,14 +231,13 @@
                 
                 <div style="margin: 30px 0;">
                     <a href="/" class="btn"><i class="fas fa-home"></i> بازگشت به صفحه اصلی</a>
-                    <a href="#" onclick="location.reload()" class="btn btn-secondary"><i class="fas fa-redo"></i> تلاش مجدد</a>
                 </div>
             </div>
         </div>
         
         <div class="footer">
             <p>© <span id="year"></span> سامانه خدمات دانشجویی دزیونی</p>
-            <p style="margin-top: 5px; font-size: 0.9rem;">همراه شما در مسیر موفقیت دانشجویی</p>
+            <p style="margin-top: 5px; font-size: 0.9rem;">دزیونی، همراه همیشگی شما</p>
         </div>
     </div>
 
@@ -328,12 +305,14 @@
                 try {
                     const result = JSON.parse(data);
                     if (result.status === "success") {
-                        showSuccess(formData, ref_id);
+                        // دریافت کد تخفیف از خروجی گوگل اپس اسکریپت
+                        const discountCode = result.discount_code || null;
+                        showSuccess(formData, ref_id, discountCode);
                     } else {
                         showError(result.message || 'خطا در ذخیره اطلاعات');
                     }
                 } catch (e) {
-                    showSuccess(formData, ref_id);
+                    showSuccess(formData, ref_id, null);
                 }
             })
             .catch(error => {
@@ -341,7 +320,7 @@
             });
         }
 
-        function showSuccess(formData, ref_id) {
+        function showSuccess(formData, ref_id, discountCode) {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('success').style.display = 'block';
             
@@ -357,20 +336,26 @@
                     <p>جناب آقای/سرکار خانم <strong>${formData.name}</strong> گرامی،</p>
                     <p>از اعتماد شما به مجموعه <strong>دزیونی</strong> صمیمانه سپاسگزاریم.</p>
                     <br>
-                    <p>پرداخت شما با موفقیت انجام شد!</p>
-                    <p>کارت رزرو شده: <strong>${formData.title}</strong></p>
+                     <p>کارت رزرو شده: <strong>${formData.title}</strong></p>
                     <p>فروشگاه: <strong>${formData.store_name}</strong></p>
                     <p>تاریخ انقضای کارت رزرو شده: <strong>${formData.expire_date}</strong></p>
-                    <p>مبلغ پیش‌پرداخت: <strong>${new Intl.NumberFormat('fa-IR').format(parseInt(formData.adv_pay))} تومان</strong></p>
                     <br>
-                    <p style="color: #059669; font-weight: bold;">کد تخفیف شما در حال تخصیص است...</p>
-                    <p>کد تخفیف به زودی از طریق تلگرام به شما ارسال خواهد شد.</p>
-                    <br>
+                                     
                     <p style="font-style: italic; color: #6b7280;">توجه: در صورتی که تا تاریخ انقضای کارت تخفیف (<strong>${formData.expire_date}</strong>) از آن استفاده نکنید، کارت تخفیف دریافتی باطل می‌شود ولی مبلغ پیش‌پرداخت برای خریدهای بعدی قابل استفاده خواهد بود.</p>
                 </div>
             `;
             
             document.getElementById('successMessage').innerHTML = message;
+
+            // نمایش کد تخفیف یا پیام مناسب
+            if (discountCode) {
+                document.getElementById('discountCodeDisplay').innerHTML = 
+                    `<strong>کد تخفیف شما:</strong> <span style="direction: ltr; font-size: 1.3rem; color: #059669;">${discountCode}</span>`;
+            } else {
+                document.getElementById('discountCodeDisplay').innerHTML = 
+                    `<p style="color: #f59e0b; font-weight: bold;">کد تخفیف شما در حال تخصیص است...</p>
+                     <p>کد تخفیف به زودی از طریق تلگرام به شما ارسال خواهد شد.</p>`;
+            }
             
             // Remove localStorage
             localStorage.removeItem('discountFormData');
