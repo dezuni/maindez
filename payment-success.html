@@ -3,67 +3,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نتیجه پرداخت</title>
+    <title>پرداخت موفق - دزیونی</title>
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { font-family: 'Vazirmatn', sans-serif !important; }
-        body { background: #f5f5f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-        .container { background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); padding: 40px; max-width: 500px; width: 90%; text-align: center; }
-        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .success { color: #10b981; font-size: 64px; margin-bottom: 20px; }
-        .error { color: #ef4444; font-size: 64px; margin-bottom: 20px; }
-        h1 { color: #1e3a8a; margin-bottom: 15px; }
-        .message { font-size: 1.1rem; line-height: 1.8; color: #4b5563; margin: 20px 0; }
-        .btn { display: inline-block; background: #667eea; color: white; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 20px; }
-        .btn:hover { background: #764ba2; }
+        * { 
+            font-family: 'Vazirmatn', sans-serif !important; 
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.2);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/></svg>');
+            background-size: cover;
+            opacity: 0.1;
+        }
+        
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 15px;
+            animation: bounce 1s ease-in-out;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .content {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .message {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4b5563;
+            margin: 20px 0;
+            text-align: right;
+        }
+        
+        .transaction-info {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            color: #1e293b;
+            font-weight: 600;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #fef3c7, #fcd34d);
+            border: 2px solid #f59e0b;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #92400e;
+            direction: ltr;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #64748b, #475569);
+        }
+        
+        .footer {
+            background: #f8fafc;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #10b981;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-content {
+            display: none;
+        }
+        
+        .success-content {
+            display: none;
+        }
+        
+        .error-content {
+            display: none;
+        }
+        
+        .error-icon {
+            color: #ef4444;
+            font-size: 80px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="loading">
-            <div class="spinner"></div>
-            <h1>در حال پردازش...</h1>
-            <p class="message">لطفاً منتظر بمانید</p>
+        <div class="header">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h1>پرداخت موفقیت‌آمیز</h1>
         </div>
-        <div id="success" style="display:none;">
-            <div class="success">✓</div>
-            <h1>پرداخت موفق</h1>
-            <p class="message" id="successMessage"></p>
-            <a href="/" class="btn">بازگشت به صفحه اصلی</a>
+        
+        <div class="loading-content" id="loading">
+            <div class="content">
+                <div class="spinner"></div>
+                <h2>در حال پردازش پرداخت...</h2>
+                <p class="message">لطفاً منتظر بمانید تا اطلاعات شما بررسی شود</p>
+            </div>
         </div>
-        <div id="error" style="display:none;">
-            <div class="error">✕</div>
-            <h1>پرداخت ناموفق</h1>
-            <p class="message" id="errorMessage"></p>
-            <a href="/" class="btn">بازگشت به صفحه اصلی</a>
+        
+        <div class="success-content" id="success">
+            <div class="content">
+                <div id="successMessage" class="message"></div>
+                
+                <div class="transaction-info">
+                    <div class="info-item">
+                        <span class="info-label">نام:</span>
+                        <span class="info-value" id="customerName">...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">مبلغ پرداختی:</span>
+                        <span class="info-value" id="amount">...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">شماره تراکنش:</span>
+                        <span class="info-value" id="refId">...</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">تاریخ:</span>
+                        <span class="info-value" id="date">...</span>
+                    </div>
+                </div>
+                
+                <div class="highlight" id="discountCodeDisplay"></div>
+                
+                <div style="margin: 30px 0;">
+                    <a href="/" class="btn"><i class="fas fa-home"></i> بازگشت به صفحه اصلی</a>
+                    <a href="#" onclick="location.reload()" class="btn btn-secondary"><i class="fas fa-redo"></i> تلاش مجدد</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="error-content" id="error">
+            <div class="content">
+                <i class="fas fa-times-circle error-icon"></i>
+                <h2>پرداخت ناموفق</h2>
+                <div id="errorMessage" class="message"></div>
+                
+                <div class="transaction-info">
+                    <p style="color: #dc2626; font-weight: bold; margin: 20px 0;">
+                        در صورت کسر وجه از حساب شما، مبلغ ظرف 72 ساعت کاری به حساب شما بازگشت داده خواهد شد.
+                    </p>
+                </div>
+                
+                <div style="margin: 30px 0;">
+                    <a href="/" class="btn"><i class="fas fa-home"></i> بازگشت به صفحه اصلی</a>
+                    <a href="#" onclick="location.reload()" class="btn btn-secondary"><i class="fas fa-redo"></i> تلاش مجدد</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© <span id="year"></span> سامانه خدمات دانشجویی دزیونی</p>
+            <p style="margin-top: 5px; font-size: 0.9rem;">همراه شما در مسیر موفقیت دانشجویی</p>
         </div>
     </div>
 
     <script>
-        // ✅ درست - آدرس کامل گوگل اپس اسکریپت
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJyYM5bKYCssdSNwiaGlkM8_l6YsMRk5hxNoRhqCInY0I38Wz3cCqRWJ6NCJrbk8/exec';
         const STATUS = new URLSearchParams(window.location.search).get('Status');
         const AUTHORITY = new URLSearchParams(window.location.search).get('Authority');
+        
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
 
         window.addEventListener('load', function() {
             if (STATUS === 'OK' && AUTHORITY) {
                 verifyPayment(AUTHORITY);
             } else {
-                showError('پرداخت لغو شد یا با خطا مواجه شد.');
+                showError('پرداخت توسط شما لغو شد یا با خطا مواجه شد.');
             }
         });
 
         function verifyPayment(authority) {
             const formData = JSON.parse(localStorage.getItem('discountFormData'));
             if (!formData) {
-                showError('اطلاعات فرم یافت نشد.');
+                showError('اطلاعات فرم یافت نشد. لطفاً مجدداً تلاش کنید.');
                 return;
             }
 
             const amountRial = parseInt(formData.adv_pay) * 10;
 
-            // ✅ درست - استفاده از FormData بدون هدر JSON
             const verifyData = new FormData();
             verifyData.append("action", "payment_verify");
             verifyData.append("merchant_id", "04daeba9-a655-44c1-87aa-0bdcb1330b37");
@@ -72,7 +297,7 @@
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
-                body: verifyData  // بدون headers!
+                body: verifyData
             })
             .then(response => response.json())
             .then(data => {
@@ -83,7 +308,7 @@
                 }
             })
             .catch(error => {
-                showError('خطا در ارتباط با سرور.');
+                showError('خطا در ارتباط با سرور. لطفاً با پشتیبانی تماس بگیرید.');
             });
         }
 
@@ -96,44 +321,67 @@
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
-                body: fd  // بدون headers!
+                body: fd
             })
             .then(response => response.text())
             .then(data => {
                 try {
                     const result = JSON.parse(data);
                     if (result.status === "success") {
-                        showSuccess(formData.name, formData.adv_pay, ref_id);
+                        showSuccess(formData, ref_id);
                     } else {
-                        showError(result.message);
+                        showError(result.message || 'خطا در ذخیره اطلاعات');
                     }
                 } catch (e) {
-                    showSuccess(formData.name, formData.adv_pay, ref_id);
+                    showSuccess(formData, ref_id);
                 }
-                localStorage.removeItem('discountFormData');
-                localStorage.removeItem('paymentAuthority');
             })
             .catch(error => {
-                showError('خطا در ذخیره اطلاعات.');
-                localStorage.removeItem('discountFormData');
-                localStorage.removeItem('paymentAuthority');
+                showError('خطا در ذخیره اطلاعات. لطفاً با پشتیبانی تماس بگیرید.');
             });
         }
 
-        function showSuccess(name, amount, ref_id) {
+        function showSuccess(formData, ref_id) {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('success').style.display = 'block';
-            document.getElementById('successMessage').innerHTML = 
-                `پرداخت شما با موفقیت انجام شد!<br><br>` +
-                `مبلغ: ${new Intl.NumberFormat('fa-IR').format(amount)} تومان<br>` +
-                `شماره تراکنش: ${ref_id}<br><br>` +
-                `کد تخفیف به زودی از طریق تلگرام ارسال می‌شود.`;
+            
+            // Fill transaction info
+            document.getElementById('customerName').textContent = formData.name;
+            document.getElementById('amount').textContent = new Intl.NumberFormat('fa-IR').format(parseInt(formData.adv_pay)) + ' تومان';
+            document.getElementById('refId').textContent = ref_id;
+            document.getElementById('date').textContent = new Date().toLocaleDateString('fa-IR');
+            
+            // Generate success message (without showing in-shop payment)
+            const message = ` 
+                <div style="text-align: right; direction: rtl;">
+                    <p>جناب آقای/سرکار خانم <strong>${formData.name}</strong> گرامی،</p>
+                    <p>از اعتماد شما به مجموعه <strong>دزیونی</strong> صمیمانه سپاسگزاریم.</p>
+                    <br>
+                    <p>پرداخت شما با موفقیت انجام شد!</p>
+                    <p>کارت رزرو شده: <strong>${formData.title}</strong></p>
+                    <p>فروشگاه: <strong>${formData.store_name}</strong></p>
+                    <p>تاریخ انقضای کارت رزرو شده: <strong>${formData.expire_date}</strong></p>
+                    <p>مبلغ پیش‌پرداخت: <strong>${new Intl.NumberFormat('fa-IR').format(parseInt(formData.adv_pay))} تومان</strong></p>
+                    <br>
+                    <p style="color: #059669; font-weight: bold;">کد تخفیف شما در حال تخصیص است...</p>
+                    <p>کد تخفیف به زودی از طریق تلگرام به شما ارسال خواهد شد.</p>
+                    <br>
+                    <p style="font-style: italic; color: #6b7280;">توجه: در صورتی که تا تاریخ انقضای کارت تخفیف (<strong>${formData.expire_date}</strong>) از آن استفاده نکنید، کارت تخفیف دریافتی باطل می‌شود ولی مبلغ پیش‌پرداخت برای خریدهای بعدی قابل استفاده خواهد بود.</p>
+                </div>
+            `;
+            
+            document.getElementById('successMessage').innerHTML = message;
+            
+            // Remove localStorage
+            localStorage.removeItem('discountFormData');
+            localStorage.removeItem('paymentAuthority');
         }
 
         function showError(message) {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('error').style.display = 'block';
-            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorMessage').innerHTML = `<p style="color: #dc2626; font-weight: bold;">${message}</p>`;
+            
             localStorage.removeItem('discountFormData');
             localStorage.removeItem('paymentAuthority');
         }
