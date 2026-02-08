@@ -64,13 +64,12 @@
             text-align: center;
         }
         
-        .intro-message {
+        .message {
             font-size: 1.1rem;
             line-height: 1.8;
             color: #4b5563;
-            margin: 20px 0 30px;
+            margin: 20px 0;
             text-align: right;
-            font-weight: 500;
         }
         
         .transaction-info {
@@ -84,7 +83,7 @@
         .info-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 8px 0;
             border-bottom: 1px solid #e2e8f0;
         }
         
@@ -95,14 +94,11 @@
         .info-label {
             color: #6b7280;
             font-weight: 500;
-            flex: 1;
         }
         
         .info-value {
             color: #1e293b;
             font-weight: 600;
-            flex: 2;
-            text-align: left;
         }
         
         .highlight {
@@ -170,18 +166,6 @@
             font-size: 80px;
             margin-bottom: 15px;
         }
-        
-        .attention-note {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            text-align: right;
-            color: #b91c1c;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
     </style>
 </head>
 <body>
@@ -195,20 +179,18 @@
             <div class="content">
                 <div class="spinner"></div>
                 <h2>در حال پردازش پرداخت...</h2>
-                <p class="intro-message">لطفاً کمی منتظر بمانید تا کد تخفیف شما صادر شود</p>
+                <p class="message">لطفاً منتظر بمانید تا اطلاعات شما بررسی شود</p>
             </div>
         </div>
         
         <div class="success-content" id="success">
             <div class="content">
-                <div class="intro-message">
-                     <p>از اعتماد شما به مجموعه <strong>دزیونی</strong> صمیمانه سپاسگزاریم.</p>
-                </div>
+                <div id="successMessage" class="message"></div>
                 
                 <div class="transaction-info">
                     <div class="info-item">
                         <span class="info-label">نام:</span>
-                        <span class="info-value" id="customerNameValue">...</span>
+                        <span class="info-value" id="customerName">...</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">مبلغ پرداختی:</span>
@@ -222,26 +204,11 @@
                         <span class="info-label">تاریخ:</span>
                         <span class="info-value" id="date">...</span>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">کارت رزرو شده:</span>
-                        <span class="info-value" id="title">...</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">فروشگاه:</span>
-                        <span class="info-value" id="storeName">...</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">تاریخ انقضای کارت:</span>
-                        <span class="info-value" id="expireDate">...</span>
-                    </div>
                 </div>
                 
                 <div class="highlight" id="discountCodeDisplay">
-                    <p style="color: #f59e0b; font-weight: bold;">کمی منتظر بمانید تا کد تخفیف شما صادر شود...</p>
-                </div>
-                
-                <div class="attention-note">
-                    <p style="margin: 0;"><strong>توجه:</strong> در صورتی که تا تاریخ انقضای کارت تخفیف (<strong id="noteExpireDate">...</strong>) از آن استفاده نکنید، کارت تخفیف دریافتی باطل می‌شود ولی مبلغ پیش‌پرداخت برای خریدهای بعدی قابل استفاده خواهد بود.</p>
+                    <p style="color: #f59e0b; font-weight: bold;">در حال دریافت کد تخفیف شما...</p>
+                    <p style="font-size: 0.9rem; color: #6b7280;">لطفاً منتظر بمانید تا کد تخفیف شما تولید شود</p>
                 </div>
                 
                 <div style="margin: 30px 0;">
@@ -254,10 +221,10 @@
             <div class="content">
                 <i class="fas fa-times-circle error-icon"></i>
                 <h2>پرداخت ناموفق</h2>
-                <div id="errorMessage" class="intro-message"></div>
+                <div id="errorMessage" class="message"></div>
                 
                 <div class="transaction-info">
-                    <p style="color: #dc2626; font-weight: bold; margin: 20px 0; text-align: center;">
+                    <p style="color: #dc2626; font-weight: bold; margin: 20px 0;">
                         در صورت کسر وجه از حساب شما، مبلغ ظرف 72 ساعت کاری به حساب شما بازگشت داده خواهد شد.
                     </p>
                 </div>
@@ -269,7 +236,8 @@
         </div>
         
         <div class="footer">
-            <p style="color: #64748b; font-size: 0.9rem;">دزیونی، همراه همیشگی شما</p>
+            <p>© <span id="year"></span> سامانه خدمات دانشجویی دزیونی</p>
+            <p style="margin-top: 5px; font-size: 0.9rem;">دزیونی، همراه همیشگی شما</p>
         </div>
     </div>
 
@@ -277,6 +245,9 @@
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJyYM5bKYCssdSNwiaGlkM8_l6YsMRk5hxNoRhqCInY0I38Wz3cCqRWJ6NCJrbk8/exec';
         const STATUS = new URLSearchParams(window.location.search).get('Status');
         const AUTHORITY = new URLSearchParams(window.location.search).get('Authority');
+        
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
 
         window.addEventListener('load', function() {
             if (STATUS === 'OK' && AUTHORITY) {
@@ -334,6 +305,7 @@
                 try {
                     const result = JSON.parse(data);
                     if (result.status === "success") {
+                        // دریافت کد تخفیف از خروجی گوگل اپس اسکریپت
                         const discountCode = result.discount_code || null;
                         showSuccess(formData, ref_id, discountCode);
                     } else {
@@ -349,22 +321,32 @@
         }
 
         function showSuccess(formData, ref_id, discountCode) {
-            // مخفی کردن لودر
             document.getElementById('loading').style.display = 'none';
-            // نمایش محتوای موفقیت
             document.getElementById('success').style.display = 'block';
             
-            // پر کردن اطلاعات در جدول
+            // Fill transaction info
             document.getElementById('customerName').textContent = formData.name;
-            document.getElementById('customerNameValue').textContent = formData.name;
             document.getElementById('amount').textContent = new Intl.NumberFormat('fa-IR').format(parseInt(formData.adv_pay)) + ' تومان';
             document.getElementById('refId').textContent = ref_id;
             document.getElementById('date').textContent = new Date().toLocaleDateString('fa-IR');
-            document.getElementById('title').textContent = formData.title;
-            document.getElementById('storeName').textContent = formData.store_name;
-            document.getElementById('expireDate').textContent = formData.expire_date;
-            document.getElementById('noteExpireDate').textContent = formData.expire_date;
             
+            // Generate success message (without showing in-shop payment)
+            const message = ` 
+                <div style="text-align: right; direction: rtl;">
+                    <p>جناب آقای/سرکار خانم <strong>${formData.name}</strong> گرامی،</p>
+                    <p>از اعتماد شما به مجموعه <strong>دزیونی</strong> صمیمانه سپاسگزاریم.</p>
+                    <br>
+                     <p>کارت رزرو شده: <strong>${formData.title}</strong></p>
+                    <p>فروشگاه: <strong>${formData.store_name}</strong></p>
+                    <p>تاریخ انقضای کارت رزرو شده: <strong>${formData.expire_date}</strong></p>
+                    <br>
+                                     
+                    <p style="font-style: italic; color: #6b7280;">توجه: در صورتی که تا تاریخ انقضای کارت تخفیف (<strong>${formData.expire_date}</strong>) از آن استفاده نکنید، کارت تخفیف دریافتی باطل می‌شود ولی مبلغ پیش‌پرداخت برای خریدهای بعدی قابل استفاده خواهد بود.</p>
+                </div>
+            `;
+            
+            document.getElementById('successMessage').innerHTML = message;
+
             // نمایش کد تخفیف یا پیام مناسب
             if (discountCode) {
                 document.getElementById('discountCodeDisplay').innerHTML = 
@@ -375,7 +357,7 @@
                      <p>کد تخفیف به زودی از طریق تلگرام به شما ارسال خواهد شد.</p>`;
             }
             
-            // حذف اطلاعات از حافظه
+            // Remove localStorage
             localStorage.removeItem('discountFormData');
             localStorage.removeItem('paymentAuthority');
         }
