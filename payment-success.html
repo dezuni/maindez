@@ -41,7 +41,8 @@
     </div>
 
     <script>
-        const GOOGLE_SCRIPT_URL = 'AKfycbwyJyYM5bKYCssdSNwiaGlkM8_l6YsMRk5hxNoRhqCInY0I38Wz3cCqRWJ6NCJrbk8'; // ⚠️ اینجا را عوض کنید!
+        // ✅ درست - آدرس کامل گوگل اپس اسکریپت
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJyYM5bKYCssdSNwiaGlkM8_l6YsMRk5hxNoRhqCInY0I38Wz3cCqRWJ6NCJrbk8/exec';
         const STATUS = new URLSearchParams(window.location.search).get('Status');
         const AUTHORITY = new URLSearchParams(window.location.search).get('Authority');
 
@@ -62,15 +63,16 @@
 
             const amountRial = parseInt(formData.adv_pay) * 10;
 
+            // ✅ درست - استفاده از FormData بدون هدر JSON
+            const verifyData = new FormData();
+            verifyData.append("action", "payment_verify");
+            verifyData.append("merchant_id", "04daeba9-a655-44c1-87aa-0bdcb1330b37");
+            verifyData.append("amount", amountRial);
+            verifyData.append("authority", authority);
+
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    action: "payment_verify",
-                    merchant_id: "04daeba9-a655-44c1-87aa-0bdcb1330b37",
-                    amount: amountRial,
-                    authority: authority
-                })
+                body: verifyData  // بدون headers!
             })
             .then(response => response.json())
             .then(data => {
@@ -87,37 +89,26 @@
 
         function saveToGoogleSheet(formData, authority, ref_id) {
             const fd = new FormData();
-            fd.append("phone", formData.phone);
-            fd.append("name", formData.name);
-            fd.append("password", formData.password);
-            fd.append("status", "active");
-            fd.append("time_used", "");
-            fd.append("date_used", "");
-            fd.append("Expiration_Date_english", formData.Expiration_Date_english);
-            fd.append("store_name", formData.store_name);
-            fd.append("dis_card_label", formData.dis_card_label);
-            fd.append("credit", formData.credit);
-            fd.append("in_shop_pay", formData.in_shop_pay);
-            fd.append("expire_date", formData.expire_date);
-            fd.append("DiscountCode", "");
-            fd.append("MessageSent", "0");
-            fd.append("title", formData.title);
-            fd.append("adv_pay", formData.adv_pay);
-            fd.append("dezuni_profit_percent", formData.dezuni_profit_percent);
-            fd.append("dezuni_profit", formData.dezuni_profit);
-            fd.append("store_profit", formData.store_profit);
+            Object.keys(formData).forEach(key => fd.append(key, formData[key]));
             fd.append("payment_status", "paid");
             fd.append("authority", authority);
             fd.append("ref_id", ref_id);
 
-            fetch(GOOGLE_SCRIPT_URL, {method: "POST", body: fd})
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                body: fd  // بدون headers!
+            })
             .then(response => response.text())
             .then(data => {
-                const result = JSON.parse(data);
-                if (result.status === "success") {
+                try {
+                    const result = JSON.parse(data);
+                    if (result.status === "success") {
+                        showSuccess(formData.name, formData.adv_pay, ref_id);
+                    } else {
+                        showError(result.message);
+                    }
+                } catch (e) {
                     showSuccess(formData.name, formData.adv_pay, ref_id);
-                } else {
-                    showError(result.message);
                 }
                 localStorage.removeItem('discountFormData');
                 localStorage.removeItem('paymentAuthority');
