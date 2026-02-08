@@ -85,8 +85,8 @@ function handleFormSubmit() {
     // ایجاد FormData (نکته کلیدی: بدون هدر!)
     const paymentData = new FormData();
     paymentData.append("action", "payment_request");
-    paymentData.append("merchant_id", "b653e8a3-122d-4f8f-9bc2-7d05f662ca86"); // فقط برای تست
-    //paymentData.append("merchant_id", "04daeba9-a655-44c1-87aa-0bdcb1330b37");
+    //paymentData.append("merchant_id", "b653e8a3-122d-4f8f-9bc2-7d05f662ca86"); // فقط برای تست
+    paymentData.append("merchant_id", "04daeba9-a655-44c1-87aa-0bdcb1330b37");
     paymentData.append("amount", amountRial);
     paymentData.append("currency", "IRR");
     paymentData.append("description", `پیش‌پرداخت کارت تخفیف ${formData.title}`);
