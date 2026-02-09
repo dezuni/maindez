@@ -270,10 +270,9 @@
                         <span class="info-label">تاریخ انقضا:</span>
                         <span class="info-value" id="expiryDate">...</span>
                     </div>
-                    
                     <div class="info-row">
-                        <span class="info-label">پرداختی در فروشگاه:</span>
-                        <span class="info-value" id="storePayment">...</span>
+                        <span class="info-label">پرداخت در فروشگاه:</span>
+                        <span class="info-value" id="store_pay">...</span>
                     </div>
                 </div>
                 
@@ -332,11 +331,10 @@
         </div>
         
         <div class="footer">
-            
-            <p class="wait-message" id="waitMessage">
-                 کمی صبر کنید تا کد تخفیف شما صادر شود...
-            </p>
             <p class="footer-title">سامانه خدمات دانشجویی دزیونی</p>
+            <p class="wait-message" id="waitMessage">
+                این صفحه را نبندید تا کد تخفیف شما صادر شود، از صبوری شما سپاسگذاریم ...
+            </p>
             <p class="footer-text">دزیونی، همراه همیشگی شما</p>
         </div>
     </div>
@@ -352,7 +350,7 @@
             if (waitMessage) {
                 waitMessage.style.display = 'none';
             }
-        }, 20000);
+        }, 10000);
 
         window.addEventListener('load', function() {
             if (STATUS === 'OK' && AUTHORITY) {
@@ -416,7 +414,7 @@
                         showError(result.message || 'خطا در ذخیره اطلاعات');
                     }
                 } catch (e) {
-                    const discountCode = "کد به زودی از طریق تلگرام یا ایتا ارسال می‌شود";
+                    const discountCode = "کد به زودی از طریق تلگرام ارسال می‌شود";
                     showSuccess(formData, ref_id, discountCode);
                 }
             })
@@ -430,14 +428,10 @@
             
             // پر کردن اطلاعات
             document.getElementById('discountTitle').textContent = formData.title || "کارت تخفیف ویژه";
+            document.getElementById('store_pay').textContent = formData.in_shop_pay || "کارت تخفیف ویژه";
             document.getElementById('expiryDate').textContent = formData.expire_date || "تعیین نشده";
             document.getElementById('storeName').textContent = formData.store_name || "فروشگاه مشخص نشده";
-            
-            // نمایش مبلغ پرداختی در فروشگاه
-            const storePayment = formData.in_shop_pay ;
-            const storePaymentFormatted = new Intl.NumberFormat('fa-IR').format(parseInt(storePayment || 0));
-            document.getElementById('storePayment').textContent = storePaymentFormatted + ' تومان';
-            
+            قث
             // نمایش مبلغ با فرمت فارسی و تومان
             const amount = new Intl.NumberFormat('fa-IR').format(parseInt(formData.adv_pay || 0));
             document.getElementById('amountPaid').textContent = amount + ' تومان';
