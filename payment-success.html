@@ -20,14 +20,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
+            padding: 20px;
         }
         
         .container {
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.25);
-            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.2);
+            max-width: 600px;
             width: 100%;
             overflow: hidden;
             position: relative;
@@ -35,151 +35,122 @@
         
         .header {
             background: linear-gradient(135deg, #10b981, #059669);
-            padding: 20px 15px;
+            padding: 30px;
             text-align: center;
             color: white;
             position: relative;
         }
         
         .success-icon {
-            font-size: 60px;
-            margin-bottom: 10px;
+            font-size: 20px;
+            margin-bottom: 15px;
             animation: bounce 1s ease-in-out;
         }
         
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-15px);}
-            60% {transform: translateY(-8px);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
         }
         
         .header h1 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin: 0;
-            font-weight: 700;
+            font-weight: 600;
         }
         
         .content {
-            padding: 20px 15px;
+            padding: 40px;
             text-align: center;
         }
         
-        /* استایل کد تخفیف - بزرگ و واضح */
-        .discount-code-container {
-            background: linear-gradient(135deg, #a78bfa, #8b5cf6);
-            border-radius: 12px;
-            padding: 20px 15px;
-            margin: 15px 0;
-            text-align: center;
-            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
-        }
-        
-        .discount-code {
-            font-family: monospace;
-            font-size: 1.8rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            color: white;
-            background: rgba(255,255,255,0.15);
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin: 8px 0;
-            display: inline-block;
-            direction: ltr;
-            min-width: 250px;
-        }
-        
-        .discount-label {
-            color: white;
-            font-size: 1rem;
-            margin-bottom: 8px;
-            display: block;
-            font-weight: 500;
-        }
-        
-        /* استایل کارت‌های اطلاعات */
-        .info-card {
-            background: #f8fafc;
-            border-radius: 12px;
-            padding: 15px;
-            margin: 10px 0;
-            border: 1px solid #e2e8f0;
+        .message {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4b5563;
+            margin: 20px 0;
             text-align: right;
         }
         
-        .info-row {
+        .transaction-info {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .info-item {
             display: flex;
             justify-content: space-between;
             padding: 8px 0;
-            border-bottom: 1px solid #edf2f7;
+            border-bottom: 1px solid #e2e8f0;
         }
         
-        .info-row:last-child {
+        .info-item:last-child {
             border-bottom: none;
-            padding-bottom: 0;
         }
         
         .info-label {
-            font-weight: 600;
-            color: #4b5563;
-            font-size: 0.95rem;
+            color: #6b7280;
+            font-weight: 500;
         }
         
         .info-value {
-            font-weight: 500;
-            color: #1f2937;
-            font-size: 0.95rem;
-        }
-        
-        .info-title {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            padding: 10px;
-            border-radius: 8px 8px 0 0;
-            margin: -15px -15px 15px -15px;
+            color: #1e293b;
             font-weight: 600;
-            font-size: 1.1rem;
         }
         
-        /* یادداشت توجه */
-        .warning-note {
+        .highlight {
             background: linear-gradient(135deg, #fef3c7, #fcd34d);
             border: 2px solid #f59e0b;
             border-radius: 12px;
             padding: 15px;
-            margin: 15px 0;
-            text-align: center;
-            font-weight: 500;
+            margin: 20px 0;
+            font-weight: bold;
             color: #92400e;
-            font-size: 0.95rem;
-            line-height: 1.6;
+            direction: ltr;
+            text-align: center;
+            font-size: 1.2rem;
         }
         
-        .warning-note i {
-            margin-left: 5px;
-        }
-        
-        /* دکمه بازگشت */
         .btn {
             display: inline-block;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 14px 35px;
+            padding: 15px 40px;
             border-radius: 12px;
             text-decoration: none;
-            font-weight: 600;
-            margin: 15px 0;
+            font-weight: bold;
+            margin: 20px 10px;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             font-size: 1rem;
-            width: 90%;
-            max-width: 300px;
         }
         
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #10b981;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-content {
+            display: none;
         }
         
         .success-content {
@@ -192,49 +163,8 @@
         
         .error-icon {
             color: #ef4444;
-            font-size: 60px;
+            font-size: 80px;
             margin-bottom: 15px;
-        }
-        
-        .error-title {
-            color: #ef4444;
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-        
-        /* فوتر */
-        .footer {
-            text-align: center;
-            padding: 15px 10px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            color: #6b7280;
-            font-size: 0.85rem;
-        }
-        
-        .footer-title {
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 8px;
-            font-size: 1rem;
-        }
-        
-        .wait-message {
-            color: #3b82f6;
-            font-weight: 600;
-            margin: 8px 0;
-            line-height: 1.6;
-            font-size: 0.9rem;
-            padding: 10px;
-            background: #dbeafe;
-            border-radius: 8px;
-            border: 1px solid #93c5fd;
-        }
-        
-        .footer-text {
-            color: #6b7280;
-            margin-top: 8px;
         }
     </style>
 </head>
@@ -245,97 +175,69 @@
             <h1>پرداخت موفقیت‌آمیز</h1>
         </div>
         
+        <div class="loading-content" id="loading">
+            <div class="content">
+                <div class="spinner"></div>
+                <h2>در حال پردازش پرداخت...</h2>
+                <p class="message">لطفاً منتظر بمانید تا اطلاعات شما بررسی شود</p>
+            </div>
+        </div>
+        
         <div class="success-content" id="success">
             <div class="content">
-                <!-- کد تخفیف -->
-                <div class="discount-code-container">
-                    <span class="discount-label">کد تخفیف شما:</span>
-                    <div class="discount-code" id="discountCodeDisplay">در حال دریافت...</div>
-                    <p style="color: rgba(255,255,255,0.9); margin-top: 8px; font-size: 0.85rem;">
-                        این کد را در هنگام خرید ارائه دهید
-                    </p>
-                </div>
+                <div id="successMessage" class="message"></div>
                 
-                <!-- کارت اطلاعات کارت تخفیف -->
-                <div class="info-card">
-                    <div class="info-title">
-                        <i class="fas fa-ticket-alt" style="margin-left: 5px;"></i>
-                        اطلاعات کارت تخفیف
+                <div class="transaction-info">
+                    <div class="info-item">
+                        <span class="info-label">نام:</span>
+                        <span class="info-value" id="customerName">...</span>
                     </div>
-                    <div class="info-row">
-                        <span class="info-label">عنوان کارت:</span>
-                        <span class="info-value" id="discountTitle">...</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">تاریخ انقضا:</span>
-                        <span class="info-value" id="expiryDate">...</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">پرداخت در فروشگاه:</span>
-                        <span class="info-value" id="store_pay">...</span>
-                    </div>
-                </div>
-                
-                <!-- کارت جزئیات پرداخت -->
-                <div class="info-card">
-                    <div class="info-title">
-                        <i class="fas fa-receipt" style="margin-left: 5px;"></i>
-                        جزئیات پرداخت
-                    </div>
-                    <div class="info-row">
+                    <div class="info-item">
                         <span class="info-label">مبلغ پرداختی:</span>
-                        <span class="info-value" id="amountPaid">...</span>
+                        <span class="info-value" id="amount">...</span>
                     </div>
-                    <div class="info-row">
-                        <span class="info-label">تاریخ پرداخت:</span>
-                        <span class="info-value" id="paymentDate">...</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">شماره پیگیری:</span>
+                    <div class="info-item">
+                        <span class="info-label">شماره تراکنش:</span>
                         <span class="info-value" id="refId">...</span>
                     </div>
+                    <div class="info-item">
+                        <span class="info-label">تاریخ:</span>
+                        <span class="info-value" id="date">...</span>
+                    </div>
                 </div>
                 
-                <!-- یادداشت توجه -->
-                <div class="warning-note">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    توجه: در صورت عدم استفاده تا تاریخ 
-                    <span id="expiryDateNote" style="color: #dc2626; font-weight: bold;">...</span>
-                    کارت منقضی می‌شود
+                <div class="highlight" id="discountCodeDisplay">
+                    <p style="color: #f59e0b; font-weight: bold;">در حال دریافت کد تخفیف شما...</p>
+                    <p style="font-size: 0.9rem; color: #6b7280;">لطفاً منتظر بمانید تا کد تخفیف شما تولید شود</p>
                 </div>
                 
-                <!-- دکمه بازگشت -->
-                <a href="/" class="btn">
-                    <i class="fas fa-home" style="margin-left: 5px;"></i>
-                    بازگشت به صفحه اصلی
-                </a>
+                <div style="margin: 30px 0;">
+                    <a href="/" class="btn"><i class="fas fa-home"></i> بازگشت به صفحه اصلی</a>
+                </div>
             </div>
         </div>
         
         <div class="error-content" id="error">
             <div class="content">
                 <i class="fas fa-times-circle error-icon"></i>
-                <h2 class="error-title">پرداخت ناموفق</h2>
-                <div id="errorMessage" style="margin: 15px 0; line-height: 1.6;"></div>
+                <h2>پرداخت ناموفق</h2>
+                <div id="errorMessage" class="message"></div>
                 
-                <div class="warning-note">
-                    <i class="fas fa-info-circle" style="margin-left: 5px;"></i>
-                    در صورت کسر وجه، مبلغ ظرف ۷۲ ساعت کاری بازگشت داده می‌شود
+                <div class="transaction-info">
+                    <p style="color: #dc2626; font-weight: bold; margin: 20px 0;">
+                        در صورت کسر وجه از حساب شما، مبلغ ظرف 72 ساعت کاری به حساب شما بازگشت داده خواهد شد.
+                    </p>
                 </div>
                 
-                <a href="/" class="btn">
-                    <i class="fas fa-home" style="margin-left: 5px;"></i>
-                    بازگشت به صفحه اصلی
-                </a>
+                <div style="margin: 30px 0;">
+                    <a href="/" class="btn"><i class="fas fa-home"></i> بازگشت به صفحه اصلی</a>
+                </div>
             </div>
         </div>
         
         <div class="footer">
-            <p class="footer-title">سامانه خدمات دانشجویی دزیونی</p>
-            <p class="wait-message" id="waitMessage">
-                این صفحه را نبندید تا کد تخفیف شما صادر شود، از صبوری شما سپاسگذاریم ...
-            </p>
-            <p class="footer-text">دزیونی، همراه همیشگی شما</p>
+            <p>© <span id="year"></span> سامانه خدمات دانشجویی دزیونی</p>
+            <p style="margin-top: 5px; font-size: 0.9rem;">دزیونی، همراه همیشگی شما</p>
         </div>
     </div>
 
@@ -344,13 +246,8 @@
         const STATUS = new URLSearchParams(window.location.search).get('Status');
         const AUTHORITY = new URLSearchParams(window.location.search).get('Authority');
         
-        // حذف پیام انتظار بعد از 10 ثانیه
-        setTimeout(() => {
-            const waitMessage = document.getElementById('waitMessage');
-            if (waitMessage) {
-                waitMessage.style.display = 'none';
-            }
-        }, 10000);
+        // Set current year
+        document.getElementById('year').textContent = new Date().getFullYear();
 
         window.addEventListener('load', function() {
             if (STATUS === 'OK' && AUTHORITY) {
@@ -408,14 +305,14 @@
                 try {
                     const result = JSON.parse(data);
                     if (result.status === "success") {
-                        const discountCode = result.discount_code || "کد به زودی ارسال می‌شود";
+                        // دریافت کد تخفیف از خروجی گوگل اپس اسکریپت
+                        const discountCode = result.discount_code || null;
                         showSuccess(formData, ref_id, discountCode);
                     } else {
                         showError(result.message || 'خطا در ذخیره اطلاعات');
                     }
                 } catch (e) {
-                    const discountCode = "کد به زودی از طریق تلگرام ارسال می‌شود";
-                    showSuccess(formData, ref_id, discountCode);
+                    showSuccess(formData, ref_id, null);
                 }
             })
             .catch(error => {
@@ -424,55 +321,51 @@
         }
 
         function showSuccess(formData, ref_id, discountCode) {
+            document.getElementById('loading').style.display = 'none';
             document.getElementById('success').style.display = 'block';
             
-            // پر کردن اطلاعات
-            document.getElementById('discountTitle').textContent = formData.title || "کارت تخفیف ویژه";
-            document.getElementById('store_pay').textContent = formData.in_shop_pay || "کارت تخفیف ویژه";
-            document.getElementById('expiryDate').textContent = formData.expire_date || "تعیین نشده";
-            document.getElementById('storeName').textContent = formData.store_name || "فروشگاه مشخص نشده";
-            قث
-            // نمایش مبلغ با فرمت فارسی و تومان
-            const amount = new Intl.NumberFormat('fa-IR').format(parseInt(formData.adv_pay || 0));
-            document.getElementById('amountPaid').textContent = amount + ' تومان';
+            // Fill transaction info
+            document.getElementById('customerName').textContent = formData.name;
+            document.getElementById('amount').textContent = new Intl.NumberFormat('fa-IR').format(parseInt(formData.adv_pay)) + ' تومان';
+            document.getElementById('refId').textContent = ref_id;
+            document.getElementById('date').textContent = new Date().toLocaleDateString('fa-IR');
             
-            // نمایش تاریخ جاری با فرمت فارسی
-            const now = new Date();
-            const persianDate = now.toLocaleDateString('fa-IR', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            document.getElementById('paymentDate').textContent = persianDate;
+            // Generate success message (without showing in-shop payment)
+            const message = ` 
+                <div style="text-align: right; direction: rtl;">
+                    <p>جناب آقای/سرکار خانم <strong>${formData.name}</strong> گرامی،</p>
+                    <p>از اعتماد شما به مجموعه <strong>دزیونی</strong> صمیمانه سپاسگزاریم.</p>
+                    <br>
+                     <p>کارت رزرو شده: <strong>${formData.title}</strong></p>
+                    <p>فروشگاه: <strong>${formData.store_name}</strong></p>
+                    <p>تاریخ انقضای کارت رزرو شده: <strong>${formData.expire_date}</strong></p>
+                    <br>
+                                     
+                    <p style="font-style: italic; color: #6b7280;">توجه: در صورتی که تا تاریخ انقضای کارت تخفیف (<strong>${formData.expire_date}</strong>) از آن استفاده نکنید، کارت تخفیف دریافتی باطل می‌شود ولی مبلغ پیش‌پرداخت برای خریدهای بعدی قابل استفاده خواهد بود.</p>
+                </div>
+            `;
             
-            document.getElementById('refId').textContent = ref_id || "در انتظار تایید";
+            document.getElementById('successMessage').innerHTML = message;
+
+            // نمایش کد تخفیف یا پیام مناسب
+            if (discountCode) {
+                document.getElementById('discountCodeDisplay').innerHTML = 
+                    `<strong>کد تخفیف شما:</strong> <span style="direction: ltr; font-size: 1.3rem; color: #059669;">${discountCode}</span>`;
+            } else {
+                document.getElementById('discountCodeDisplay').innerHTML = 
+                    `<p style="color: #f59e0b; font-weight: bold;">کد تخفیف شما در حال تخصیص است...</p>
+                     <p>کد تخفیف به زودی از طریق تلگرام به شما ارسال خواهد شد.</p>`;
+            }
             
-            // نمایش کد تخفیف
-            document.getElementById('discountCodeDisplay').textContent = discountCode;
-            
-            // پر کردن تاریخ انقضا در یادداشت توجه
-            document.getElementById('expiryDateNote').textContent = formData.expire_date || "تعیین نشده";
-            
-            // حذف داده‌های localStorage
+            // Remove localStorage
             localStorage.removeItem('discountFormData');
             localStorage.removeItem('paymentAuthority');
-            
-            // حذف پیام انتظار
-            const waitMessage = document.getElementById('waitMessage');
-            if (waitMessage) {
-                waitMessage.style.display = 'none';
-            }
         }
 
         function showError(message) {
+            document.getElementById('loading').style.display = 'none';
             document.getElementById('error').style.display = 'block';
-            document.getElementById('errorMessage').innerHTML = `<p style="color: #dc2626; font-weight: 600;">${message}</p>`;
-            
-            // حذف پیام انتظار
-            const waitMessage = document.getElementById('waitMessage');
-            if (waitMessage) {
-                waitMessage.style.display = 'none';
-            }
+            document.getElementById('errorMessage').innerHTML = `<p style="color: #dc2626; font-weight: bold;">${message}</p>`;
             
             localStorage.removeItem('discountFormData');
             localStorage.removeItem('paymentAuthority');
