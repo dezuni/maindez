@@ -271,8 +271,8 @@
                         <span class="info-value" id="expiryDate">...</span>
                     </div>
                     <div class="info-row">
-                        <span class="info-label">فروشگاه:</span>
-                        <span class="info-value" id="storeName">...</span>
+                            <span class="info-label">پرداختی در فروشگاه:</span>
+                            <span class="info-value" id="storePayment">...</span>
                     </div>
                 </div>
                 
@@ -331,10 +331,11 @@
         </div>
         
         <div class="footer">
-            <p class="footer-title">سامانه خدمات دانشجویی دزیونی</p>
+            
             <p class="wait-message" id="waitMessage">
-                این صفحه را نبندید تا کد تخفیف شما صادر شود، از صبوری شما سپاسگذاریم ...
+                ... لطفا کمی صبر کنید تا کد تخفیف شما صادر شود
             </p>
+            <p class="footer-title">سامانه خدمات دانشجویی دزیونی</p>
             <p class="footer-text">دزیونی، همراه همیشگی شما</p>
         </div>
     </div>
@@ -350,7 +351,7 @@
             if (waitMessage) {
                 waitMessage.style.display = 'none';
             }
-        }, 10000);
+        }, 25000);
 
         window.addEventListener('load', function() {
             if (STATUS === 'OK' && AUTHORITY) {
