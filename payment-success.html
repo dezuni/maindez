@@ -270,12 +270,9 @@
                         <span class="info-label">تاریخ انقضا:</span>
                         <span class="info-value" id="expiryDate">...</span>
                     </div>
+                    
                     <div class="info-row">
-                        <span class="info-label">فروشگاه:</span>
-                        <span class="info-value" id="storeName">...</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">مبلغ پرداختی:</span>
+                        <span class="info-label">پرداختی در فروشگاه:</span>
                         <span class="info-value" id="storePayment">...</span>
                     </div>
                 </div>
@@ -437,7 +434,7 @@
             document.getElementById('storeName').textContent = formData.store_name || "فروشگاه مشخص نشده";
             
             // نمایش مبلغ پرداختی در فروشگاه
-            const storePayment = formData.store_payment || formData.store_amount || formData.adv_pay;
+            const storePayment = formData.in_shop_pay ;
             const storePaymentFormatted = new Intl.NumberFormat('fa-IR').format(parseInt(storePayment || 0));
             document.getElementById('storePayment').textContent = storePaymentFormatted + ' تومان';
             
