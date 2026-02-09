@@ -271,8 +271,12 @@
                         <span class="info-value" id="expiryDate">...</span>
                     </div>
                     <div class="info-row">
-                            <span class="info-label">پرداختی در فروشگاه:</span>
-                            <span class="info-value" id="storePayment">...</span>
+                        <span class="info-label">فروشگاه:</span>
+                        <span class="info-value" id="storeName">...</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">مبلغ پرداختی:</span>
+                        <span class="info-value" id="storePayment">...</span>
                     </div>
                 </div>
                 
@@ -333,7 +337,7 @@
         <div class="footer">
             
             <p class="wait-message" id="waitMessage">
-                ... لطفا کمی صبر کنید تا کد تخفیف شما صادر شود
+                 کمی صبر کنید تا کد تخفیف شما صادر شود...
             </p>
             <p class="footer-title">سامانه خدمات دانشجویی دزیونی</p>
             <p class="footer-text">دزیونی، همراه همیشگی شما</p>
@@ -351,7 +355,7 @@
             if (waitMessage) {
                 waitMessage.style.display = 'none';
             }
-        }, 25000);
+        }, 20000);
 
         window.addEventListener('load', function() {
             if (STATUS === 'OK' && AUTHORITY) {
@@ -415,7 +419,7 @@
                         showError(result.message || 'خطا در ذخیره اطلاعات');
                     }
                 } catch (e) {
-                    const discountCode = "کد به زودی از طریق تلگرام ارسال می‌شود";
+                    const discountCode = "کد به زودی از طریق تلگرام یا ایتا ارسال می‌شود";
                     showSuccess(formData, ref_id, discountCode);
                 }
             })
@@ -431,6 +435,11 @@
             document.getElementById('discountTitle').textContent = formData.title || "کارت تخفیف ویژه";
             document.getElementById('expiryDate').textContent = formData.expire_date || "تعیین نشده";
             document.getElementById('storeName').textContent = formData.store_name || "فروشگاه مشخص نشده";
+            
+            // نمایش مبلغ پرداختی در فروشگاه
+            const storePayment = formData.store_payment || formData.store_amount || formData.adv_pay;
+            const storePaymentFormatted = new Intl.NumberFormat('fa-IR').format(parseInt(storePayment || 0));
+            document.getElementById('storePayment').textContent = storePaymentFormatted + ' تومان';
             
             // نمایش مبلغ با فرمت فارسی و تومان
             const amount = new Intl.NumberFormat('fa-IR').format(parseInt(formData.adv_pay || 0));
